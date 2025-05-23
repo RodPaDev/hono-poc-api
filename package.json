@@ -1,5 +1,5 @@
 {
-  "name": "hono-api",
+  "name": "hono-poc-api",
   "type": "module",
   "scripts": {
     "client": "tsx src/client.ts",

@@ -1,4 +1,4 @@
-# Hono API
+# Hono POC API
 
 This is a REST API built with Hono.js and PostgreSQL using Drizzle ORM.
 
