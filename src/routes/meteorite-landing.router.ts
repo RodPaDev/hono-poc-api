@@ -26,6 +26,7 @@ const querySchema = z.object({
 export const meteoriteLandingRouter = new Hono()
   .get(
     "/",
+    // Example of using OpenAPI with Hono and Zod
     describeRoute({
       summary: "List meteorite landings",
       description: "Get a list of meteorite landings with optional filters.",
@@ -35,7 +36,11 @@ export const meteoriteLandingRouter = new Hono()
           content: {
             "application/json": {
               schema: resolver(
-                z.object({ data: z.array(z.any()), total: z.number() })
+                z.object({
+                  // drizzle-zod is not compatible with this version of zod. not sure if we should use drizzle-zod as of now
+                  data: z.array(z.any()),
+                  total: z.number(),
+                })
               ),
             },
           },
