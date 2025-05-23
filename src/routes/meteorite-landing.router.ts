@@ -7,10 +7,11 @@ import {
   MeteoriteLandingUpdateSchema,
 } from "../models/meteorite-landing.model.js";
 import { drizzleZodValidator } from "../middlewares/drizzleZodValidator.js";
-import { HTTPException } from "hono/http-exception";
 import { ClientError } from "../common/error.js";
 import { MeteoriteLandingRepository } from "../repositories/meteorite-landing.repository.js";
 import { db } from "../db.js";
+import { describeRoute } from "hono-openapi";
+import { resolver } from "hono-openapi/zod";
 
 const metoeriteRepository = new MeteoriteLandingRepository(db);
 const meteoriteService = new MeteoriteService(metoeriteRepository);
@@ -23,21 +24,41 @@ const querySchema = z.object({
 });
 
 export const meteoriteLandingRouter = new Hono()
-  .get("/", zValidator("query", querySchema), async (c) => {
-    const {
-      page = "1",
-      pageSize = "10",
-      year,
-      min_mass,
-    } = c.req.valid("query");
-    const { data, total } = await meteoriteService.list({
-      page: parseInt(page, 10),
-      pageSize: parseInt(pageSize, 10),
-      year,
-      minMass: min_mass ? parseFloat(min_mass) : undefined,
-    });
-    return c.json({ data, total });
-  })
+  .get(
+    "/",
+    describeRoute({
+      summary: "List meteorite landings",
+      description: "Get a list of meteorite landings with optional filters.",
+      responses: {
+        200: {
+          description: "Successful response",
+          content: {
+            "application/json": {
+              schema: resolver(
+                z.object({ data: z.array(z.any()), total: z.number() })
+              ),
+            },
+          },
+        },
+      },
+    }),
+    zValidator("query", querySchema),
+    async (c) => {
+      const {
+        page = "1",
+        pageSize = "10",
+        year,
+        min_mass,
+      } = c.req.valid("query");
+      const { data, total } = await meteoriteService.list({
+        page: parseInt(page, 10),
+        pageSize: parseInt(pageSize, 10),
+        year,
+        minMass: min_mass ? parseFloat(min_mass) : undefined,
+      });
+      return c.json({ data, total });
+    }
+  )
   .get("/years", async (c) => {
     return c.json(await meteoriteService.listYears());
   })
@@ -51,7 +72,7 @@ export const meteoriteLandingRouter = new Hono()
       const { id } = c.req.valid("param");
       const rec = await meteoriteService.getById(id);
       if (!rec) {
-        throw ClientError.NotFound
+        throw ClientError.NotFound;
       }
       return c.json(rec);
     }

@@ -9,14 +9,17 @@
   },
   "dependencies": {
     "@hono/node-server": "^1.14.2",
+    "@hono/swagger-ui": "^0.5.1",
     "@hono/zod-validator": "^0.5.0",
     "csv-parse": "^5.6.0",
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.43.1",
     "drizzle-zod": "^0.8.2",
     "hono": "^4.7.10",
+    "hono-openapi": "^0.4.8",
     "pg": "^8.16.0",
-    "zod": "^3.25.24"
+    "zod": "^3.25.24",
+    "zod-openapi": "^4.2.4"
   },
   "devDependencies": {
     "@types/node": "^22.15.21",

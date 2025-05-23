@@ -44,7 +44,7 @@ export class MeteoriteService {
   }
 
   async listYears(): Promise<string[]> {
-    throw ClientError.NotImplemented;
+    // throw ClientError.NotImplemented;
     const all = await this.repo.findAll();
     return Array.from(new Set(all.map((m) => m.year))).filter(
       (y): y is string => y !== null && y !== undefined
