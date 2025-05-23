@@ -1,5 +1,7 @@
+import { HTTPException } from "hono/http-exception";
 import type { MeteoriteLanding } from "../models/meteorite-landing.model.js";
 import type { MeteoriteLandingRepository } from "../repositories/meteorite-landing.repository.js";
+import { ClientError } from "../common/error.js";
 
 export interface ListOptions {
   page?: number;
@@ -42,15 +44,19 @@ export class MeteoriteService {
   }
 
   async listYears(): Promise<string[]> {
+    throw ClientError.NotImplemented;
     const all = await this.repo.findAll();
-    return Array.from(new Set(all.map((m) => m.year)))
-      .filter((y): y is string => y !== null && y !== undefined);
+    return Array.from(new Set(all.map((m) => m.year))).filter(
+      (y): y is string => y !== null && y !== undefined
+    );
   }
 
   async listClasses(): Promise<string[]> {
     const all = await this.repo.findAll();
-    return Array.from(new Set(all.map((m) => m.recclass)))
-      .filter((recclass): recclass is string => recclass !== null && recclass !== undefined);
+    return Array.from(new Set(all.map((m) => m.recclass))).filter(
+      (recclass): recclass is string =>
+        recclass !== null && recclass !== undefined
+    );
   }
 
   async create(data: Partial<MeteoriteLanding>): Promise<MeteoriteLanding> {
