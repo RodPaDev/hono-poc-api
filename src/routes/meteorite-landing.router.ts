@@ -12,6 +12,7 @@ import { MeteoriteLandingRepository } from "../repositories/meteorite-landing.re
 import { db } from "../db.js";
 import { describeRoute } from "hono-openapi";
 import { resolver } from "hono-openapi/zod";
+import { count } from "console";
 
 const metoeriteRepository = new MeteoriteLandingRepository(db);
 const meteoriteService = new MeteoriteService(metoeriteRepository);
@@ -65,10 +66,12 @@ export const meteoriteLandingRouter = new Hono()
     }
   )
   .get("/years", async (c) => {
-    return c.json(await meteoriteService.listYears());
+    const years = await meteoriteService.listYears();
+    return c.json(years);
   })
   .get("/classes", async (c) => {
-    return c.json(await meteoriteService.listClasses());
+    const classes = await meteoriteService.listClasses();
+    return c.json(classes);
   })
   .get(
     "/:id",
@@ -107,8 +110,11 @@ export const meteoriteLandingRouter = new Hono()
     zValidator("param", z.object({ id: z.string().uuid() })),
     async (c) => {
       const { id } = c.req.valid("param");
-      await meteoriteService.delete(id);
+      const result = await meteoriteService.delete(id);
+      if (result.rowCount === 0) {
+        throw ClientError.NotFound;
+      }
       c.status(204);
-      return c.text("");
+      return c.text("ok");
     }
   );

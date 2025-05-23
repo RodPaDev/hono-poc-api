@@ -1,6 +1,10 @@
 import { eq, and } from "drizzle-orm";
-import { meteoriteLandingTable, type MeteoriteLanding } from "../models/meteorite-landing.model.js";
+import {
+  meteoriteLandingTable,
+  type MeteoriteLanding,
+} from "../models/meteorite-landing.model.js";
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
+import type { QueryResult } from "pg";
 
 export interface IMeteoriteLandingRepository {
   findAll(): Promise<MeteoriteLanding[]>;
@@ -11,7 +15,7 @@ export interface IMeteoriteLandingRepository {
     id: string,
     data: Partial<Omit<MeteoriteLanding, "id">>
   ): Promise<MeteoriteLanding>;
-  delete(id: string): Promise<void>;
+  delete(id: string): Promise<QueryResult>;
 }
 
 export class MeteoriteLandingRepository implements IMeteoriteLandingRepository {
@@ -57,8 +61,8 @@ export class MeteoriteLandingRepository implements IMeteoriteLandingRepository {
     return updated;
   }
 
-  async delete(id: string): Promise<void> {
-    await this.db
+  async delete(id: string): Promise<QueryResult> {
+    return await this.db
       .delete(meteoriteLandingTable)
       .where(eq(meteoriteLandingTable.id, id));
   }

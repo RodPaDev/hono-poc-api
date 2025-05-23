@@ -2,6 +2,7 @@ import { HTTPException } from "hono/http-exception";
 import type { MeteoriteLanding } from "../models/meteorite-landing.model.js";
 import type { MeteoriteLandingRepository } from "../repositories/meteorite-landing.repository.js";
 import { ClientError } from "../common/error.js";
+import type { QueryResult } from "pg";
 
 export interface ListOptions {
   page?: number;
@@ -70,7 +71,7 @@ export class MeteoriteService {
     return this.repo.update(id, data);
   }
 
-  async delete(id: string): Promise<void> {
-    await this.repo.delete(id);
+  async delete(id: string): Promise<QueryResult> {
+    return await this.repo.delete(id);
   }
 }
