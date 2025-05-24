@@ -9,6 +9,7 @@ function openApi(app: Hono) {
         version: "1.0.0",
         description: "Greeting API",
       },
+      
       servers: [{ url: "http://localhost:3000", description: "Local Server" }],
     },
   });

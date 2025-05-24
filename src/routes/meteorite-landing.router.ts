@@ -7,12 +7,13 @@ import {
   MeteoriteLandingUpdateSchema,
 } from "../models/meteorite-landing.model.js";
 import { drizzleZodValidator } from "../middlewares/drizzleZodValidator.js";
-import { ClientError } from "../common/error.js";
+import { ClientError } from "../lib/error.js";
 import { MeteoriteLandingRepository } from "../repositories/meteorite-landing.repository.js";
 import { db } from "../db.js";
 import { describeRoute } from "hono-openapi";
 import { resolver } from "hono-openapi/zod";
 import { count } from "console";
+import { type HonoContext } from "../lib/context.js";
 
 const metoeriteRepository = new MeteoriteLandingRepository(db);
 const meteoriteService = new MeteoriteService(metoeriteRepository);
@@ -24,7 +25,7 @@ const querySchema = z.object({
   min_mass: z.string().optional(),
 });
 
-export const meteoriteLandingRouter = new Hono()
+export const meteoriteLandingRouter = new Hono<HonoContext>()
   .get(
     "/",
     // Example of using OpenAPI with Hono and Zod
