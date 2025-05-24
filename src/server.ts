@@ -29,14 +29,8 @@ app.get("/reference", openApi(app as any)).get(
   "/docs",
   Scalar({
     title: "Hono API Docs",
-    // url: "/api/reference",
+    url: "/api/reference",
     description: "Hono API Docs",
-    specs: [
-      {
-        url: "/api/reference",
-        description: "Hono API Docs",
-      },
-    ]
   })
 );
 
