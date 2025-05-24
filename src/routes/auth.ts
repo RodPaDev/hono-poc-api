@@ -1,6 +1,6 @@
 import { Hono } from "hono";
-import { auth } from "../lib/auth.js";
-import { type HonoContext } from "../lib/context.js";
+import { auth } from "../lib/auth";
+import { type HonoContext } from "../lib/context";
 
 
 export const betterAuthRouter = new Hono<HonoContext>({

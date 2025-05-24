@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { parse } from "csv-parse";
-import { meteoriteLandingTable } from "../src/models/meteorite-landing.model.js";
+import { meteoriteLandingTable } from "../src/models/meteorite-landing.model";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Client } from "pg";
 import "dotenv/config";

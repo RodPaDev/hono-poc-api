@@ -1,4 +1,4 @@
-import type { auth, AuthType } from "./auth.js";
+import type { auth, AuthType } from "./auth";
 
 export type HonoContext = {
   Bindings: AuthType;

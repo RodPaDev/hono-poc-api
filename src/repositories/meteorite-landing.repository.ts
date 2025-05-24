@@ -2,7 +2,7 @@ import { eq, and } from "drizzle-orm";
 import {
   meteoriteLandingTable,
   type MeteoriteLanding,
-} from "../models/meteorite-landing.model.js";
+} from "../models/meteorite-landing.model";
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 import type { QueryResult } from "pg";
 
