@@ -1,7 +1,7 @@
-import { Hono } from "hono";
+import { Hono, type Env } from "hono";
 import { openAPISpecs } from "hono-openapi";
 
-function openApi(app: Hono) {
+function openApi<E extends Env = Env>(app: Hono<E>) {
   return openAPISpecs(app, {
     documentation: {
       info: {
@@ -9,7 +9,7 @@ function openApi(app: Hono) {
         version: "1.0.0",
         description: "Greeting API",
       },
-      
+
       servers: [{ url: "http://localhost:3000", description: "Local Server" }],
     },
   });

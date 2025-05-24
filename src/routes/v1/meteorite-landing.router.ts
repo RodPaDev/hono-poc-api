@@ -1,19 +1,19 @@
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
-import { MeteoriteService } from "../services/meteorite-landing.service.js";
+import { MeteoriteService } from "../../services/meteorite-landing.service.js";
 import {
   MeteoriteLandingInsertSchema,
   MeteoriteLandingUpdateSchema,
-} from "../models/meteorite-landing.model.js";
-import { drizzleZodValidator } from "../middlewares/drizzleZodValidator.js";
-import { ClientError } from "../lib/error.js";
-import { MeteoriteLandingRepository } from "../repositories/meteorite-landing.repository.js";
-import { db } from "../db.js";
+} from "../../models/meteorite-landing.model.js";
+import { drizzleZodValidator } from "../../middlewares/drizzleZodValidator.js";
+import { ClientError } from "../../lib/error.js";
+import { MeteoriteLandingRepository } from "../../repositories/meteorite-landing.repository.js";
+import { db } from "../../db.js";
 import { describeRoute } from "hono-openapi";
 import { resolver } from "hono-openapi/zod";
 import { count } from "console";
-import { type HonoContext } from "../lib/context.js";
+import { type HonoContext } from "../../lib/context.js";
 
 const metoeriteRepository = new MeteoriteLandingRepository(db);
 const meteoriteService = new MeteoriteService(metoeriteRepository);
