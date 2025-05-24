@@ -1,9 +1,4 @@
 import { integer, uuid, varchar, pgTable } from "drizzle-orm/pg-core";
-import {
-  createInsertSchema,
-  createSelectSchema,
-  createUpdateSchema,
-} from "drizzle-zod";
 import { z } from "zod";
 
 export const meteoriteLandingTable = pgTable("meteorite_landing", {
@@ -20,14 +15,18 @@ export const meteoriteLandingTable = pgTable("meteorite_landing", {
   geolocation: varchar("geolocation"),
 });
 
-export const MeteoriteLandingSchema = createSelectSchema(meteoriteLandingTable);
+export const MeteoriteLandingSchema = z.object({
+  id: z.string().uuid(),
+  datasetId: z.number().int(),
+  name: z.string(),
+  nametype: z.string().optional(),
+  recclass: z.string().optional(),
+  mass: z.string().optional(),
+  fall: z.string().optional(),
+  year: z.string().optional(),
+  reclat: z.string().optional(),
+  reclong: z.string().optional(),
+  geolocation: z.string().optional(),
+}).strict();
 
-export type MeteoriteLanding = typeof meteoriteLandingTable.$inferSelect;
-
-export const MeteoriteLandingInsertSchema = createInsertSchema(
-  meteoriteLandingTable
-);
-
-export const MeteoriteLandingUpdateSchema = createUpdateSchema(
-  meteoriteLandingTable
-);
+export type MeteoriteLanding = z.infer<typeof MeteoriteLandingSchema>;

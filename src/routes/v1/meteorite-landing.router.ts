@@ -3,17 +3,16 @@ import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
 import { MeteoriteService } from "../../services/meteorite-landing.service.js";
 import {
-  MeteoriteLandingInsertSchema,
-  MeteoriteLandingUpdateSchema,
+  MeteoriteLandingSchema,
 } from "../../models/meteorite-landing.model.js";
-import { drizzleZodValidator } from "../../middlewares/drizzleZodValidator.js";
 import { ClientError } from "../../lib/error.js";
 import { MeteoriteLandingRepository } from "../../repositories/meteorite-landing.repository.js";
 import { db } from "../../db.js";
 import { describeRoute } from "hono-openapi";
 import { resolver } from "hono-openapi/zod";
-import { count } from "console";
 import { type HonoContext } from "../../lib/context.js";
+
+
 
 const metoeriteRepository = new MeteoriteLandingRepository(db);
 const meteoriteService = new MeteoriteService(metoeriteRepository);
@@ -28,7 +27,6 @@ const querySchema = z.object({
 export const meteoriteLandingRouter = new Hono<HonoContext>()
   .get(
     "/",
-    // Example of using OpenAPI with Hono and Zod
     describeRoute({
       summary: "List meteorite landings",
       description: "Get a list of meteorite landings with optional filters.",
@@ -39,8 +37,7 @@ export const meteoriteLandingRouter = new Hono<HonoContext>()
             "application/json": {
               schema: resolver(
                 z.object({
-                  // drizzle-zod is not compatible with this version of zod. not sure if we should use drizzle-zod as of now
-                  data: z.array(z.any()),
+                  data: z.array(MeteoriteLandingSchema),
                   total: z.number(),
                 })
               ),
@@ -88,7 +85,7 @@ export const meteoriteLandingRouter = new Hono<HonoContext>()
   )
   .post(
     "/",
-    drizzleZodValidator("json", MeteoriteLandingInsertSchema),
+    zValidator("json", MeteoriteLandingSchema.omit({ id: true })),
     async (c) => {
       const payload = c.req.valid("json");
       const created = await meteoriteService.create(payload);
@@ -98,7 +95,7 @@ export const meteoriteLandingRouter = new Hono<HonoContext>()
   .put(
     "/:id",
     zValidator("param", z.object({ id: z.string().uuid() })),
-    drizzleZodValidator("json", MeteoriteLandingUpdateSchema),
+    zValidator("json", MeteoriteLandingSchema.partial()),
     async (c) => {
       const { id } = c.req.valid("param");
       const payload = c.req.valid("json");
