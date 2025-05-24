@@ -1,7 +1,7 @@
 import { HTTPException } from "hono/http-exception";
-import type { MeteoriteLanding } from "../models/meteorite-landing.model";
-import type { MeteoriteLandingRepository } from "../repositories/meteorite-landing.repository";
-import { ClientError } from "../lib/error";
+import type { MeteoriteLanding } from "../models/meteorite-landing.model.js";
+import type { MeteoriteLandingRepository } from "../repositories/meteorite-landing.repository.js";
+import { ClientError } from "../lib/error.js";
 import type { QueryResult } from "pg";
 
 export interface ListOptions {
