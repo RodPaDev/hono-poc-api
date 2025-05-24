@@ -19,14 +19,14 @@ export const MeteoriteLandingSchema = z.object({
   id: z.string().uuid(),
   datasetId: z.number().int(),
   name: z.string(),
-  nametype: z.string().optional(),
-  recclass: z.string().optional(),
-  mass: z.string().optional(),
-  fall: z.string().optional(),
-  year: z.string().optional(),
-  reclat: z.string().optional(),
-  reclong: z.string().optional(),
-  geolocation: z.string().optional(),
+  nametype: z.string().nullable(),
+  recclass: z.string().nullable(),
+  mass: z.string().nullable(),
+  fall: z.string().nullable(),
+  year: z.string().nullable(),
+  reclat: z.string().nullable(),
+  reclong: z.string().nullable(),
+  geolocation: z.string().nullable(),
 }).strict();
 
 export type MeteoriteLanding = z.infer<typeof MeteoriteLandingSchema>;
