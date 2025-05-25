@@ -36,7 +36,10 @@ export const ClientError = {
   }),
 } as const satisfies Record<string, HTTPException>;
 
-export function GlobalErrorHandler(err: Error | HTTPResponseError, c: Context) {
+export function GlobalErrorHandler(
+  err: Error | HTTPResponseError,
+  c: Context
+): Response {
   console.error(err);
   if (err instanceof HTTPException) {
     return c.json({ message: err.message }, err.status);
