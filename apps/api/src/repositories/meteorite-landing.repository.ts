@@ -1,10 +1,9 @@
-import { eq, and } from "drizzle-orm";
-import {
-  meteoriteLandingTable,
-  type MeteoriteLanding,
-} from "../models/meteorite-landing.model.js";
-import type { NodePgDatabase } from "drizzle-orm/node-postgres";
+import { eq } from "drizzle-orm";
 import type { QueryResult } from "pg";
+import type { NodePgDatabase } from "drizzle-orm/node-postgres";
+import type { MeteoriteLanding } from "@fsm/types";
+
+import { meteoriteLandingTable } from "@/models/meteorite-landing.model.js";
 
 export interface IMeteoriteLandingRepository {
   findAll(): Promise<MeteoriteLanding[]>;

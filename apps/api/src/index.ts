@@ -1,6 +1,5 @@
 import { serve } from "@hono/node-server";
-import { create } from "domain";
-import app from "./server.js";
+import app from "@/server.js";
 
 serve(
   {
