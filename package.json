@@ -2,12 +2,21 @@
   "name": "fsm",
   "version": "0.0.1",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "concurrently --prefix-colors \"cyan,magenta\" --names \"api,client\" \"pnpm run api:dev\" \"pnpm run client:dev\"",
+    "api:dev": "pnpm --filter api dev",
+    "client:dev": "pnpm --filter client dev",
+    "build": "pnpm --filter \"*\" build",
+    "api:build": "pnpm --filter api build",
+    "client:build": "pnpm --filter client build"
   },
   "packageManager": "pnpm@10.11.0",
   "pnpm": {
     "ignoredBuiltDependencies": [
+      "@tailwindcss/oxide",
       "esbuild"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
   }
 }
