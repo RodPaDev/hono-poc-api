@@ -40,6 +40,7 @@ export function GlobalErrorHandler(
   err: Error | HTTPResponseError,
   c: Context
 ): Response {
+  // eslint-disable-next-line no-console
   console.error(err);
   if (err instanceof HTTPException) {
     return c.json({ message: err.message }, err.status);

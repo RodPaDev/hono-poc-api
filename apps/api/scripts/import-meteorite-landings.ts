@@ -1,13 +1,13 @@
-import fs from "fs";
-import path from "path";
-import { parse } from "csv-parse";
-import { meteoriteLandingTable } from "../src/models/meteorite-landing.model.js";
-import { drizzle } from "drizzle-orm/node-postgres";
-import { Client } from "pg";
-import "dotenv/config";
+import fs from 'fs';
+import path from 'path';
+import { parse } from 'csv-parse';
+import { meteoriteLandingTable } from '../src/models/meteorite-landing.model.js';
+import { drizzle } from 'drizzle-orm/node-postgres';
+import { Client } from 'pg';
+import 'dotenv/config';
 
 async function main() {
-  const csvPath = path.join(__dirname, "../meteorite-landings.csv");
+  const csvPath = path.join(__dirname, '../meteorite-landings.csv');
   const client = new Client({ connectionString: process.env.DATABASE_URL });
   await client.connect();
   const db = drizzle(client);
@@ -17,7 +17,6 @@ async function main() {
     .pipe(parse({ columns: true, skip_empty_lines: true }));
 
   for await (const record of parser) {
-
     await db.insert(meteoriteLandingTable).values({
       datasetId: record.id,
       name: record.name,
@@ -33,10 +32,12 @@ async function main() {
   }
 
   await client.end();
-  console.log("Import complete.");
+  // eslint-disable-next-line no-console
+  console.log('Import complete.');
 }
 
 main().catch((err) => {
+  // eslint-disable-next-line no-console
   console.error(err);
   process.exit(1);
 });

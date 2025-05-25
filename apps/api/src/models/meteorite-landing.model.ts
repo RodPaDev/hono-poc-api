@@ -1,5 +1,4 @@
 import { integer, uuid, varchar, pgTable } from "drizzle-orm/pg-core";
-import { z } from "zod";
 
 export const meteoriteLandingTable = pgTable("meteorite_landing", {
   id: uuid("id").primaryKey().defaultRandom(),

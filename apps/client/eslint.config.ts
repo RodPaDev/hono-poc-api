@@ -8,7 +8,7 @@ export default [
   ...baseConfig,
 
   // React/Vite-specific config
-  tseslint.config(
+  ...tseslint.config(
     { ignores: ['dist'] },
     {
       files: ['**/*.{ts,tsx}'],

@@ -1,6 +1,7 @@
 import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import prettier from 'eslint-config-prettier';
+import path from 'path';
 
 export default [
   js.configs.recommended,
@@ -10,7 +11,7 @@ export default [
     languageOptions: {
       parser: tseslint.parser,
       parserOptions: {
-        project: './tsconfig.base.json',
+        project: path.resolve(__dirname, 'tsconfig.base.json'),
       },
     },
     rules: {
