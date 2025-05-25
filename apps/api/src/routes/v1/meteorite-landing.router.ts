@@ -2,15 +2,13 @@ import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
 import { MeteoriteService } from "../../services/meteorite-landing.service.js";
-import {
-  MeteoriteLandingSchema,
-} from "../../models/meteorite-landing.model.js";
 import { ClientError } from "../../lib/error.js";
 import { MeteoriteLandingRepository } from "../../repositories/meteorite-landing.repository.js";
 import { db } from "../../db.js";
 import { describeRoute } from "hono-openapi";
 import { resolver } from "hono-openapi/zod";
 import { type HonoContext } from "../../lib/context.js";
+import { MeteoriteLandingSchema } from "@fsm/types";
 
 
 

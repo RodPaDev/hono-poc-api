@@ -3,14 +3,20 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { openAPI } from "better-auth/plugins";
 import { db } from "../db.js";
 import type { Context, Next } from "hono";
+import * as betterAuthSchema from "../models/auth.model.js"
 
 export const auth = betterAuth({
+  // TODO: adjust this for all environments
+  trustedOrigins: ["http://localhost:5173"],
   database: drizzleAdapter(db, {
     provider: "pg",
+    schema: betterAuthSchema,
   }),
-  plugins: [openAPI({
-    path: "/docs",
-  })],
+  plugins: [
+    openAPI({
+      path: "/docs",
+    }),
+  ],
   emailAndPassword: {
     enabled: true,
   },

@@ -1,21 +1,4 @@
-# dev
-.yarn/
-!.yarn/releases
-.vscode/*
-!.vscode/launch.json
-!.vscode/*.code-snippets
-.idea/workspace.xml
-.idea/usage.statistics.xml
-.idea/shelf
-
-# deps
-node_modules/
-
-# env
-.env
-.env.production
-
-# logs
+# Logs
 logs/
 *.log
 npm-debug.log*
@@ -24,8 +7,36 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# misc
+# Dependency directories
+node_modules/
+.yarn/
+!.yarn/releases
+
+# Distribution folders
+dist/
+dist-ssr
+
+# Local environment files
+*.local
+.env
+.env.production
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/*.code-snippets
+.idea
+.idea/workspace.xml
+.idea/usage.statistics.xml
+.idea/shelf
+
+# macOS
 .DS_Store
 
-# dist
-dist/
+# Visual Studio
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
