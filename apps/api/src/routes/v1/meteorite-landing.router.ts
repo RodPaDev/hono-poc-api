@@ -5,7 +5,7 @@ import { resolver } from "hono-openapi/zod";
 import { z } from "zod";
 import { MeteoriteLandingSchema } from "@fsm/types";
 
-import { db } from "@/db.js";
+import { db } from "@/lib/db.js";
 import { ClientError } from "@/lib/error.js";
 import { type HonoContext } from "@/lib/context.js";
 

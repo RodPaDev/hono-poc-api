@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { logger } from "hono/logger";
-import { GlobalErrorHandler } from "./lib/error.js";
+import { GlobalErrorHandler } from "./error.js";
 import { requestId } from "hono/request-id";
 import { secureHeaders } from "hono/secure-headers";
 import { compress } from "hono/compress";
