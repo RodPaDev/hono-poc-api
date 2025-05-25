@@ -15,6 +15,7 @@ export default [
     },
     rules: {
       ...prettier.rules,
+      '@typescript-eslint/no-explicit-any': 'warn',
       'no-console': 'warn',
     },
   },
