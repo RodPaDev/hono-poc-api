@@ -1,4 +1,4 @@
-# Hono POC API
+# Hono API
 
 This is a REST API built with Hono.js and PostgreSQL using Drizzle ORM.
 
@@ -21,12 +21,12 @@ This is a REST API built with Hono.js and PostgreSQL using Drizzle ORM.
 
 4. Run the development server:
    ```bash
-   pnpm run dev
+   pnpm dev
    ```
 
 5. In a separate terminal, run the client to test the API:
    ```bash
-   pnpm run client
+   pnpm client
    ```
 
 ## API Access
