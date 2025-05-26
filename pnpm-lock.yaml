@@ -11,13 +11,22 @@ importers:
       '@eslint/js':
         specifier: ^9.27.0
         version: 9.27.0
+      esbuild:
+        specifier: ^0.25.4
+        version: 0.25.4
       eslint:
         specifier: ^9.27.0
         version: 9.27.0(jiti@2.4.2)
+      typescript:
+        specifier: ^5.8.3
+        version: 5.8.3
       typescript-eslint:
         specifier: ^8.32.1
         version: 8.32.1(eslint@9.27.0(jiti@2.4.2))(typescript@5.8.3)
     devDependencies:
+      '@types/node':
+        specifier: ^22.15.21
+        version: 22.15.21
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.32.1
         version: 8.32.1(@typescript-eslint/parser@8.32.1(eslint@9.27.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.27.0(jiti@2.4.2))(typescript@5.8.3)
@@ -85,9 +94,6 @@ importers:
         specifier: ^4.2.4
         version: 4.2.4(zod@3.25.28)
     devDependencies:
-      '@types/node':
-        specifier: ^22.15.21
-        version: 22.15.21
       '@types/pg':
         specifier: ^8.15.2
         version: 8.15.2
@@ -155,9 +161,6 @@ importers:
         specifier: ^5.0.5
         version: 5.0.5(@types/react@19.1.5)(react@19.1.0)(use-sync-external-store@1.5.0(react@19.1.0))
     devDependencies:
-      '@types/node':
-        specifier: ^22.15.21
-        version: 22.15.21
       '@types/react':
         specifier: ^19.1.2
         version: 19.1.5
@@ -192,9 +195,6 @@ importers:
         specifier: ^3.25.28
         version: 3.25.28
     devDependencies:
-      '@types/node':
-        specifier: ^22.15.21
-        version: 22.15.21
       typescript:
         specifier: ^5.8.3
         version: 5.8.3

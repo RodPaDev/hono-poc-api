@@ -1,9 +1,7 @@
 import baseConfig from '../../eslint.config.js';
+import tseslint from 'typescript-eslint';
 
-export default [
-  ...baseConfig,
-  {
-    files: ['**/*.ts', '**/*.tsx'],
-    rules: {},
-  },
-];
+export default tseslint.config(...baseConfig, {
+  files: ['**/*.ts', '**/*.tsx'],
+  rules: {},
+});
