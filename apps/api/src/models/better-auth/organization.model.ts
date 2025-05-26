@@ -1,4 +1,4 @@
-import { user } from "@/models/better-auth/auth.model.js";
+import { user } from "@/models/better-auth/auth.model";
 import { type InvitationStatus } from "better-auth/plugins";
 import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
 

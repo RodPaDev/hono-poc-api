@@ -1,2 +1,2 @@
-export * from "./auth.model.js";
-export * from "./organization.model.js";
+export * from "./auth.model";
+export * from "./organization.model";

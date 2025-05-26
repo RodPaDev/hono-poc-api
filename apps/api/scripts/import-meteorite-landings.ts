@@ -1,10 +1,10 @@
+import { parse } from "csv-parse";
+import "dotenv/config";
+import { drizzle } from "drizzle-orm/node-postgres";
 import fs from "fs";
 import path from "path";
-import { parse } from "csv-parse";
-import { meteoriteLandingTable } from "../src/models/meteorite-landing.model.js";
-import { drizzle } from "drizzle-orm/node-postgres";
 import { Client } from "pg";
-import "dotenv/config";
+import { meteoriteLandingTable } from "../src/models/meteorite-landing.model";
 
 async function main() {
   const csvPath = path.join(__dirname, "../meteorite-landings.csv");

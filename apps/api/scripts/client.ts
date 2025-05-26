@@ -1,16 +1,10 @@
-import { hc } from "hono/client";
-import { type AppType } from "../src/lib/server.js";
+import { createAuthClient } from "better-auth/client";
 
-const client = hc<AppType>("http://localhost:3000/");
+// login to the Better Auth client
+export const authClient = createAuthClient({
+  baseURL: "http://localhost:3000",
+});
 
-const res = await client.api.v1["meteorite-landing"].$get({ query: {} });
+const session = await authClient.getSession();
 
-if (res.ok) {
-  const data = await res.json();
-  // eslint-disable-next-line no-console
-  console.log(data);
-} else {
-  const errMsg = await res.text();
-  // eslint-disable-next-line no-console
-  console.error(errMsg);
-}
+console.log("Session:", session);

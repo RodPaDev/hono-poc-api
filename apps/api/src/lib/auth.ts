@@ -3,8 +3,8 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { openAPI, organization } from "better-auth/plugins";
 import type { Context, Next } from "hono";
 
-import { db } from "@/lib/db.js";
-import * as betterAuthSchema from "@/models/better-auth/auth.model.js";
+import { db } from "@/lib/db";
+import * as betterAuthSchema from "@/models/better-auth/index";
 
 export const auth = betterAuth({
   // TODO: adjust this for all environments
@@ -17,9 +17,7 @@ export const auth = betterAuth({
     openAPI({
       path: "/docs",
     }),
-    organization({
-       
-    }),
+    organization({}),
   ],
   emailAndPassword: {
     enabled: true,

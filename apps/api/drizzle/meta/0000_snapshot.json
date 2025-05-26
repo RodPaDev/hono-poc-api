@@ -1,0 +1,99 @@
+{
+  "id": "03c31c4b-462b-4406-8572-78bb527c11ae",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.meteorite_landing": {
+      "name": "meteorite_landing",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "datasetId": {
+          "name": "datasetId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nametype": {
+          "name": "nametype",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "recclass": {
+          "name": "recclass",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mass": {
+          "name": "mass",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fall": {
+          "name": "fall",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "year": {
+          "name": "year",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "reclat": {
+          "name": "reclat",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "reclong": {
+          "name": "reclong",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "geolocation": {
+          "name": "geolocation",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

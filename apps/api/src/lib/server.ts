@@ -4,12 +4,12 @@ import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import { requestId } from "hono/request-id";
 import { secureHeaders } from "hono/secure-headers";
-import { GlobalErrorHandler } from "./error.js";
+import { GlobalErrorHandler } from "./error";
 
-import { setUserSession } from "@/lib/auth.js";
-import type { HonoContext } from "@/lib/context.js";
-import { betterAuthRouter } from "@/routes/auth.js";
-import { v1Rotuer } from "@/routes/v1/routes.js";
+import { setUserSession } from "@/lib/auth";
+import type { HonoContext } from "@/lib/context";
+import { betterAuthRouter } from "@/routes/auth";
+import { v1Rotuer } from "@/routes/v1/routes";
 
 const corsConfig = cors({
   // TODO: adjust this for all environments

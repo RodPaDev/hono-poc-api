@@ -1,4 +1,4 @@
-import app from "@/lib/server.js";
+import app from "@/lib/server";
 import { serve } from "@hono/node-server";
 
 serve(
