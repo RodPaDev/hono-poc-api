@@ -1,15 +1,15 @@
-import { build } from 'esbuild';
-import eslint from 'esbuild-plugin-eslint';
+import { build } from "esbuild";
+import eslint from "esbuild-plugin-eslint";
 
 build({
-  entryPoints: ['./src/**/*.ts'],
-  outdir: 'dist',
+  entryPoints: ["./src/**/*.ts"],
+  outdir: "dist",
   bundle: false,
-  format: 'esm',
-  platform: 'node',
-  target: ['node22'],
+  format: "esm",
+  platform: "node",
+  target: ["node22"],
   sourcemap: true,
-  outExtension: { '.js': '.js' },
+  outExtension: { ".js": ".js" },
   plugins: [eslint()],
-  logLevel: 'info',
+  logLevel: "info",
 });

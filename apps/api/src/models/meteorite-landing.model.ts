@@ -13,4 +13,3 @@ export const meteoriteLandingTable = pgTable("meteorite_landing", {
   reclong: varchar("reclong"),
   geolocation: varchar("geolocation"),
 });
-

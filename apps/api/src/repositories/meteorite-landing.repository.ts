@@ -12,7 +12,7 @@ export interface IMeteoriteLandingRepository {
   create(data: Partial<MeteoriteLanding>): Promise<MeteoriteLanding>;
   update(
     id: string,
-    data: Partial<Omit<MeteoriteLanding, "id">>
+    data: Partial<Omit<MeteoriteLanding, "id">>,
   ): Promise<MeteoriteLanding>;
   delete(id: string): Promise<QueryResult>;
 }
@@ -50,7 +50,7 @@ export class MeteoriteLandingRepository implements IMeteoriteLandingRepository {
 
   async update(
     id: string,
-    data: Partial<Omit<MeteoriteLanding, "id">>
+    data: Partial<Omit<MeteoriteLanding, "id">>,
   ): Promise<MeteoriteLanding> {
     const [updated] = await this.db
       .update(meteoriteLandingTable)

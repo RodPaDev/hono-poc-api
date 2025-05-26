@@ -38,7 +38,7 @@ export const ClientError = {
 
 export function GlobalErrorHandler(
   err: Error | HTTPResponseError,
-  c: Context
+  c: Context,
 ): Response {
   // eslint-disable-next-line no-console
   console.error(err);

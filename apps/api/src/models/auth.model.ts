@@ -9,7 +9,7 @@ import { pgTable, text, timestamp, boolean } from "drizzle-orm/pg-core";
  * https://www.better-auth.com/docs/concepts/database#extending-core-schema
  *
  * !! DO NOT EDIT !!
- * * * * * * * * * * 
+ * * * * * * * * * *
  */
 
 export const user = pgTable("user", {
@@ -65,9 +65,9 @@ export const verification = pgTable("verification", {
   value: text("value").notNull(),
   expiresAt: timestamp("expires_at").notNull(),
   createdAt: timestamp("created_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
   updatedAt: timestamp("updated_at").$defaultFn(
-    () => /* @__PURE__ */ new Date()
+    () => /* @__PURE__ */ new Date(),
   ),
 });

@@ -14,7 +14,7 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "composite": true,
-    "baseUrl": ".",
+    "baseUrl": "."
   },
   "exclude": ["node_modules", "dist"]
 }

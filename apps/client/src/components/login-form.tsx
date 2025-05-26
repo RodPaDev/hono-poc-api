@@ -77,8 +77,7 @@ export function LoginForm({ className, onSubmit, ...props }: LoginFormProps) {
                       <FormLabel>Password</FormLabel>
                       <a
                         href="#"
-                        className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                      >
+                        className="ml-auto inline-block text-sm underline-offset-4 hover:underline">
                         Forgot your password?
                       </a>
                     </div>

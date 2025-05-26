@@ -4,10 +4,9 @@ import { meteoriteLandingRouter } from "./meteorite-landing.router.js";
 import { openApi } from "../../lib/open-api.js";
 import { Scalar } from "@scalar/hono-api-reference";
 
-export const v1Rotuer = new Hono<HonoContext>()
-.route(
+export const v1Rotuer = new Hono<HonoContext>().route(
   "/meteorite-landing",
-  meteoriteLandingRouter
+  meteoriteLandingRouter,
 );
 
 v1Rotuer.get("/reference", openApi(v1Rotuer)).get(
@@ -15,5 +14,5 @@ v1Rotuer.get("/reference", openApi(v1Rotuer)).get(
   Scalar({
     title: "Hono API v1",
     url: "/api/v1/reference",
-  })
+  }),
 );

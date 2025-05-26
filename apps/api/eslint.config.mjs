@@ -1,11 +1,11 @@
-import baseConfig from '../../eslint.config.mjs';
-import tseslint from 'typescript-eslint';
+import baseConfig from "../../eslint.config.mjs";
+import tseslint from "typescript-eslint";
 
 export default tseslint.config(
   ...baseConfig,
-  { ignores: ['dist'] },
+  { ignores: ["dist"] },
   {
-    files: ['**/*.ts', '**/*.tsx'],
+    files: ["**/*.ts", "**/*.tsx"],
     rules: {},
   },
 );

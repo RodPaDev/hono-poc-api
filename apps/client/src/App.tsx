@@ -1,6 +1,6 @@
-import { Auth } from '@/pages/auth';
-import { Button } from './components/ui/button';
-import { signOut, useSession } from './lib/auth-client';
+import { Auth } from "@/pages/auth";
+import { Button } from "./components/ui/button";
+import { signOut, useSession } from "./lib/auth-client";
 
 function App() {
   const { data: session } = useSession();

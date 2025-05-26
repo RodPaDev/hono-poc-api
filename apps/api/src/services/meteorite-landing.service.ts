@@ -13,7 +13,7 @@ export class MeteoriteService {
   constructor(private readonly repo: MeteoriteLandingRepository) {}
 
   async list(
-    opts: ListOptions
+    opts: ListOptions,
   ): Promise<{ data: MeteoriteLanding[]; total: number }> {
     const all = await this.repo.findAll();
     let filtered = all;
@@ -24,7 +24,7 @@ export class MeteoriteService {
 
     if (opts.minMass !== undefined) {
       filtered = filtered.filter(
-        (m) => parseFloat(m.mass ?? "0") >= opts.minMass!
+        (m) => parseFloat(m.mass ?? "0") >= opts.minMass!,
       );
     }
 
@@ -46,7 +46,7 @@ export class MeteoriteService {
     // throw ClientError.NotImplemented;
     const all = await this.repo.findAll();
     return Array.from(new Set(all.map((m) => m.year))).filter(
-      (y): y is string => y !== null && y !== undefined
+      (y): y is string => y !== null && y !== undefined,
     );
   }
 
@@ -54,7 +54,7 @@ export class MeteoriteService {
     const all = await this.repo.findAll();
     return Array.from(new Set(all.map((m) => m.recclass))).filter(
       (recclass): recclass is string =>
-        recclass !== null && recclass !== undefined
+        recclass !== null && recclass !== undefined,
     );
   }
 
@@ -64,7 +64,7 @@ export class MeteoriteService {
 
   async update(
     id: string,
-    data: Partial<Omit<MeteoriteLanding, "id">>
+    data: Partial<Omit<MeteoriteLanding, "id">>,
   ): Promise<MeteoriteLanding> {
     return this.repo.update(id, data);
   }

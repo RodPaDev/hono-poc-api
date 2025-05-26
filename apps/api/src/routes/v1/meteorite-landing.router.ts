@@ -37,7 +37,7 @@ export const meteoriteLandingRouter = new Hono<HonoContext>()
                 z.object({
                   data: z.array(MeteoriteLandingSchema),
                   total: z.number(),
-                })
+                }),
               ),
             },
           },
@@ -59,7 +59,7 @@ export const meteoriteLandingRouter = new Hono<HonoContext>()
         minMass: min_mass ? parseFloat(min_mass) : undefined,
       });
       return c.json({ data, total });
-    }
+    },
   )
   .get("/years", async (c) => {
     const years = await meteoriteService.listYears();
@@ -79,7 +79,7 @@ export const meteoriteLandingRouter = new Hono<HonoContext>()
         throw ClientError.NotFound;
       }
       return c.json(rec);
-    }
+    },
   )
   .post(
     "/",
@@ -88,7 +88,7 @@ export const meteoriteLandingRouter = new Hono<HonoContext>()
       const payload = c.req.valid("json");
       const created = await meteoriteService.create(payload);
       return c.json(created, 201);
-    }
+    },
   )
   .put(
     "/:id",
@@ -99,7 +99,7 @@ export const meteoriteLandingRouter = new Hono<HonoContext>()
       const payload = c.req.valid("json");
       const updated = await meteoriteService.update(id, payload);
       return c.json(updated, 200);
-    }
+    },
   )
   .delete(
     "/:id",
@@ -112,5 +112,5 @@ export const meteoriteLandingRouter = new Hono<HonoContext>()
       }
       c.status(204);
       return c.text("ok");
-    }
+    },
   );
