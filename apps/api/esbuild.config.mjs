@@ -1,4 +1,5 @@
 import { build } from "esbuild";
+import pkg from "./package.json" assert { type: "json" };
 
 build({
   entryPoints: ["./src/**/*.ts"],
@@ -10,5 +11,10 @@ build({
   sourcemap: true,
   outExtension: { ".js": ".js" },
   logLevel: "info",
-  external: ["pg", "dotenv"],
+  external: [
+    ...Object.entries(pkg.dependencies || {})
+      .filter(([, value]) => !value.includes("workspace:"))
+      .map(([key]) => key),
+    ...Object.keys(pkg.peerDependencies || {}),
+  ],
 });
