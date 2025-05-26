@@ -9,6 +9,7 @@
     "lint": "eslint . --ext .ts,.tsx"
   },
   "dependencies": {
+    "@fsm/types": "workspace:*",
     "@hono/node-server": "^1.14.2",
     "@hono/swagger-ui": "^0.5.1",
     "@scalar/hono-api-reference": "^0.9.1",
@@ -17,12 +18,12 @@
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.43.1",
     "drizzle-zod": "^0.8.2",
+    "esbuild-plugin-eslint": "^0.3.12",
     "hono": "^4.7.10",
     "hono-openapi": "^0.4.8",
     "pg": "^8.16.0",
     "zod": "^3.25.24",
-    "zod-openapi": "^4.2.4",
-    "@fsm/types": "workspace:*"
+    "zod-openapi": "^4.2.4"
   },
   "devDependencies": {
     "@types/pg": "^8.15.2",

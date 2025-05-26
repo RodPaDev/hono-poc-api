@@ -78,12 +78,15 @@ importers:
       drizzle-zod:
         specifier: ^0.8.2
         version: 0.8.2(drizzle-orm@0.43.1(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0))(zod@3.25.28)
+      esbuild-plugin-eslint:
+        specifier: ^0.3.12
+        version: 0.3.12(esbuild@0.25.4)(eslint@9.27.0(jiti@2.4.2))
       hono:
         specifier: ^4.7.10
         version: 4.7.10
       hono-openapi:
         specifier: ^0.4.8
-        version: 0.4.8(@hono/zod-validator@0.5.0(hono@4.7.10)(zod@3.25.28))(hono@4.7.10)(openapi-types@12.1.3)(zod-openapi@4.2.4(zod@3.25.28))(zod@3.25.28)
+        version: 0.4.8(hono@4.7.10)(openapi-types@12.1.3)(zod-openapi@4.2.4(zod@3.25.28))(zod@3.25.28)
       pg:
         specifier: ^8.16.0
         version: 8.16.0
@@ -103,9 +106,6 @@ importers:
       tsx:
         specifier: ^4.19.4
         version: 4.19.4
-      typescript:
-        specifier: ^5.8.3
-        version: 5.8.3
 
   apps/client:
     dependencies:
@@ -182,9 +182,6 @@ importers:
       tw-animate-css:
         specifier: ^1.3.0
         version: 1.3.0
-      typescript:
-        specifier: ~5.8.3
-        version: 5.8.3
       vite:
         specifier: ^6.3.5
         version: 6.3.5(@types/node@22.15.21)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.19.4)
@@ -194,10 +191,6 @@ importers:
       zod:
         specifier: ^3.25.28
         version: 3.25.28
-    devDependencies:
-      typescript:
-        specifier: ^5.8.3
-        version: 5.8.3
 
 packages:
 
@@ -1362,6 +1355,13 @@ packages:
   enhanced-resolve@5.18.1:
     resolution: {integrity: sha512-ZSW3ma5GkcQBIpwZTSRAI8N71Uuwgs93IezB7mf7R60tC8ZbJideoDNKjHn2O9KIlx6rkGTTEk1xUCK2E1Y2Yg==}
     engines: {node: '>=10.13.0'}
+
+  esbuild-plugin-eslint@0.3.12:
+    resolution: {integrity: sha512-n37Nn6vmh2tdGMnm6GZebiYJDrqERAReyvLFwdCWCw15ZvAu251i6cIeJWoVB8AiS+j3N97gylvf58ysIwii4g==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      esbuild: '>=0.20'
+      eslint: ^8 || ^9
 
   esbuild-register@3.6.0:
     resolution: {integrity: sha512-H2/S7Pm8a9CL1uhp9OvjwrBh5Pvx0H8qVOxNu8Wed9Y7qv56MPtq+GGM8RJpq6glYJn9Wspr8uw7l55uyinNeg==}
@@ -3246,6 +3246,11 @@ snapshots:
       graceful-fs: 4.2.11
       tapable: 2.2.2
 
+  esbuild-plugin-eslint@0.3.12(esbuild@0.25.4)(eslint@9.27.0(jiti@2.4.2)):
+    dependencies:
+      esbuild: 0.25.4
+      eslint: 9.27.0(jiti@2.4.2)
+
   esbuild-register@3.6.0(esbuild@0.25.4):
     dependencies:
       debug: 4.4.1
@@ -3475,12 +3480,11 @@ snapshots:
 
   has-flag@4.0.0: {}
 
-  hono-openapi@0.4.8(@hono/zod-validator@0.5.0(hono@4.7.10)(zod@3.25.28))(hono@4.7.10)(openapi-types@12.1.3)(zod-openapi@4.2.4(zod@3.25.28))(zod@3.25.28):
+  hono-openapi@0.4.8(hono@4.7.10)(openapi-types@12.1.3)(zod-openapi@4.2.4(zod@3.25.28))(zod@3.25.28):
     dependencies:
       json-schema-walker: 2.0.0
       openapi-types: 12.1.3
     optionalDependencies:
-      '@hono/zod-validator': 0.5.0(hono@4.7.10)(zod@3.25.28)
       hono: 4.7.10
       zod: 3.25.28
       zod-openapi: 4.2.4(zod@3.25.28)
