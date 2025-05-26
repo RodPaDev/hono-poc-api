@@ -13,6 +13,7 @@ import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
  */
 
 export const user = pgTable("user", {
+  // DO NOT EDIT START
   id: text("id").primaryKey(),
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
@@ -26,6 +27,7 @@ export const user = pgTable("user", {
   updatedAt: timestamp("updated_at")
     .$defaultFn(() => /* @__PURE__ */ new Date())
     .notNull(),
+  // DO NOT EDIT END
 });
 
 export const session = pgTable("session", {
