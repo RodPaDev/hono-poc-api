@@ -20,8 +20,17 @@ export default tseslint.config(
     },
     rules: {
       ...prettier.rules,
-      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-explicit-any': 'error',
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          varsIgnorePattern: '^_',
+          argsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+        },
+      ],
       'no-console': 'warn',
+      'no-unreachable': 'warn',
     },
   },
 );
