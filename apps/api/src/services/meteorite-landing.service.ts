@@ -1,6 +1,6 @@
 import type { MeteoriteLanding } from "@fsm/types";
-import type { MeteoriteLandingRepository } from "../repositories/meteorite-landing.repository.js";
 import type { QueryResult } from "pg";
+import type { MeteoriteLandingRepository } from "../repositories/meteorite-landing.repository.js";
 
 export interface ListOptions {
   page?: number;

@@ -1,5 +1,5 @@
-import { serve } from "@hono/node-server";
 import app from "@/lib/server.js";
+import { serve } from "@hono/node-server";
 
 serve(
   {
