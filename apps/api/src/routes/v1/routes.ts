@@ -31,7 +31,7 @@ function createRebac(
 }
 
 const rebac = createRebac({
-  "meteorite-landing": ["delete"],
+  "meteorite-landing": ["read", "create", "update", "delete"],
 });
 
 export const v1Rotuer = new Hono<HonoContext>()

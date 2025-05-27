@@ -3,7 +3,9 @@
   "type": "module",
   "scripts": {
     "client": "tsx src/client.ts",
-    "dev": "tsx watch src/index.ts",
+    "dev": "pnpm --filter @fsm/api --parallel \"/^dev:.*/\"",
+    "dev:serve": "tsx watch src/index.ts",
+    "dev:tsc": "tsc -p tsconfig.build.json --incremental --watch",
     "build": "node esbuild.config.mjs",
     "start": "node dist/index.js",
     "lint": "eslint . --ext .ts,.tsx"
@@ -33,7 +35,10 @@
   "peerDependencies": {
     "@hono/zod-validator": "^0.5.0"
   },
-  "exports": [
-    "./src/lib/server.ts"
-  ]
+  "exports": {
+    "./hc": {
+      "import": "./dist/apps/api/src/lib/hc.js",
+      "types": "./dist/apps/api/src/lib/hc.d.ts"
+    }
+  }
 }

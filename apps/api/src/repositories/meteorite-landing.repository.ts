@@ -3,6 +3,7 @@ import { eq } from "drizzle-orm";
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 import type { QueryResult } from "pg";
 
+import * as schema from "@/models";
 import { meteoriteLandingTable } from "@/models/meteorite-landing.model";
 
 export interface IMeteoriteLandingRepository {
@@ -18,7 +19,7 @@ export interface IMeteoriteLandingRepository {
 }
 
 export class MeteoriteLandingRepository implements IMeteoriteLandingRepository {
-  constructor(private readonly db: NodePgDatabase) {}
+  constructor(private readonly db: NodePgDatabase<typeof schema>) {}
 
   async findAll(): Promise<MeteoriteLanding[]> {
     return await this.db.select().from(meteoriteLandingTable);
@@ -30,6 +31,7 @@ export class MeteoriteLandingRepository implements IMeteoriteLandingRepository {
       .from(meteoriteLandingTable)
       .where(eq(meteoriteLandingTable.id, id))
       .limit(1);
+
     return result[0];
   }
 

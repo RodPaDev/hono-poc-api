@@ -19,7 +19,7 @@ export type RolePermissions = {
 export const bussinessAc = createAccessControl(permissions);
 
 const user = bussinessAc.newRole({
-  "meteorite-landing": ["create"],
+  "meteorite-landing": ["read", "create", "update", "delete"],
 });
 
 export const auth = betterAuth({
