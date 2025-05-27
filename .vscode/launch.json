@@ -6,7 +6,7 @@
       "request": "launch",
       "name": "Debug API (Hono)",
       "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["exec", "tsx", "--inspect", "src/index.ts"],
+      "runtimeArgs": ["exec", "tsx", "watch", "--inspect", "src/index.ts"],
       "cwd": "${workspaceFolder}/apps/api",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
