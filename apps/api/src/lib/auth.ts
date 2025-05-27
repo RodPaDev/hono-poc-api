@@ -8,14 +8,19 @@ import * as schema from "@/models";
 import { createAccessControl } from "better-auth/plugins/access";
 import { defaultRoles } from "better-auth/plugins/organization/access";
 
-export const ac = createAccessControl({
-  [schema.metoeriteResourceName]: ["create", "read", "update", "delete"],
-});
+const permissions = {
+  "meteorite-landing": ["read", "create", "update", "delete"],
+} as const;
 
-const user = ac.newRole({
-  [schema.metoeriteResourceName]: ["read"],
-});
+export type RolePermissions = {
+  [K in keyof typeof permissions]?: Array<(typeof permissions)[K][number]>;
+};
 
+export const bussinessAc = createAccessControl(permissions);
+
+const user = bussinessAc.newRole({
+  "meteorite-landing": ["create"],
+});
 
 export const auth = betterAuth({
   // TODO: adjust this for all environments
@@ -29,7 +34,7 @@ export const auth = betterAuth({
       path: "/docs",
     }),
     organization({
-      ac,
+      ac: bussinessAc,
       roles: {
         owner: defaultRoles.owner,
         user,
