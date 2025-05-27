@@ -17,10 +17,27 @@ export const auth = betterAuth({
     openAPI({
       path: "/docs",
     }),
-    organization({}),
+    organization(),
   ],
   emailAndPassword: {
     enabled: true,
+  },
+  databaseHooks: {
+    user: {
+      create: {
+        after: async (user, ctx) => {
+          if (ctx?.path === "/sign-up/email") {
+            auth.api.createOrganization({
+              body: {
+                name: "Default Organization",
+                userId: user.id,
+                slug: `default-org-${user.id}`,
+              },
+            });
+          }
+        },
+      },
+    },
   },
 });
 
