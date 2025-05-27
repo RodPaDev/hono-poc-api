@@ -32,5 +32,8 @@
   },
   "peerDependencies": {
     "@hono/zod-validator": "^0.5.0"
-  }
+  },
+  "exports": [
+    "./src/lib/server.ts"
+  ]
 }

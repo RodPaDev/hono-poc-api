@@ -4,20 +4,37 @@ import { openAPI, organization } from "better-auth/plugins";
 import type { Context, Next } from "hono";
 
 import { db } from "@/lib/db";
-import * as betterAuthSchema from "@/models/better-auth/index";
+import * as schema from "@/models";
+import { createAccessControl } from "better-auth/plugins/access";
+import { defaultRoles } from "better-auth/plugins/organization/access";
+
+export const ac = createAccessControl({
+  [schema.metoeriteResourceName]: ["create", "read", "update", "delete"],
+});
+
+const user = ac.newRole({
+  [schema.metoeriteResourceName]: ["read"],
+});
+
 
 export const auth = betterAuth({
   // TODO: adjust this for all environments
   trustedOrigins: ["http://localhost:5173"],
   database: drizzleAdapter(db, {
     provider: "pg",
-    schema: betterAuthSchema,
+    schema,
   }),
   plugins: [
     openAPI({
       path: "/docs",
     }),
-    organization(),
+    organization({
+      ac,
+      roles: {
+        owner: defaultRoles.owner,
+        user,
+      },
+    }),
   ],
   emailAndPassword: {
     enabled: true,

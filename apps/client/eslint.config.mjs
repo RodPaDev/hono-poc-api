@@ -1,8 +1,8 @@
-import baseConfig from "../../eslint.config.mjs";
-import globals from "globals";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
+import globals from "globals";
 import tseslint from "typescript-eslint";
+import baseConfig from "../../eslint.config.mjs";
 
 export default tseslint.config(
   ...baseConfig,

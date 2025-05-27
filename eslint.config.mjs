@@ -1,7 +1,7 @@
 import js from "@eslint/js";
-import tseslint from "typescript-eslint";
 import prettier from "eslint-config-prettier";
 import path from "path";
+import tseslint from "typescript-eslint";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -20,7 +20,6 @@ export default tseslint.config(
     },
     rules: {
       ...prettier.rules,
-      "@typescript-eslint/no-explicit-any": "error",
       "@typescript-eslint/no-unused-vars": [
         "warn",
         {

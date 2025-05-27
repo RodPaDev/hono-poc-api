@@ -13,21 +13,22 @@ async function clearAllTables() {
     await tx.delete(schema.organization);
   });
 }
+console.log("Clearing all tables...");
 await clearAllTables();
-
+console.log("All tables cleared.");
 const apiClient = hc<AppType>("http://localhost:3000/");
-
+console.log("API client created");
 export const authClient = createAuthClient({
   baseURL: "http://localhost:3000",
   plugins: [organizationClient()],
 });
-
-const { data: data1 } = await authClient.signUp.email({
+console.log("Auth client created");
+const { data: data1, error } = await authClient.signUp.email({
   email: "dev1@altar.io",
   password: "devpassword",
   name: "Dev1 User",
 });
-
+console.log("User 1 created", error);
 const { data: data2 } = await authClient.signUp.email({
   email: "dev2@altar.io",
   password: "devpassword",
@@ -44,7 +45,7 @@ if (data1?.user && data2?.user) {
     body: {
       userId: data2.user.id,
       organizationId: member?.organizationId || "",
-      role: "member",
+      role: "user",
     },
   });
   console.log("Here 3", x);
