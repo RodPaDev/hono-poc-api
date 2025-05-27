@@ -1,1 +1,1 @@
-export * from "./meteorite-landings.type";
+export * from "./meteorite-landing.type";

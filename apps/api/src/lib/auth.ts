@@ -11,6 +11,7 @@ import { defaultRoles } from "better-auth/plugins/organization/access";
 
 const permissions = {
   "meteorite-landing": ["read", "create", "update", "delete"],
+  "meteorite-landing:year": ["read", "create", "update", "delete"],
 } as const;
 
 export type RolePermissions = {
