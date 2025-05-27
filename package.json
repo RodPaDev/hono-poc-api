@@ -11,7 +11,10 @@
     "client:build": "pnpm --filter client build",
     "lint": "pnpm --filter \"*\" lint",
     "api:lint": "pnpm --filter api lint",
-    "client:lint": "pnpm --filter client lint"
+    "client:lint": "pnpm --filter client lint",
+    "start": "concurrently --prefix-colors \"cyan,magenta\" --names \"api,client\" \"pnpm run api:start\" \"pnpm run client:start\"",
+    "api:start": "pnpm --filter api start",
+    "client:start": "pnpm --filter client start"
   },
   "devDependencies": {
     "@types/node": "^22.15.21",
