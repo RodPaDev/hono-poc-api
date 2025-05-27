@@ -6,7 +6,7 @@ import { serve } from "@hono/node-server";
 serve(
   {
     fetch: app.fetch,
-    port: 3000,
+    port: environment.PORT,
   },
   (info) => {
     console.log(`\nServer is running!`);

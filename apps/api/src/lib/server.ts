@@ -6,14 +6,14 @@ import { requestId } from "hono/request-id";
 import { secureHeaders } from "hono/secure-headers";
 import { GlobalErrorHandler } from "./error";
 
+import { environment } from "@/env";
 import { setUserSession } from "@/lib/auth";
 import type { HonoContext } from "@/lib/context";
 import { betterAuthRouter } from "@/routes/auth";
 import { v1Rotuer } from "@/routes/v1/routes";
 
 const corsConfig = cors({
-  // TODO: adjust this for all environments
-  origin: "http://localhost:5173",
+  origin: environment.ALLOWED_ORIGINS,
   allowHeaders: ["Content-Type", "Authorization"],
   allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   exposeHeaders: ["Content-Length"],

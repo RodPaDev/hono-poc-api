@@ -3,6 +3,7 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { openAPI, organization } from "better-auth/plugins";
 import type { Context, Next } from "hono";
 
+import { environment } from "@/env";
 import { db } from "@/lib/db";
 import * as schema from "@/models";
 import { createAccessControl } from "better-auth/plugins/access";
@@ -23,8 +24,7 @@ const user = bussinessAc.newRole({
 });
 
 export const auth = betterAuth({
-  // TODO: adjust this for all environments
-  trustedOrigins: ["http://localhost:5173"],
+  trustedOrigins: environment.ALLOWED_ORIGINS,
   database: drizzleAdapter(db, {
     provider: "pg",
     schema,
