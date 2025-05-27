@@ -13,13 +13,6 @@
     "api:lint": "pnpm --filter api lint",
     "client:lint": "pnpm --filter client lint"
   },
-  "packageManager": "pnpm@10.11.0",
-  "pnpm": {
-    "ignoredBuiltDependencies": [
-      "@tailwindcss/oxide",
-      "esbuild"
-    ]
-  },
   "devDependencies": {
     "@types/node": "^22.15.21",
     "@typescript-eslint/eslint-plugin": "^8.32.1",
@@ -35,5 +28,15 @@
     "eslint": "^9.27.0",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.32.1"
+  },
+  "pnpm": {
+    "ignoredBuiltDependencies": [
+      "@tailwindcss/oxide",
+      "esbuild"
+    ]
+  },
+  "engines": {
+    "node": ">=22.16.0",
+    "pnpm": ">=10.11.0"
   }
 }
