@@ -115,6 +115,9 @@ importers:
       '@fsm/api':
         specifier: workspace:*
         version: link:../api
+      '@fsm/types':
+        specifier: workspace:*
+        version: link:../../libs/types
       '@hookform/resolvers':
         specifier: ^5.0.1
         version: 5.0.1(react-hook-form@7.56.4(react@19.1.0))
