@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev": "concurrently --prefix-colors \"cyan,magenta\" --names \"api,client\" \"pnpm run api:dev\" \"pnpm run client:dev\"",
+    "dev": "pnpm --filter @fsm/api --filter @fsm/client --parallel run dev",
     "api:dev": "pnpm --filter api dev",
     "client:dev": "pnpm --filter client dev",
     "build": "pnpm --filter \"*\" build",
@@ -12,26 +12,27 @@
     "lint": "pnpm --filter \"*\" lint",
     "api:lint": "pnpm --filter api lint",
     "client:lint": "pnpm --filter client lint",
-    "start": "concurrently --prefix-colors \"cyan,magenta\" --names \"api,client\" \"pnpm run api:start\" \"pnpm run client:start\"",
+    "start": "pnpm --filter @fsm/api --filter @fsm/client --parallel run start",
     "api:start": "pnpm --filter api start",
     "client:start": "pnpm --filter client start"
   },
   "devDependencies": {
-    "@types/node": "^22.15.21",
-    "@typescript-eslint/eslint-plugin": "^8.32.1",
-    "@typescript-eslint/parser": "^8.32.1",
-    "concurrently": "^9.1.2",
+    "@types/node": "^22.15.23",
+    "@typescript-eslint/eslint-plugin": "^8.33.0",
+    "@typescript-eslint/parser": "^8.33.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.4.0",
     "eslint-plugin-react-refresh": "^0.4.20"
   },
   "dependencies": {
     "@eslint/js": "^9.27.0",
-    "esbuild": "^0.25.4",
+    "chalk": "^5.4.1",
+    "esbuild": "^0.25.5",
     "eslint": "^9.27.0",
     "hono": "^4.7.10",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.32.1"
+    "typescript-eslint": "^8.33.0",
+    "zod": "^3.24.2"
   },
   "pnpm": {
     "ignoredBuiltDependencies": [

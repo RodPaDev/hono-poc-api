@@ -6,7 +6,7 @@
     "dev": "pnpm --filter @fsm/api --parallel \"/^dev:.*/\"",
     "dev:serve": "tsx watch src/index.ts",
     "dev:tsc": "tsc -p tsconfig.build.json --incremental --watch",
-    "build": "node esbuild.config.mjs",
+    "build": "tsc -p tsconfig.build.json && node esbuild.config.mjs",
     "start": "node dist/index.js",
     "lint": "eslint . --ext .ts,.tsx"
   },
@@ -21,10 +21,8 @@
     "drizzle-orm": "^0.43.1",
     "drizzle-zod": "^0.8.2",
     "esbuild-plugin-eslint": "^0.3.12",
-    "hono": "^4.7.10",
     "hono-openapi": "^0.4.8",
     "pg": "^8.16.0",
-    "zod": "^3.25.24",
     "zod-openapi": "^4.2.4"
   },
   "devDependencies": {
@@ -33,7 +31,7 @@
     "tsx": "^4.19.4"
   },
   "peerDependencies": {
-    "@hono/zod-validator": "^0.5.0"
+    "@hono/zod-validator": "^0.6.0"
   },
   "exports": {
     "./hc": {

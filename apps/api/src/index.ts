@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import app from "@/lib/server";
 import { serve } from "@hono/node-server";
 
@@ -7,7 +8,9 @@ serve(
     port: 3000,
   },
   (info) => {
-    // eslint-disable-next-line no-console
-    console.log(`Server is running on http://localhost:${info.port}`);
+    console.log(`\nServer is running!`);
+    console.log(`\t- Listening: ${`http://localhost:${info.port}`}`);
+    console.log(`\t- API Docs: ${`http://localhost:${info.port}/api/v1/docs`}`);
+    console.log(`\t- DB Connection: ${process.env.DATABASE_URL}`);
   },
 );
