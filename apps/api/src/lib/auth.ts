@@ -1,6 +1,6 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { openAPI, organization } from "better-auth/plugins";
+import { admin, openAPI, organization } from "better-auth/plugins";
 import type { Context, Next } from "hono";
 
 import { env } from "@/env";
@@ -34,6 +34,7 @@ export const auth = betterAuth({
     openAPI({
       path: "/docs",
     }),
+    admin({}),
     organization({
       ac: bussinessAc,
       roles: {
