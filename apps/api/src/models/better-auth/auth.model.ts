@@ -13,7 +13,7 @@ import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
  */
 
 export const user = pgTable("user", {
-  // DO NOT EDIT START
+  // DO NOT EDIT START (these fields are required by BetterAuth)
   id: text("id").primaryKey(),
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
@@ -27,10 +27,16 @@ export const user = pgTable("user", {
   updatedAt: timestamp("updated_at")
     .$defaultFn(() => /* @__PURE__ */ new Date())
     .notNull(),
+  // Admin Plugin (better-auth/plugins/admin)
+  role: text("role"),
+  banned: boolean("banned"),
+  banReason: text("ban_reason"),
+  banExpires: timestamp("ban_expires"),
   // DO NOT EDIT END
 });
 
 export const session = pgTable("session", {
+  // DO NOT EDIT START (these fields are required by BetterAuth)
   id: text("id").primaryKey(),
   expiresAt: timestamp("expires_at").notNull(),
   token: text("token").notNull().unique(),
@@ -41,10 +47,15 @@ export const session = pgTable("session", {
   userId: text("user_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
+  // Organization Plugin (better-auth/plugins/organization)
   activeOrganizationId: text("active_organization_id"),
+  // Admin Plugin (better-auth/plugins/admin)
+  impersonatedBy: text("impersonated_by"),
+  // DO NOT EDIT END
 });
 
 export const account = pgTable("account", {
+  // DO NOT EDIT START (these fields are required by BetterAuth)
   id: text("id").primaryKey(),
   accountId: text("account_id").notNull(),
   providerId: text("provider_id").notNull(),
@@ -60,9 +71,11 @@ export const account = pgTable("account", {
   password: text("password"),
   createdAt: timestamp("created_at").notNull(),
   updatedAt: timestamp("updated_at").notNull(),
+  // DO NOT EDIT END
 });
 
 export const verification = pgTable("verification", {
+  // DO NOT EDIT START (these fields are required by BetterAuth)
   id: text("id").primaryKey(),
   identifier: text("identifier").notNull(),
   value: text("value").notNull(),
@@ -73,4 +86,5 @@ export const verification = pgTable("verification", {
   updatedAt: timestamp("updated_at").$defaultFn(
     () => /* @__PURE__ */ new Date(),
   ),
+  // DO NOT EDIT END
 });
