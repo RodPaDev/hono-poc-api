@@ -51,13 +51,17 @@ export const auth = betterAuth({
       create: {
         after: async (user, ctx) => {
           if (ctx?.path === "/sign-up/email") {
-            auth.api.createOrganization({
-              body: {
-                name: "Default Organization",
-                userId: user.id,
-                slug: `default-org-${user.id}`,
-              },
-            });
+            try {
+              await auth.api.createOrganization({
+                body: {
+                  name: "Default Organization",
+                  userId: user.id,
+                  slug: `default-org-${user.id}`,
+                },
+              });
+            } catch (error) {
+              console.error("Error creating organization:", error);
+            }
           }
         },
       },
