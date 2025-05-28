@@ -36,7 +36,7 @@ type LoginFormProps = {
 };
 
 export function LoginForm({ className, onSubmit, ...props }: LoginFormProps) {
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<SignInForm>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "test@test.com",

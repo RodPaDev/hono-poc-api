@@ -13,8 +13,8 @@
     "typescript",
     "typescriptreact"
   ],
-  "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": {
-    "source.sortImports": "always"
-  }
+  "editor.formatOnSave": true
+  // "editor.codeActionsOnSave": {
+  //   "source.sortImports": "always"
+  // }
 }

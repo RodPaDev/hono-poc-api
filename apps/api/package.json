@@ -8,6 +8,7 @@
     "dev:tsc": "tsc -p tsconfig.build.json --incremental --watch",
     "build": "tsc -p tsconfig.build.json && node esbuild.config.mjs",
     "start": "node dist/index.js",
+    "test:unit": "vitest --config ./vitest.unit.config.ts",
     "lint": "eslint . --ext .ts,.tsx"
   },
   "dependencies": {
@@ -28,7 +29,9 @@
   "devDependencies": {
     "@types/pg": "^8.15.2",
     "drizzle-kit": "^0.31.1",
-    "tsx": "^4.19.4"
+    "tsx": "^4.19.4",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.1.4"
   },
   "peerDependencies": {
     "@hono/zod-validator": "^0.6.0"
