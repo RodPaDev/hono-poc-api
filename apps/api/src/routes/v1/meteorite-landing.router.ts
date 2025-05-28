@@ -1,4 +1,5 @@
 import { MeteoriteLandingSchema } from "@fsm/types";
+// import { MeteoriteLandingSelectSchema } from "@/models";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { describeRoute } from "hono-openapi";
@@ -7,9 +8,8 @@ import { z } from "zod";
 
 import { type HonoContext } from "@/lib/context";
 import { db } from "@/lib/db";
-import { ClientError } from "@/lib/error";
+import { AppError } from "@/lib/error";
 
-import { MeteoriteLandingSelectSchema } from "@/models";
 import { MeteoriteLandingRepository } from "@/repositories/meteorite-landing.repository";
 import { MeteoriteService } from "@/services/meteorite-landing.service";
 
@@ -36,7 +36,7 @@ export const meteoriteLandingRouter = new Hono<HonoContext>()
             "application/json": {
               schema: resolver(
                 z.object({
-                  data: z.array(z.object(MeteoriteLandingSelectSchema.shape)),
+                  data: MeteoriteLandingSchema,
                   total: z.number(),
                 }),
               ),
@@ -77,14 +77,14 @@ export const meteoriteLandingRouter = new Hono<HonoContext>()
       const { id } = c.req.valid("param");
       const rec = await meteoriteService.getById(id);
       if (!rec) {
-        throw ClientError.NotFound;
+        throw new AppError.NotFound();
       }
       return c.json(rec);
     },
   )
   .post(
     "/",
-    zValidator("json", MeteoriteLandingSelectSchema.omit({ id: true })),
+    zValidator("json", MeteoriteLandingSchema.omit({ id: true })),
     async (c) => {
       const payload = c.req.valid("json");
       const created = await meteoriteService.create(payload);
@@ -94,7 +94,7 @@ export const meteoriteLandingRouter = new Hono<HonoContext>()
   .put(
     "/:id",
     zValidator("param", z.object({ id: z.string().uuid() })),
-    zValidator("json", MeteoriteLandingSelectSchema),
+    zValidator("json", MeteoriteLandingSchema.omit({ id: true })),
     async (c) => {
       const { id } = c.req.valid("param");
       const payload = c.req.valid("json");
@@ -109,7 +109,7 @@ export const meteoriteLandingRouter = new Hono<HonoContext>()
       const { id } = c.req.valid("param");
       const result = await meteoriteService.delete(id);
       if (result.rowCount === 0) {
-        throw ClientError.NotFound;
+        throw new AppError.NotFound();
       }
       c.status(204);
       return c.text("ok");

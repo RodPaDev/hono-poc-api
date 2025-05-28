@@ -1,49 +1,73 @@
 import type { Context } from "hono";
 import { HTTPException } from "hono/http-exception";
 import type { HTTPResponseError } from "hono/types";
+import type { ContentfulStatusCode } from "hono/utils/http-status";
 
-export const ClientError = {
-  BadRequest: new HTTPException(400, {
-    message: "Bad Request",
-  }),
-  Unauthorized: new HTTPException(401, {
-    message: "Unauthorized",
-  }),
-  Forbidden: new HTTPException(403, {
-    message: "Forbidden",
-  }),
-  NotFound: new HTTPException(404, {
-    message: "Not Found",
-  }),
-  Conflict: new HTTPException(409, {
-    message: "Conflict",
-  }),
-  UnprocessableEntity: new HTTPException(422, {
-    message: "Unprocessable Entity",
-  }),
-  TooManyRequests: new HTTPException(429, {
-    message: "Too Many Requests",
-  }),
+class BaseAppError extends HTTPException {
+  constructor(status: ContentfulStatusCode, message: string) {
+    super(status, { message });
+  }
+}
 
-  InternalServerError: new HTTPException(500, {
-    message: "Internal Server Error",
-  }),
-  NotImplemented: new HTTPException(501, {
-    message: "Not Implemented",
-  }),
-  ServiceUnavailable: new HTTPException(503, {
-    message: "Service Unavailable",
-  }),
-} as const satisfies Record<string, HTTPException>;
+export const AppError = {
+  BadRequest: class extends BaseAppError {
+    constructor(message: string = "Bad Request") {
+      super(400, message);
+    }
+  },
+  Unauthorized: class extends BaseAppError {
+    constructor(message: string = "Unauthorized") {
+      super(401, message);
+    }
+  },
+  Forbidden: class extends BaseAppError {
+    constructor(message: string = "Forbidden") {
+      super(403, message);
+    }
+  },
+  NotFound: class extends BaseAppError {
+    constructor(message: string = "Not Found") {
+      super(404, message);
+    }
+  },
+  Conflict: class extends BaseAppError {
+    constructor(message: string = "Conflict") {
+      super(409, message);
+    }
+  },
+  UnprocessableEntity: class extends BaseAppError {
+    constructor(message: string = "Unprocessable Entity") {
+      super(422, message);
+    }
+  },
+  TooManyRequests: class extends BaseAppError {
+    constructor(message: string = "Too Many Requests") {
+      super(429, message);
+    }
+  },
+  NotImplemented: class extends BaseAppError {
+    constructor(message: string = "Not Implemented") {
+      super(501, message);
+    }
+  },
+  ServiceUnavailable: class extends BaseAppError {
+    constructor(message: string = "Service Unavailable") {
+      super(503, message);
+    }
+  },
+} as const;
 
 export function GlobalErrorHandler(
   err: Error | HTTPResponseError,
   c: Context,
 ): Response {
-  // eslint-disable-next-line no-console
-  console.error(err);
-  if (err instanceof HTTPException) {
-    return c.json({ message: err.message }, err.status);
+  if (err instanceof BaseAppError) {
+    return c.json({ error: err.message }, err.status);
   }
-  return c.json({ message: ClientError.InternalServerError }, 500);
+
+  if (err instanceof HTTPException) {
+    return c.json({ error: err.message }, err.status);
+  }
+
+  return c.json({ error: "Internal Server Error" }, 500);
 }

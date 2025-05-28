@@ -39,7 +39,7 @@ function InnerApp() {
     error,
     data,
     refetch: refetchData,
-  } = useQuery({
+  } = useQuery<MeteoriteLanding[]>({
     queryKey: ["repoData", queryParams],
     queryFn: async () => {
       // hono rpc + tanstack query chef's kiss
@@ -50,11 +50,12 @@ function InnerApp() {
         throw new Error("Failed to fetch data");
       }
 
-      const data: MeteoriteLanding[] = (await response.json()).data;
+      const data = (await response.json()).data;
 
       return data;
     },
     placeholderData: keepPreviousData,
+    staleTime: 1000 * 60 * 5, // 5 minutes
   });
 
   useEffect(() => {
@@ -85,7 +86,7 @@ function InnerApp() {
           </Button>
           <Button
             className="mt-4"
-            onClick={() => setActive("4c5DLEKUOSDsTzIuVXkoA1knMonFRxXN")}>
+            onClick={() => setActive("QXG7KdnHHqdnhIvOR5DeZLIFOeHNuMUy")}>
             Set Active Organization
           </Button>
           <Button className="mt-4" onClick={() => setActive(null)}>

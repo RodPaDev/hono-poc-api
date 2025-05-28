@@ -2,7 +2,7 @@ import { Hono, type Context, type Next } from "hono";
 
 import { auth, type RolePermissions } from "@/lib/auth";
 import type { HonoContext } from "@/lib/context";
-import { ClientError } from "@/lib/error";
+import { AppError } from "@/lib/error";
 import { openApi } from "@/lib/open-api";
 import { Scalar } from "@scalar/hono-api-reference";
 import { meteoriteLandingRouter } from "./meteorite-landing.router";
@@ -20,10 +20,8 @@ function createRebac(
           permissions: permissions,
         },
       });
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error("Authorization error:", error);
-      throw ClientError.Unauthorized;
+    } catch (_error) {
+      throw new AppError.Unauthorized();
     }
 
     return next();
