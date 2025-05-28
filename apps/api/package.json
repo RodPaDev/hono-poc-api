@@ -13,28 +13,28 @@
   },
   "dependencies": {
     "@fsm/types": "workspace:*",
-    "@hono/node-server": "^1.14.2",
-    "@hono/swagger-ui": "^0.5.1",
-    "@scalar/hono-api-reference": "^0.9.1",
-    "better-auth": "^1.2.8",
-    "csv-parse": "^5.6.0",
-    "dotenv": "^16.5.0",
-    "drizzle-orm": "^0.43.1",
-    "drizzle-zod": "^0.8.2",
-    "esbuild-plugin-eslint": "^0.3.12",
-    "hono-openapi": "^0.4.8",
-    "pg": "^8.16.0",
-    "zod-openapi": "^4.2.4"
+    "@hono/node-server": "1.14.2",
+    "@hono/swagger-ui": "0.5.1",
+    "@scalar/hono-api-reference": "0.9.1",
+    "better-auth": "1.2.8",
+    "csv-parse": "5.6.0",
+    "dotenv": "16.5.0",
+    "drizzle-orm": "0.43.1",
+    "drizzle-zod": "0.8.2",
+    "esbuild-plugin-eslint": "0.3.12",
+    "hono-openapi": "0.4.8",
+    "pg": "8.16.0",
+    "zod-openapi": "4.2.4"
   },
   "devDependencies": {
-    "@types/pg": "^8.15.2",
-    "drizzle-kit": "^0.31.1",
-    "tsx": "^4.19.4",
-    "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.1.4"
+    "@types/pg": "8.15.2",
+    "drizzle-kit": "0.31.1",
+    "tsx": "4.19.4",
+    "vite-tsconfig-paths": "5.1.4",
+    "vitest": "3.1.4"
   },
   "peerDependencies": {
-    "@hono/zod-validator": "^0.6.0"
+    "@hono/zod-validator": "0.6.0"
   },
   "exports": {
     "./hc": {
