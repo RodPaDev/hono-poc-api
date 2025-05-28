@@ -1,10 +1,7 @@
-import { MeteoriteLandingSchema } from "@fsm/types";
-// import { MeteoriteLandingSelectSchema } from "@/models";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { describeRoute } from "hono-openapi";
 import { resolver } from "hono-openapi/zod";
-import { z } from "zod";
 
 import { type HonoContext } from "@/lib/context";
 import { db } from "@/lib/db";
@@ -12,6 +9,8 @@ import { AppError } from "@/lib/error";
 
 import { MeteoriteLandingRepository } from "@/repositories/meteorite-landing.repository";
 import { MeteoriteService } from "@/services/meteorite-landing.service";
+import { MeteoriteLandingSchema } from "@fsm/types";
+import { z } from "zod";
 
 const metoeriteRepository = new MeteoriteLandingRepository(db);
 const meteoriteService = new MeteoriteService(metoeriteRepository);
@@ -36,7 +35,7 @@ export const meteoriteLandingRouter = new Hono<HonoContext>()
             "application/json": {
               schema: resolver(
                 z.object({
-                  data: MeteoriteLandingSchema,
+                  data: z.array(MeteoriteLandingSchema),
                   total: z.number(),
                 }),
               ),
@@ -94,7 +93,7 @@ export const meteoriteLandingRouter = new Hono<HonoContext>()
   .put(
     "/:id",
     zValidator("param", z.object({ id: z.string().uuid() })),
-    zValidator("json", MeteoriteLandingSchema.omit({ id: true })),
+    zValidator("json", MeteoriteLandingSchema),
     async (c) => {
       const { id } = c.req.valid("param");
       const payload = c.req.valid("json");
