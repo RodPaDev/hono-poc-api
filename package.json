@@ -14,7 +14,8 @@
     "client:lint": "pnpm --filter client lint",
     "start": "pnpm --filter @fsm/api --filter @fsm/client --parallel run start",
     "api:start": "pnpm --filter api start",
-    "client:start": "pnpm --filter client start"
+    "client:start": "pnpm --filter client start",
+    "test:unit": "pnpm --filter \"*\" test:unit"
   },
   "devDependencies": {
     "@types/node": "22.15.23",
