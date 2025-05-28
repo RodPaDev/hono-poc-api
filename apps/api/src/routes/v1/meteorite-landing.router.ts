@@ -9,6 +9,7 @@ import { type HonoContext } from "@/lib/context";
 import { db } from "@/lib/db";
 import { ClientError } from "@/lib/error";
 
+import { MeteoriteLandingSelectSchema } from "@/models";
 import { MeteoriteLandingRepository } from "@/repositories/meteorite-landing.repository";
 import { MeteoriteService } from "@/services/meteorite-landing.service";
 
@@ -35,7 +36,7 @@ export const meteoriteLandingRouter = new Hono<HonoContext>()
             "application/json": {
               schema: resolver(
                 z.object({
-                  data: z.array(MeteoriteLandingSchema),
+                  data: z.array(z.object(MeteoriteLandingSelectSchema.shape)),
                   total: z.number(),
                 }),
               ),
@@ -83,7 +84,7 @@ export const meteoriteLandingRouter = new Hono<HonoContext>()
   )
   .post(
     "/",
-    zValidator("json", MeteoriteLandingSchema.omit({ id: true })),
+    zValidator("json", MeteoriteLandingSelectSchema.omit({ id: true })),
     async (c) => {
       const payload = c.req.valid("json");
       const created = await meteoriteService.create(payload);
@@ -93,7 +94,7 @@ export const meteoriteLandingRouter = new Hono<HonoContext>()
   .put(
     "/:id",
     zValidator("param", z.object({ id: z.string().uuid() })),
-    zValidator("json", MeteoriteLandingSchema.partial()),
+    zValidator("json", MeteoriteLandingSelectSchema),
     async (c) => {
       const { id } = c.req.valid("param");
       const payload = c.req.valid("json");

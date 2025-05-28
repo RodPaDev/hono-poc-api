@@ -1,4 +1,6 @@
 import { integer, pgTable, uuid, varchar } from "drizzle-orm/pg-core";
+import { createSchemaFactory } from "drizzle-zod";
+import { z } from "zod";
 
 export const meteoriteLandingTable = pgTable("meteorite_landing", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -13,3 +15,13 @@ export const meteoriteLandingTable = pgTable("meteorite_landing", {
   reclong: varchar("reclong"),
   geolocation: varchar("geolocation"),
 });
+
+const { createSelectSchema } = createSchemaFactory({
+  zodInstance: z,
+});
+
+export const MeteoriteLandingSelectSchema = createSelectSchema(
+  meteoriteLandingTable,
+);
+
+const select = z.object(MeteoriteLandingSelectSchema);
