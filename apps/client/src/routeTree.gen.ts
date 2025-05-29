@@ -12,9 +12,10 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as AboutImport } from './routes/about'
-import { Route as AuthImport } from './routes/_auth'
+import { Route as AuthRouteImport } from './routes/_auth/route'
 import { Route as IndexImport } from './routes/index'
 import { Route as AuthFoodImport } from './routes/_auth/food'
+import { Route as AuthOrganizationsRouteImport } from './routes/_auth/organizations/route'
 import { Route as AuthOrganizationsOrganizationIdIndexImport } from './routes/_auth/organizations/$organizationId/index'
 import { Route as AuthOrganizationsOrganizationIdUsersIndexImport } from './routes/_auth/organizations/$organizationId/users/index'
 import { Route as AuthOrganizationsOrganizationIdActionsNewImport } from './routes/_auth/organizations/$organizationId/actions/new'
@@ -32,7 +33,7 @@ const AboutRoute = AboutImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthRoute = AuthImport.update({
+const AuthRouteRoute = AuthRouteImport.update({
   id: '/_auth',
   getParentRoute: () => rootRoute,
 } as any)
@@ -46,63 +47,69 @@ const IndexRoute = IndexImport.update({
 const AuthFoodRoute = AuthFoodImport.update({
   id: '/food',
   path: '/food',
-  getParentRoute: () => AuthRoute,
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+
+const AuthOrganizationsRouteRoute = AuthOrganizationsRouteImport.update({
+  id: '/organizations',
+  path: '/organizations',
+  getParentRoute: () => AuthRouteRoute,
 } as any)
 
 const AuthOrganizationsOrganizationIdIndexRoute =
   AuthOrganizationsOrganizationIdIndexImport.update({
-    id: '/organizations/$organizationId/',
-    path: '/organizations/$organizationId/',
-    getParentRoute: () => AuthRoute,
+    id: '/$organizationId/',
+    path: '/$organizationId/',
+    getParentRoute: () => AuthOrganizationsRouteRoute,
   } as any)
 
 const AuthOrganizationsOrganizationIdUsersIndexRoute =
   AuthOrganizationsOrganizationIdUsersIndexImport.update({
-    id: '/organizations/$organizationId/users/',
-    path: '/organizations/$organizationId/users/',
-    getParentRoute: () => AuthRoute,
+    id: '/$organizationId/users/',
+    path: '/$organizationId/users/',
+    getParentRoute: () => AuthOrganizationsRouteRoute,
   } as any)
 
 const AuthOrganizationsOrganizationIdActionsNewRoute =
   AuthOrganizationsOrganizationIdActionsNewImport.update({
-    id: '/organizations/$organizationId/actions/new',
-    path: '/organizations/$organizationId/actions/new',
-    getParentRoute: () => AuthRoute,
+    id: '/$organizationId/actions/new',
+    path: '/$organizationId/actions/new',
+    getParentRoute: () => AuthOrganizationsRouteRoute,
   } as any)
 
 const AuthOrganizationsOrganizationIdActionsEditRoute =
   AuthOrganizationsOrganizationIdActionsEditImport.update({
-    id: '/organizations/$organizationId/actions/edit',
-    path: '/organizations/$organizationId/actions/edit',
-    getParentRoute: () => AuthRoute,
+    id: '/$organizationId/actions/edit',
+    path: '/$organizationId/actions/edit',
+    getParentRoute: () => AuthOrganizationsRouteRoute,
   } as any)
 
 const AuthOrganizationsOrganizationIdUsersUserIdIndexRoute =
   AuthOrganizationsOrganizationIdUsersUserIdIndexImport.update({
-    id: '/organizations/$organizationId/users/$userId/',
-    path: '/organizations/$organizationId/users/$userId/',
-    getParentRoute: () => AuthRoute,
+    id: '/$organizationId/users/$userId/',
+    path: '/$organizationId/users/$userId/',
+    getParentRoute: () => AuthOrganizationsRouteRoute,
   } as any)
 
 const AuthOrganizationsOrganizationIdUsersUserIdNewRoute =
   AuthOrganizationsOrganizationIdUsersUserIdNewImport.update({
-    id: '/organizations/$organizationId/users/$userId/new',
-    path: '/organizations/$organizationId/users/$userId/new',
-    getParentRoute: () => AuthRoute,
+    id: '/$organizationId/users/$userId/new',
+    path: '/$organizationId/users/$userId/new',
+    getParentRoute: () => AuthOrganizationsRouteRoute,
   } as any)
 
 const AuthOrganizationsOrganizationIdUsersUserIdEditRoute =
   AuthOrganizationsOrganizationIdUsersUserIdEditImport.update({
-    id: '/organizations/$organizationId/users/$userId/edit',
-    path: '/organizations/$organizationId/users/$userId/edit',
-    getParentRoute: () => AuthRoute,
+    id: '/$organizationId/users/$userId/edit',
+    path: '/$organizationId/users/$userId/edit',
+    getParentRoute: () => AuthOrganizationsRouteRoute,
   } as any)
 
 const AuthOrganizationsOrganizationIdUsersUserIdConfirmRoute =
   AuthOrganizationsOrganizationIdUsersUserIdConfirmImport.update({
-    id: '/organizations/$organizationId/users/$userId/confirm',
-    path: '/organizations/$organizationId/users/$userId/confirm',
-    getParentRoute: () => AuthRoute,
+    id: '/$organizationId/users/$userId/confirm',
+    path: '/$organizationId/users/$userId/confirm',
+    getParentRoute: () => AuthOrganizationsRouteRoute,
   } as any)
 
 // Populate the FileRoutesByPath interface
@@ -120,7 +127,7 @@ declare module '@tanstack/react-router' {
       id: '/_auth'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof AuthImport
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRoute
     }
     '/about': {
@@ -130,76 +137,82 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
+    '/_auth/organizations': {
+      id: '/_auth/organizations'
+      path: '/organizations'
+      fullPath: '/organizations'
+      preLoaderRoute: typeof AuthOrganizationsRouteImport
+      parentRoute: typeof AuthRouteImport
+    }
     '/_auth/food': {
       id: '/_auth/food'
       path: '/food'
       fullPath: '/food'
       preLoaderRoute: typeof AuthFoodImport
-      parentRoute: typeof AuthImport
+      parentRoute: typeof AuthRouteImport
     }
     '/_auth/organizations/$organizationId/': {
       id: '/_auth/organizations/$organizationId/'
-      path: '/organizations/$organizationId'
+      path: '/$organizationId'
       fullPath: '/organizations/$organizationId'
       preLoaderRoute: typeof AuthOrganizationsOrganizationIdIndexImport
-      parentRoute: typeof AuthImport
+      parentRoute: typeof AuthOrganizationsRouteImport
     }
     '/_auth/organizations/$organizationId/actions/edit': {
       id: '/_auth/organizations/$organizationId/actions/edit'
-      path: '/organizations/$organizationId/actions/edit'
+      path: '/$organizationId/actions/edit'
       fullPath: '/organizations/$organizationId/actions/edit'
       preLoaderRoute: typeof AuthOrganizationsOrganizationIdActionsEditImport
-      parentRoute: typeof AuthImport
+      parentRoute: typeof AuthOrganizationsRouteImport
     }
     '/_auth/organizations/$organizationId/actions/new': {
       id: '/_auth/organizations/$organizationId/actions/new'
-      path: '/organizations/$organizationId/actions/new'
+      path: '/$organizationId/actions/new'
       fullPath: '/organizations/$organizationId/actions/new'
       preLoaderRoute: typeof AuthOrganizationsOrganizationIdActionsNewImport
-      parentRoute: typeof AuthImport
+      parentRoute: typeof AuthOrganizationsRouteImport
     }
     '/_auth/organizations/$organizationId/users/': {
       id: '/_auth/organizations/$organizationId/users/'
-      path: '/organizations/$organizationId/users'
+      path: '/$organizationId/users'
       fullPath: '/organizations/$organizationId/users'
       preLoaderRoute: typeof AuthOrganizationsOrganizationIdUsersIndexImport
-      parentRoute: typeof AuthImport
+      parentRoute: typeof AuthOrganizationsRouteImport
     }
     '/_auth/organizations/$organizationId/users/$userId/confirm': {
       id: '/_auth/organizations/$organizationId/users/$userId/confirm'
-      path: '/organizations/$organizationId/users/$userId/confirm'
+      path: '/$organizationId/users/$userId/confirm'
       fullPath: '/organizations/$organizationId/users/$userId/confirm'
       preLoaderRoute: typeof AuthOrganizationsOrganizationIdUsersUserIdConfirmImport
-      parentRoute: typeof AuthImport
+      parentRoute: typeof AuthOrganizationsRouteImport
     }
     '/_auth/organizations/$organizationId/users/$userId/edit': {
       id: '/_auth/organizations/$organizationId/users/$userId/edit'
-      path: '/organizations/$organizationId/users/$userId/edit'
+      path: '/$organizationId/users/$userId/edit'
       fullPath: '/organizations/$organizationId/users/$userId/edit'
       preLoaderRoute: typeof AuthOrganizationsOrganizationIdUsersUserIdEditImport
-      parentRoute: typeof AuthImport
+      parentRoute: typeof AuthOrganizationsRouteImport
     }
     '/_auth/organizations/$organizationId/users/$userId/new': {
       id: '/_auth/organizations/$organizationId/users/$userId/new'
-      path: '/organizations/$organizationId/users/$userId/new'
+      path: '/$organizationId/users/$userId/new'
       fullPath: '/organizations/$organizationId/users/$userId/new'
       preLoaderRoute: typeof AuthOrganizationsOrganizationIdUsersUserIdNewImport
-      parentRoute: typeof AuthImport
+      parentRoute: typeof AuthOrganizationsRouteImport
     }
     '/_auth/organizations/$organizationId/users/$userId/': {
       id: '/_auth/organizations/$organizationId/users/$userId/'
-      path: '/organizations/$organizationId/users/$userId'
+      path: '/$organizationId/users/$userId'
       fullPath: '/organizations/$organizationId/users/$userId'
       preLoaderRoute: typeof AuthOrganizationsOrganizationIdUsersUserIdIndexImport
-      parentRoute: typeof AuthImport
+      parentRoute: typeof AuthOrganizationsRouteImport
     }
   }
 }
 
 // Create and export the route tree
 
-interface AuthRouteChildren {
-  AuthFoodRoute: typeof AuthFoodRoute
+interface AuthOrganizationsRouteRouteChildren {
   AuthOrganizationsOrganizationIdIndexRoute: typeof AuthOrganizationsOrganizationIdIndexRoute
   AuthOrganizationsOrganizationIdActionsEditRoute: typeof AuthOrganizationsOrganizationIdActionsEditRoute
   AuthOrganizationsOrganizationIdActionsNewRoute: typeof AuthOrganizationsOrganizationIdActionsNewRoute
@@ -210,32 +223,50 @@ interface AuthRouteChildren {
   AuthOrganizationsOrganizationIdUsersUserIdIndexRoute: typeof AuthOrganizationsOrganizationIdUsersUserIdIndexRoute
 }
 
-const AuthRouteChildren: AuthRouteChildren = {
-  AuthFoodRoute: AuthFoodRoute,
-  AuthOrganizationsOrganizationIdIndexRoute:
-    AuthOrganizationsOrganizationIdIndexRoute,
-  AuthOrganizationsOrganizationIdActionsEditRoute:
-    AuthOrganizationsOrganizationIdActionsEditRoute,
-  AuthOrganizationsOrganizationIdActionsNewRoute:
-    AuthOrganizationsOrganizationIdActionsNewRoute,
-  AuthOrganizationsOrganizationIdUsersIndexRoute:
-    AuthOrganizationsOrganizationIdUsersIndexRoute,
-  AuthOrganizationsOrganizationIdUsersUserIdConfirmRoute:
-    AuthOrganizationsOrganizationIdUsersUserIdConfirmRoute,
-  AuthOrganizationsOrganizationIdUsersUserIdEditRoute:
-    AuthOrganizationsOrganizationIdUsersUserIdEditRoute,
-  AuthOrganizationsOrganizationIdUsersUserIdNewRoute:
-    AuthOrganizationsOrganizationIdUsersUserIdNewRoute,
-  AuthOrganizationsOrganizationIdUsersUserIdIndexRoute:
-    AuthOrganizationsOrganizationIdUsersUserIdIndexRoute,
+const AuthOrganizationsRouteRouteChildren: AuthOrganizationsRouteRouteChildren =
+  {
+    AuthOrganizationsOrganizationIdIndexRoute:
+      AuthOrganizationsOrganizationIdIndexRoute,
+    AuthOrganizationsOrganizationIdActionsEditRoute:
+      AuthOrganizationsOrganizationIdActionsEditRoute,
+    AuthOrganizationsOrganizationIdActionsNewRoute:
+      AuthOrganizationsOrganizationIdActionsNewRoute,
+    AuthOrganizationsOrganizationIdUsersIndexRoute:
+      AuthOrganizationsOrganizationIdUsersIndexRoute,
+    AuthOrganizationsOrganizationIdUsersUserIdConfirmRoute:
+      AuthOrganizationsOrganizationIdUsersUserIdConfirmRoute,
+    AuthOrganizationsOrganizationIdUsersUserIdEditRoute:
+      AuthOrganizationsOrganizationIdUsersUserIdEditRoute,
+    AuthOrganizationsOrganizationIdUsersUserIdNewRoute:
+      AuthOrganizationsOrganizationIdUsersUserIdNewRoute,
+    AuthOrganizationsOrganizationIdUsersUserIdIndexRoute:
+      AuthOrganizationsOrganizationIdUsersUserIdIndexRoute,
+  }
+
+const AuthOrganizationsRouteRouteWithChildren =
+  AuthOrganizationsRouteRoute._addFileChildren(
+    AuthOrganizationsRouteRouteChildren,
+  )
+
+interface AuthRouteRouteChildren {
+  AuthOrganizationsRouteRoute: typeof AuthOrganizationsRouteRouteWithChildren
+  AuthFoodRoute: typeof AuthFoodRoute
 }
 
-const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+const AuthRouteRouteChildren: AuthRouteRouteChildren = {
+  AuthOrganizationsRouteRoute: AuthOrganizationsRouteRouteWithChildren,
+  AuthFoodRoute: AuthFoodRoute,
+}
+
+const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
+  AuthRouteRouteChildren,
+)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '': typeof AuthRouteWithChildren
+  '': typeof AuthRouteRouteWithChildren
   '/about': typeof AboutRoute
+  '/organizations': typeof AuthOrganizationsRouteRouteWithChildren
   '/food': typeof AuthFoodRoute
   '/organizations/$organizationId': typeof AuthOrganizationsOrganizationIdIndexRoute
   '/organizations/$organizationId/actions/edit': typeof AuthOrganizationsOrganizationIdActionsEditRoute
@@ -249,8 +280,9 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '': typeof AuthRouteWithChildren
+  '': typeof AuthRouteRouteWithChildren
   '/about': typeof AboutRoute
+  '/organizations': typeof AuthOrganizationsRouteRouteWithChildren
   '/food': typeof AuthFoodRoute
   '/organizations/$organizationId': typeof AuthOrganizationsOrganizationIdIndexRoute
   '/organizations/$organizationId/actions/edit': typeof AuthOrganizationsOrganizationIdActionsEditRoute
@@ -265,8 +297,9 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/_auth': typeof AuthRouteWithChildren
+  '/_auth': typeof AuthRouteRouteWithChildren
   '/about': typeof AboutRoute
+  '/_auth/organizations': typeof AuthOrganizationsRouteRouteWithChildren
   '/_auth/food': typeof AuthFoodRoute
   '/_auth/organizations/$organizationId/': typeof AuthOrganizationsOrganizationIdIndexRoute
   '/_auth/organizations/$organizationId/actions/edit': typeof AuthOrganizationsOrganizationIdActionsEditRoute
@@ -284,6 +317,7 @@ export interface FileRouteTypes {
     | '/'
     | ''
     | '/about'
+    | '/organizations'
     | '/food'
     | '/organizations/$organizationId'
     | '/organizations/$organizationId/actions/edit'
@@ -298,6 +332,7 @@ export interface FileRouteTypes {
     | '/'
     | ''
     | '/about'
+    | '/organizations'
     | '/food'
     | '/organizations/$organizationId'
     | '/organizations/$organizationId/actions/edit'
@@ -312,6 +347,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_auth'
     | '/about'
+    | '/_auth/organizations'
     | '/_auth/food'
     | '/_auth/organizations/$organizationId/'
     | '/_auth/organizations/$organizationId/actions/edit'
@@ -326,13 +362,13 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AuthRoute: typeof AuthRouteWithChildren
+  AuthRouteRoute: typeof AuthRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AuthRoute: AuthRouteWithChildren,
+  AuthRouteRoute: AuthRouteRouteWithChildren,
   AboutRoute: AboutRoute,
 }
 
@@ -355,9 +391,19 @@ export const routeTree = rootRoute
       "filePath": "index.tsx"
     },
     "/_auth": {
-      "filePath": "_auth.tsx",
+      "filePath": "_auth/route.tsx",
       "children": [
-        "/_auth/food",
+        "/_auth/organizations",
+        "/_auth/food"
+      ]
+    },
+    "/about": {
+      "filePath": "about.tsx"
+    },
+    "/_auth/organizations": {
+      "filePath": "_auth/organizations/route.tsx",
+      "parent": "/_auth",
+      "children": [
         "/_auth/organizations/$organizationId/",
         "/_auth/organizations/$organizationId/actions/edit",
         "/_auth/organizations/$organizationId/actions/new",
@@ -368,44 +414,41 @@ export const routeTree = rootRoute
         "/_auth/organizations/$organizationId/users/$userId/"
       ]
     },
-    "/about": {
-      "filePath": "about.tsx"
-    },
     "/_auth/food": {
       "filePath": "_auth/food.tsx",
       "parent": "/_auth"
     },
     "/_auth/organizations/$organizationId/": {
       "filePath": "_auth/organizations/$organizationId/index.tsx",
-      "parent": "/_auth"
+      "parent": "/_auth/organizations"
     },
     "/_auth/organizations/$organizationId/actions/edit": {
       "filePath": "_auth/organizations/$organizationId/actions/edit.tsx",
-      "parent": "/_auth"
+      "parent": "/_auth/organizations"
     },
     "/_auth/organizations/$organizationId/actions/new": {
       "filePath": "_auth/organizations/$organizationId/actions/new.tsx",
-      "parent": "/_auth"
+      "parent": "/_auth/organizations"
     },
     "/_auth/organizations/$organizationId/users/": {
       "filePath": "_auth/organizations/$organizationId/users/index.tsx",
-      "parent": "/_auth"
+      "parent": "/_auth/organizations"
     },
     "/_auth/organizations/$organizationId/users/$userId/confirm": {
       "filePath": "_auth/organizations/$organizationId/users/$userId/confirm.tsx",
-      "parent": "/_auth"
+      "parent": "/_auth/organizations"
     },
     "/_auth/organizations/$organizationId/users/$userId/edit": {
       "filePath": "_auth/organizations/$organizationId/users/$userId/edit.tsx",
-      "parent": "/_auth"
+      "parent": "/_auth/organizations"
     },
     "/_auth/organizations/$organizationId/users/$userId/new": {
       "filePath": "_auth/organizations/$organizationId/users/$userId/new.tsx",
-      "parent": "/_auth"
+      "parent": "/_auth/organizations"
     },
     "/_auth/organizations/$organizationId/users/$userId/": {
       "filePath": "_auth/organizations/$organizationId/users/$userId/index.tsx",
-      "parent": "/_auth"
+      "parent": "/_auth/organizations"
     }
   }
 }
