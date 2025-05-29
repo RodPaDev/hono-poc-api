@@ -29,7 +29,6 @@ export const user = pgTable("user", {
   updatedAt: timestamp("updated_at")
     .$defaultFn(() => /* @__PURE__ */ new Date())
     .notNull(),
-  // Admin Plugin (better-auth/plugins/admin)
   role: text("role"),
   banned: boolean("banned"),
   banReason: text("ban_reason"),
@@ -53,9 +52,7 @@ export const session = pgTable("session", {
   userId: text("user_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
-  // Organization Plugin (better-auth/plugins/organization)
   activeOrganizationId: text("active_organization_id"),
-  // Admin Plugin (better-auth/plugins/admin)
   impersonatedBy: text("impersonated_by"),
   /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
    * * *  DO NOT EDIT - END  (fields required by BetterAuth  * * *

@@ -31,11 +31,6 @@ export const organization = pgTable("organization", {
   logo: text("logo"),
   createdAt: timestamp("created_at").notNull(),
   metadata: text("metadata"),
-  // DO NOT EDIT END
-  parentId: text("parent_id").references((): AnyPgColumn => organization.id, {
-    onDelete: "cascade",
-  }),
-  type: text("type").default("default").notNull(),
   /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
    * * *  DO NOT EDIT - END  (fields required by BetterAuth - Organization Plugin  * * *
    * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
