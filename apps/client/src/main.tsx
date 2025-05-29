@@ -8,6 +8,7 @@ import { createRoot } from "react-dom/client";
 
 const router = createRouter({
   routeTree,
+  defaultPreload: "intent",
 });
 
 declare module "@tanstack/react-router" {
