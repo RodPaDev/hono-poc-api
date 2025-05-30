@@ -12,5 +12,9 @@ export const Env = z
       .string()
       .default(["http://localhost:5173", "http://localhost:3000"].join(","))
       .transform((val) => val.split(",")),
+    EXPOSE_OPEN_API: z
+      .string()
+      .optional()
+      .transform((val) => val === "true"),
   })
   .parse(process.env);

@@ -1,5 +1,6 @@
 import { Hono, type Context, type Next } from "hono";
 
+import { Env } from "@/env";
 import { auth, type RolePermissions } from "@/lib/auth";
 import type { HonoContext } from "@/lib/context";
 import { AppError } from "@/lib/error";
@@ -12,6 +13,12 @@ function createRebac(
   organizationId?: string,
 ): (c: Context, next: Next) => Promise<void> {
   return async function rebac(c: Context, next: Next) {
+    // OpenAPI docs should have their own access control if needed
+    // You can use Hono Basic Auth or any other method to protect the docs
+    if (c.req.path.includes("/docs") || c.req.path.includes("/reference")) {
+      return next();
+    }
+
     try {
       await auth.api.hasPermission({
         headers: c.req.header(),
@@ -36,10 +43,12 @@ export const v1Rotuer = new Hono<HonoContext>()
   .use(rebac)
   .route("/meteorite-landing", meteoriteLandingRouter);
 
-v1Rotuer.get("/reference", openApi(v1Rotuer)).get(
-  "/docs",
-  Scalar({
-    title: "Hono API v1",
-    url: "/api/v1/reference",
-  }),
-);
+if (Env.EXPOSE_OPEN_API || Env.NODE_ENV !== "development") {
+  v1Rotuer.get("/reference", openApi(v1Rotuer)).get(
+    "/docs",
+    Scalar({
+      title: "Hono API v1",
+      url: "/api/v1/reference",
+    }),
+  );
+}

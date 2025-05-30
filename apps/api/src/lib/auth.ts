@@ -8,7 +8,8 @@ import { db } from "@/lib/db";
 import { logger } from "@/lib/logger";
 import * as schema from "@/models";
 import { createAccessControl } from "better-auth/plugins/access";
-import { defaultRoles } from "better-auth/plugins/organization/access";
+import { defaultRoles as defaultAdminRoles } from "better-auth/plugins/admin/access";
+import { defaultRoles as defaultOrganizationRoles } from "better-auth/plugins/organization/access";
 
 const permissions = {
   "meteorite-landing": ["read", "create", "update", "delete"],
@@ -34,12 +35,16 @@ export const auth = betterAuth({
   plugins: [
     openAPI({
       path: "/docs",
+      disableDefaultReference:
+        Env.EXPOSE_OPEN_API || Env.NODE_ENV !== "development",
     }),
-    admin({}),
+    admin({
+      roles: defaultAdminRoles,
+    }),
     organization({
       ac: bussinessAc,
       roles: {
-        owner: defaultRoles.owner,
+        ...defaultOrganizationRoles,
         user,
       },
     }),
