@@ -6,19 +6,18 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { Link } from "@tanstack/react-router";
 import { type LucideIcon } from "lucide-react";
 
+export interface NavItem {
+  title: string;
+  url: string;
+  icon?: LucideIcon;
+  isActive?: boolean;
+}
+
 interface Props {
-  items: {
-    title: string;
-    url: string;
-    icon?: LucideIcon;
-    isActive?: boolean;
-    items?: {
-      title: string;
-      url: string;
-    }[];
-  }[];
+  items: NavItem[];
 }
 
 export function NavItems({ items }: Props) {
@@ -27,10 +26,12 @@ export function NavItems({ items }: Props) {
       <SidebarMenu>
         {items.map((item) => (
           <SidebarMenuItem>
-            <SidebarMenuButton tooltip={item.title}>
-              {item.icon && <item.icon />}
-              <span>{item.title}</span>
-            </SidebarMenuButton>
+            <Link to={item.url}>
+              <SidebarMenuButton isActive={item.isActive} tooltip={item.title}>
+                {item.icon && <item.icon />}
+                <span>{item.title}</span>
+              </SidebarMenuButton>
+            </Link>
           </SidebarMenuItem>
         ))}
       </SidebarMenu>

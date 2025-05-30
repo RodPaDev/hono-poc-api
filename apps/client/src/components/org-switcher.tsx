@@ -19,15 +19,17 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 
-export function OrgSwitcher({
-  orgs,
-}: {
-  orgs: {
-    name: string;
-    logo: React.ElementType;
-    plan: string;
-  }[];
-}) {
+export interface NavOrg {
+  name: string;
+  id: string;
+  logo: React.ElementType;
+}
+
+interface OrgSwitcherProps {
+  orgs: NavOrg[];
+}
+
+export function OrgSwitcher({ orgs }: OrgSwitcherProps) {
   const { isMobile } = useSidebar();
   const [activeOrg, setActiveOrg] = React.useState(orgs[0]);
 
@@ -48,7 +50,6 @@ export function OrgSwitcher({
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{activeOrg.name}</span>
-                <span className="truncate text-xs">{activeOrg.plan}</span>
               </div>
               <ChevronsUpDown className="ml-auto" />
             </SidebarMenuButton>

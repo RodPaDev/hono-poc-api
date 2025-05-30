@@ -9,8 +9,13 @@ import {
 } from "@/components/ui/breadcrumb";
 
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { getSession } from "@/lib/auth-client";
-import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
+import { getSession, signOut } from "@/lib/auth-client";
+import {
+  createFileRoute,
+  Outlet,
+  redirect,
+  useRouter,
+} from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { Fragment } from "react/jsx-runtime";
 
@@ -28,12 +33,19 @@ export const Route = createFileRoute("/_protected")({
 });
 
 function RouteComponent() {
+  const router = useRouter();
+
   const { t } = useTranslation(); // not passing any namespace will use the defaultNS (by default set to 'translation')
+
+  const handleLogout = async () => {
+    await signOut();
+    await router.invalidate();
+  };
 
   return (
     <Fragment>
-      <SidebarProvider defaultOpen={false}>
-        <AppSidebar />
+      <SidebarProvider defaultOpen={true}>
+        <AppSidebar onClickLogout={handleLogout} />
         <SidebarInset>
           <header className="sticky top-0 flex shrink-0 items-center gap-2 border-b bg-background p-4">
             <Breadcrumb>

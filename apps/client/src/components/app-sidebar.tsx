@@ -1,8 +1,8 @@
 "use client";
 
-import { NavItems } from "@/components/nav-items";
+import { NavItems, type NavItem } from "@/components/nav-items";
 import { NavUser } from "@/components/nav-user";
-import { OrgSwitcher } from "@/components/org-switcher";
+import { OrgSwitcher, type NavOrg } from "@/components/org-switcher";
 import { SidebarTrigger } from "@/components/sidebar-trigger";
 import {
   Sidebar,
@@ -13,17 +13,19 @@ import {
 } from "@/components/ui/sidebar";
 import {
   AudioWaveform,
+  Briefcase,
   Command,
   GalleryVerticalEnd,
-  Home,
-  LineChart,
-  Package,
-  ShoppingCart,
-  Users,
+  Network,
 } from "lucide-react";
 import * as React from "react";
 
-const data = {
+interface SidebarData {
+  user: NavUser;
+  orgs: NavOrg[];
+  navItems: NavItem[];
+}
+const data: SidebarData = {
   user: {
     name: "shadcn",
     email: "m@example.com",
@@ -33,50 +35,54 @@ const data = {
     {
       name: "Acme Inc",
       logo: GalleryVerticalEnd,
-      plan: "Enterprise",
+      id: "Enterprise",
     },
     {
       name: "Acme Corp.",
       logo: AudioWaveform,
-      plan: "Startup",
+      id: "Startup",
     },
     {
       name: "Evil Corp.",
       logo: Command,
-      plan: "Free",
+      id: "Free",
     },
   ],
   navItems: [
     {
-      title: "Home",
-      url: "/",
-      icon: Home,
+      title: "My Organization",
+      url: "/organizations/:organizationId",
+      icon: Briefcase,
       isActive: true,
     },
     {
-      title: "Cart",
-      url: "#",
-      icon: ShoppingCart,
+      title: "All Organizations",
+      url: "/organizations",
+      icon: Network,
     },
-    {
-      title: "Orders",
-      url: "#",
-      icon: Package,
-    },
-    {
-      title: "Users",
-      url: "#",
-      icon: Users,
-    },
-    {
-      title: "Analytics",
-      url: "#",
-      icon: LineChart,
-    },
+    // {
+    //   title: "Orders",
+    //   url: "#",
+    //   icon: Package,
+    // },
+    // {
+    //   title: "Users",
+    //   url: "#",
+    //   icon: Users,
+    // },
+    // {
+    //   title: "Analytics",
+    //   url: "#",
+    //   icon: LineChart,
+    // },
   ],
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  onClickLogout: () => void;
+}
+
+export function AppSidebar({ onClickLogout, ...props }: AppSidebarProps) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -87,7 +93,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
       <SidebarFooter>
         <SidebarTrigger />
-        <NavUser user={data.user} />
+        <NavUser onClickLogout={onClickLogout} user={data.user} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

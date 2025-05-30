@@ -1,4 +1,4 @@
-import { createFileRoute, redirect, useLocation } from "@tanstack/react-router";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
 
 import {
   LoginForm,
@@ -12,8 +12,7 @@ export const Route = createFileRoute("/_auth/login")({
 });
 
 export function RouteComponent() {
-  const location = useLocation();
-  const navigate = Route.useNavigate();
+  const router = useRouter();
 
   async function handleLogin(values: SignInForm) {
     try {
@@ -21,10 +20,7 @@ export function RouteComponent() {
         { email: values.email, password: values.password },
         {
           onSuccess: async () => {
-            await navigate({
-              to: "/dashboard",
-              search: location.search,
-            });
+            router.invalidate();
           },
         },
       );

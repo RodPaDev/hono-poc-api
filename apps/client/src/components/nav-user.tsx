@@ -16,24 +16,29 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import {
-  BadgeCheck,
-  Bell,
-  ChevronsUpDown,
-  CreditCard,
-  LogOut,
-  Sparkles,
-} from "lucide-react";
 
-export function NavUser({
-  user,
-}: {
-  user: {
-    name: string;
-    email: string;
-    avatar: string;
-  };
-}) {
+import {
+  ChevronsUpDown,
+  CircleHelp,
+  LogOut,
+  Search,
+  Settings,
+} from "lucide-react";
+import { useTranslation } from "react-i18next";
+
+export interface NavUser {
+  name: string;
+  email: string;
+  avatar: string;
+}
+
+interface Props {
+  user: NavUser;
+  onClickLogout?: () => void;
+}
+
+export function NavUser({ user, onClickLogout }: Props) {
+  const { t } = useTranslation();
   const { isMobile } = useSidebar();
 
   return (
@@ -75,29 +80,25 @@ export function NavUser({
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <Sparkles />
-                Upgrade to Pro
+                <Settings />
+                {t("common.settings")}
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <BadgeCheck />
-                Account
+                <CircleHelp />
+                {t("common.help")}
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <CreditCard />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Bell />
-                Notifications
+                <Search />
+                {t("common.search")}
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={onClickLogout}>
               <LogOut />
-              Log out
+              {t("common.logout")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
