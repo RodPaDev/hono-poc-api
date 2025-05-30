@@ -27,6 +27,8 @@
     "esbuild-plugin-eslint": "0.3.12",
     "hono-openapi": "0.4.8",
     "pg": "8.16.0",
+    "pino": "^9.7.0",
+    "pino-pretty": "^13.0.0",
     "zod-openapi": "4.2.4"
   },
   "devDependencies": {

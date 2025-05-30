@@ -1,11 +1,10 @@
 import { db } from "@/lib/db";
 import { createAuthClient } from "better-auth/client";
 import { organizationClient } from "better-auth/client/plugins";
-import { hc } from "hono/client";
-import { type AppType } from "./lib/server";
 import * as schema from "./models";
 
 import { auth } from "@/lib/auth";
+import { logger } from "@/lib/logger";
 
 async function clearAllTables() {
   return await db.transaction(async (tx) => {
@@ -13,22 +12,22 @@ async function clearAllTables() {
     await tx.delete(schema.organization);
   });
 }
-console.log("Clearing all tables...");
+logger.info("Clearing all tables...");
 await clearAllTables();
-console.log("All tables cleared.");
-const apiClient = hc<AppType>("http://localhost:3000/");
-console.log("API client created");
+logger.info("All tables cleared");
+
 export const authClient = createAuthClient({
   baseURL: "http://localhost:3000",
   plugins: [organizationClient()],
 });
-console.log("Auth client created");
-const { data: data1, error } = await authClient.signUp.email({
+logger.info("Auth client created");
+
+logger.info("Creating users...");
+const { data: data1 } = await authClient.signUp.email({
   email: "dev1@altar.io",
   password: "devpassword",
   name: "Dev1 User",
 });
-console.log("User 1 created", error);
 const { data: data2 } = await authClient.signUp.email({
   email: "dev2@altar.io",
   password: "devpassword",
@@ -36,27 +35,14 @@ const { data: data2 } = await authClient.signUp.email({
 });
 
 if (data1?.user && data2?.user) {
-  console.log("Here 1");
   const member = await db.query.member.findFirst({
     where: (m, { eq }) => eq(m.userId, data1.user.id),
   });
-  console.log("Here 2", member);
-  const x = await auth.api.addMember({
+  await auth.api.addMember({
     body: {
       userId: data2.user.id,
       organizationId: member?.organizationId || "",
       role: "user",
     },
   });
-  console.log("Here 3", x);
 }
-
-// auth.api.createInvitation({
-//   body: {
-//     email: "",
-//     organizationId: user1.organizationId,
-//   }
-// })
-// authClient.organization.in
-
-// const x = await apiClient.api.v1.

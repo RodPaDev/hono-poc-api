@@ -4,6 +4,7 @@ import { drizzle } from "drizzle-orm/node-postgres";
 import fs from "fs";
 import path from "path";
 import { Client } from "pg";
+import { logger } from "../src/lib/logger";
 import { meteoriteLandingTable } from "../src/models/meteorite-landing.model";
 
 async function main() {
@@ -32,12 +33,10 @@ async function main() {
   }
 
   await client.end();
-  // eslint-disable-next-line no-console
-  console.log("Import complete.");
+  logger.info("Import complete");
 }
 
 main().catch((err) => {
-  // eslint-disable-next-line no-console
-  console.error(err);
+  logger.error(err);
   process.exit(1);
 });

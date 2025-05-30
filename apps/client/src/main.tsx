@@ -30,6 +30,14 @@ i18n
     interpolation: {
       escapeValue: false, // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
     },
+    saveMissing: true,
+    saveMissingTo: "all", // send to all languages, not just current
+    missingKeyHandler: (lng, ns, key, fallbackValue) => {
+      // UNCOMMENT THIS TO LOG MISSING TRANSLATIONS IN BROWSER CONSOLE
+      // console.log(
+      //   `Missing translation - Language: ${lng}, Namespace: ${ns}, Key: ${key}`,
+      // );
+    },
   });
 
 const router = createRouter({

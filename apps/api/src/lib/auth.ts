@@ -3,8 +3,9 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { admin, openAPI, organization } from "better-auth/plugins";
 import type { Context, Next } from "hono";
 
-import { env } from "@/env";
+import { Env } from "@/env";
 import { db } from "@/lib/db";
+import { logger } from "@/lib/logger";
 import * as schema from "@/models";
 import { createAccessControl } from "better-auth/plugins/access";
 import { defaultRoles } from "better-auth/plugins/organization/access";
@@ -25,7 +26,7 @@ const user = bussinessAc.newRole({
 });
 
 export const auth = betterAuth({
-  trustedOrigins: env.ALLOWED_ORIGINS,
+  trustedOrigins: Env.ALLOWED_ORIGINS,
   database: drizzleAdapter(db, {
     provider: "pg",
     schema,
@@ -60,7 +61,7 @@ export const auth = betterAuth({
                 },
               });
             } catch (error) {
-              console.error("Error creating organization:", error);
+              logger.error(error, "Error creating organization");
             }
           }
         },

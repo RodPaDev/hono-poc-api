@@ -1,11 +1,12 @@
-import { env } from "@/env";
+import { Env } from "@/env";
+import { logger } from "@/lib/logger";
 import * as schema from "@/models";
 import "dotenv/config";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 
 const pool = new Pool({
-  connectionString: env.DATABASE_URL,
+  connectionString: Env.DATABASE_URL,
   connectionTimeoutMillis: 2000,
 });
 
@@ -14,8 +15,7 @@ try {
   // This ensures the API only starts if the database is reachable.
   await pool.connect();
 } catch (error) {
-  console.error("Failed to connect to the database");
-  console.error(error);
+  logger.error(error, "Failed to connect to the database");
   process.exit(1);
 }
 

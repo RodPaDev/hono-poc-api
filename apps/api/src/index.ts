@@ -1,17 +1,16 @@
-/* eslint-disable no-console */
-import { env } from "@/env";
+import { Env } from "@/env";
+import { logger } from "@/lib/logger";
 import app from "@/lib/server";
 import { serve } from "@hono/node-server";
 
 serve(
   {
     fetch: app.fetch,
-    port: env.PORT,
+    port: Env.PORT,
   },
   (info) => {
-    console.log(`\nServer is running!`);
-    console.log(`\t- Listening: ${`http://localhost:${info.port}`}`);
-    console.log(`\t- API Docs: ${`http://localhost:${info.port}/api/v1/docs`}`);
-    console.log(`\t- DB Connection: ${env.DATABASE_URL}`);
+    logger.info(`Listening on: ${`http://localhost:${info.port}`}`);
+    logger.info(`API Docs on: ${`http://localhost:${info.port}/api/v1/docs`}`);
+    logger.debug(`DB Connection: ${Env.DATABASE_URL}`);
   },
 );
