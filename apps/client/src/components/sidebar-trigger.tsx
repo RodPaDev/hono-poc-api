@@ -9,11 +9,9 @@ export function SidebarTrigger() {
   const title = isOpened ? t("common.sidebar.close") : t("common.sidebar.open");
 
   return (
-    <button onClick={toggleSidebar}>
-      <SidebarMenuButton tooltip={title}>
-        {isOpened ? <ArrowLeftToLine /> : <ArrowRightToLine />}
-        {isOpened && <span>{title}</span>}
-      </SidebarMenuButton>
-    </button>
+    <SidebarMenuButton onClick={toggleSidebar} tooltip={title}>
+      {isOpened ? <ArrowLeftToLine /> : <ArrowRightToLine />}
+      {isOpened && <span>{title}</span>}
+    </SidebarMenuButton>
   );
 }
