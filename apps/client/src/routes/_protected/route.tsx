@@ -11,6 +11,7 @@ import {
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { getSession } from "@/lib/auth-client";
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import { Fragment } from "react/jsx-runtime";
 
 export const Route = createFileRoute("/_protected")({
@@ -23,7 +24,13 @@ export const Route = createFileRoute("/_protected")({
       });
     }
   },
-  component: () => (
+  component: RouteComponent,
+});
+
+function RouteComponent() {
+  const { t } = useTranslation(); // not passing any namespace will use the defaultNS (by default set to 'translation')
+
+  return (
     <Fragment>
       <SidebarProvider defaultOpen={false}>
         <AppSidebar />
@@ -32,11 +39,11 @@ export const Route = createFileRoute("/_protected")({
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="#">All Inboxes</BreadcrumbLink>
+                  <BreadcrumbLink href="#">{t("allInbox")}</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>Inbox</BreadcrumbPage>
+                  <BreadcrumbPage>{t("Inbox")}</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
@@ -47,5 +54,5 @@ export const Route = createFileRoute("/_protected")({
         </SidebarInset>
       </SidebarProvider>
     </Fragment>
-  ),
-});
+  );
+}
