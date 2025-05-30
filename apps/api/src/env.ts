@@ -27,9 +27,7 @@ const EnvSchema = z.object({
     .transform((val) => val.split(",").map((url) => url.trim())),
 });
 
-type EnvType = z.infer<typeof EnvSchema>;
-
-export const Env: EnvType = prettySyncParse(
+export const Env: z.infer<typeof EnvSchema> = prettySyncParse(
   EnvSchema,
   process.env,
   "Environment Variables",
