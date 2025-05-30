@@ -1,9 +1,21 @@
 version: "3.8"
 
 services:
+  localstack-s3:
+    image: localstack/localstack:latest
+    container_name: fsm-localstack-s3
+    environment:
+      - SERVICES=s3
+      - DEFAULT_REGION=us-east-1
+      - DATA_DIR=/tmp/fsm-localstack/data
+    ports:
+      - "4566:4566" # LocalStack Gateway
+      - "4510-4559:4510-4559" # S3 and other services
+    volumes:
+      - localstack-data:/tmp/fsm-localstack/data
   postgres:
     image: postgres:15
-    container_name: local-postgres
+    container_name: fsm-local-postgres
     restart: unless-stopped
     environment:
       POSTGRES_USER: postgres
@@ -16,3 +28,6 @@ services:
 
 volumes:
   pgdata:
+    name: fsm-local-pgdata
+  localstack-data:
+    name: fsm-localstack-data
