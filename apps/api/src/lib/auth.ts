@@ -36,7 +36,7 @@ export const auth = betterAuth({
     openAPI({
       path: "/docs",
       disableDefaultReference:
-        Env.EXPOSE_OPEN_API || Env.NODE_ENV !== "development",
+        !Env.EXPOSE_OPEN_API || Env.NODE_ENV !== "development",
     }),
     admin({
       roles: defaultAdminRoles,
