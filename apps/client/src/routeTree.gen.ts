@@ -11,7 +11,6 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as AboutImport } from './routes/about'
 import { Route as LegalRouteImport } from './routes/legal/route'
 import { Route as ProtectedRouteImport } from './routes/_protected/route'
 import { Route as AuthRouteImport } from './routes/_auth/route'
@@ -32,12 +31,6 @@ import { Route as ProtectedOrganizationsOrganizationIdUsersUserIdEditImport } fr
 import { Route as ProtectedOrganizationsOrganizationIdUsersUserIdConfirmImport } from './routes/_protected/organizations/$organizationId/users/$userId/confirm'
 
 // Create/Update Routes
-
-const AboutRoute = AboutImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const LegalRouteRoute = LegalRouteImport.update({
   id: '/legal',
@@ -184,13 +177,6 @@ declare module '@tanstack/react-router' {
       path: '/legal'
       fullPath: '/legal'
       preLoaderRoute: typeof LegalRouteImport
-      parentRoute: typeof rootRoute
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
     '/_protected/organizations': {
@@ -379,7 +365,6 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '': typeof ProtectedRouteRouteWithChildren
   '/legal': typeof LegalRouteRouteWithChildren
-  '/about': typeof AboutRoute
   '/organizations': typeof ProtectedOrganizationsRouteRouteWithChildren
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
@@ -400,7 +385,6 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof ProtectedRouteRouteWithChildren
   '/legal': typeof LegalRouteRouteWithChildren
-  '/about': typeof AboutRoute
   '/organizations': typeof ProtectedOrganizationsRouteRouteWithChildren
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
@@ -423,7 +407,6 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteRouteWithChildren
   '/_protected': typeof ProtectedRouteRouteWithChildren
   '/legal': typeof LegalRouteRouteWithChildren
-  '/about': typeof AboutRoute
   '/_protected/organizations': typeof ProtectedOrganizationsRouteRouteWithChildren
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/register': typeof AuthRegisterRoute
@@ -446,7 +429,6 @@ export interface FileRouteTypes {
     | '/'
     | ''
     | '/legal'
-    | '/about'
     | '/organizations'
     | '/login'
     | '/register'
@@ -466,7 +448,6 @@ export interface FileRouteTypes {
     | '/'
     | ''
     | '/legal'
-    | '/about'
     | '/organizations'
     | '/login'
     | '/register'
@@ -487,7 +468,6 @@ export interface FileRouteTypes {
     | '/_auth'
     | '/_protected'
     | '/legal'
-    | '/about'
     | '/_protected/organizations'
     | '/_auth/login'
     | '/_auth/register'
@@ -510,7 +490,6 @@ export interface RootRouteChildren {
   AuthRouteRoute: typeof AuthRouteRouteWithChildren
   ProtectedRouteRoute: typeof ProtectedRouteRouteWithChildren
   LegalRouteRoute: typeof LegalRouteRouteWithChildren
-  AboutRoute: typeof AboutRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -518,7 +497,6 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRouteRoute: AuthRouteRouteWithChildren,
   ProtectedRouteRoute: ProtectedRouteRouteWithChildren,
   LegalRouteRoute: LegalRouteRouteWithChildren,
-  AboutRoute: AboutRoute,
 }
 
 export const routeTree = rootRoute
@@ -534,8 +512,7 @@ export const routeTree = rootRoute
         "/",
         "/_auth",
         "/_protected",
-        "/legal",
-        "/about"
+        "/legal"
       ]
     },
     "/": {
@@ -561,9 +538,6 @@ export const routeTree = rootRoute
         "/legal/privacy-policy",
         "/legal/terms-and-conditions"
       ]
-    },
-    "/about": {
-      "filePath": "about.tsx"
     },
     "/_protected/organizations": {
       "filePath": "_protected/organizations/route.tsx",
