@@ -3,6 +3,7 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { admin, openAPI, organization } from "better-auth/plugins";
 import type { Context, Next } from "hono";
 
+import { AppConfig } from "@/config/app.config";
 import { Env } from "@/env";
 import { db } from "@/lib/db";
 import { logger } from "@/lib/logger";
@@ -35,8 +36,7 @@ export const auth = betterAuth({
   plugins: [
     openAPI({
       path: "/docs",
-      disableDefaultReference:
-        !Env.EXPOSE_OPEN_API || Env.NODE_ENV !== "development",
+      disableDefaultReference: !AppConfig.EXPOSE_OPEN_API,
     }),
     admin({
       roles: defaultAdminRoles,

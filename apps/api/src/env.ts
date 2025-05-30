@@ -9,12 +9,10 @@ export const Env = z
     PORT: z.coerce.number().default(3000),
     DATABASE_URL: z.string().url(),
     ALLOWED_ORIGINS: z
-      .string()
-      .default(["http://localhost:5173", "http://localhost:3000"].join(","))
-      .transform((val) => val.split(",")),
-    EXPOSE_OPEN_API: z
-      .string()
-      .optional()
-      .transform((val) => val === "true"),
+      .string({
+        message:
+          "Required string with URLs separated by commas, e.g. 'http://localhost:5173,http://localhost:3000'",
+      })
+      .transform((val) => val.split(",").map((url) => url.trim())),
   })
   .parse(process.env);

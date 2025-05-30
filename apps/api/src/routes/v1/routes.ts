@@ -1,11 +1,10 @@
-import { Hono, type Context, type Next } from "hono";
-
-import { Env } from "@/env";
+import { AppConfig } from "@/config/app.config";
 import { auth, type RolePermissions } from "@/lib/auth";
 import type { HonoContext } from "@/lib/context";
 import { AppError } from "@/lib/error";
 import { openApi } from "@/lib/open-api";
 import { Scalar } from "@scalar/hono-api-reference";
+import { Hono, type Context, type Next } from "hono";
 import { meteoriteLandingRouter } from "./meteorite-landing.router";
 
 function createRebac(
@@ -43,7 +42,7 @@ export const v1Rotuer = new Hono<HonoContext>()
   .use(rebac)
   .route("/meteorite-landing", meteoriteLandingRouter);
 
-if (Env.EXPOSE_OPEN_API || Env.NODE_ENV !== "development") {
+if (AppConfig.EXPOSE_OPEN_API) {
   v1Rotuer.get("/reference", openApi(v1Rotuer)).get(
     "/docs",
     Scalar({
