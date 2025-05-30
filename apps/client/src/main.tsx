@@ -1,12 +1,15 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
+import i18n from "i18next";
 import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { initReactI18next } from "react-i18next";
 
 import { routeTree } from "@/routeTree.gen";
 
 import "@/index.css";
-import i18n from "i18next";
-import { createRoot } from "react-dom/client";
-import { initReactI18next } from "react-i18next";
+
+const queryClient = new QueryClient();
 
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
@@ -45,7 +48,9 @@ if (!rootElement.innerHTML) {
   const root = createRoot(rootElement);
   root.render(
     <StrictMode>
-      <RouterProvider router={router} />
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
     </StrictMode>,
   );
 }
