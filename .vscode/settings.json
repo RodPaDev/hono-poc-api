@@ -16,5 +16,10 @@
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.sortImports": "explicit"
+  },
+  "material-icon-theme.folders.associations": {
+    "_protected": "private",
+    "(auth)": "secure",
+    "-components": "components"
   }
 }

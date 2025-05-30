@@ -12,24 +12,41 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as AboutImport } from './routes/about'
+import { Route as LegalRouteImport } from './routes/legal/route'
+import { Route as ProtectedRouteImport } from './routes/_protected/route'
 import { Route as AuthRouteImport } from './routes/_auth/route'
 import { Route as IndexImport } from './routes/index'
-import { Route as AuthFoodImport } from './routes/_auth/food'
-import { Route as AuthOrganizationsRouteImport } from './routes/_auth/organizations/route'
-import { Route as AuthOrganizationsOrganizationIdIndexImport } from './routes/_auth/organizations/$organizationId/index'
-import { Route as AuthOrganizationsOrganizationIdUsersIndexImport } from './routes/_auth/organizations/$organizationId/users/index'
-import { Route as AuthOrganizationsOrganizationIdActionsNewImport } from './routes/_auth/organizations/$organizationId/actions/new'
-import { Route as AuthOrganizationsOrganizationIdActionsEditImport } from './routes/_auth/organizations/$organizationId/actions/edit'
-import { Route as AuthOrganizationsOrganizationIdUsersUserIdIndexImport } from './routes/_auth/organizations/$organizationId/users/$userId/index'
-import { Route as AuthOrganizationsOrganizationIdUsersUserIdNewImport } from './routes/_auth/organizations/$organizationId/users/$userId/new'
-import { Route as AuthOrganizationsOrganizationIdUsersUserIdEditImport } from './routes/_auth/organizations/$organizationId/users/$userId/edit'
-import { Route as AuthOrganizationsOrganizationIdUsersUserIdConfirmImport } from './routes/_auth/organizations/$organizationId/users/$userId/confirm'
+import { Route as LegalTermsAndConditionsImport } from './routes/legal/terms-and-conditions'
+import { Route as LegalPrivacyPolicyImport } from './routes/legal/privacy-policy'
+import { Route as ProtectedDashboardImport } from './routes/_protected/dashboard'
+import { Route as AuthRegisterImport } from './routes/_auth/register'
+import { Route as AuthLoginImport } from './routes/_auth/login'
+import { Route as ProtectedOrganizationsRouteImport } from './routes/_protected/organizations/route'
+import { Route as ProtectedOrganizationsOrganizationIdIndexImport } from './routes/_protected/organizations/$organizationId/index'
+import { Route as ProtectedOrganizationsOrganizationIdUsersIndexImport } from './routes/_protected/organizations/$organizationId/users/index'
+import { Route as ProtectedOrganizationsOrganizationIdActionsNewImport } from './routes/_protected/organizations/$organizationId/actions/new'
+import { Route as ProtectedOrganizationsOrganizationIdActionsEditImport } from './routes/_protected/organizations/$organizationId/actions/edit'
+import { Route as ProtectedOrganizationsOrganizationIdUsersUserIdIndexImport } from './routes/_protected/organizations/$organizationId/users/$userId/index'
+import { Route as ProtectedOrganizationsOrganizationIdUsersUserIdNewImport } from './routes/_protected/organizations/$organizationId/users/$userId/new'
+import { Route as ProtectedOrganizationsOrganizationIdUsersUserIdEditImport } from './routes/_protected/organizations/$organizationId/users/$userId/edit'
+import { Route as ProtectedOrganizationsOrganizationIdUsersUserIdConfirmImport } from './routes/_protected/organizations/$organizationId/users/$userId/confirm'
 
 // Create/Update Routes
 
 const AboutRoute = AboutImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const LegalRouteRoute = LegalRouteImport.update({
+  id: '/legal',
+  path: '/legal',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ProtectedRouteRoute = ProtectedRouteImport.update({
+  id: '/_protected',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -44,72 +61,97 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthFoodRoute = AuthFoodImport.update({
-  id: '/food',
-  path: '/food',
+const LegalTermsAndConditionsRoute = LegalTermsAndConditionsImport.update({
+  id: '/terms-and-conditions',
+  path: '/terms-and-conditions',
+  getParentRoute: () => LegalRouteRoute,
+} as any)
+
+const LegalPrivacyPolicyRoute = LegalPrivacyPolicyImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
+  getParentRoute: () => LegalRouteRoute,
+} as any)
+
+const ProtectedDashboardRoute = ProtectedDashboardImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => ProtectedRouteRoute,
+} as any)
+
+const AuthRegisterRoute = AuthRegisterImport.update({
+  id: '/register',
+  path: '/register',
   getParentRoute: () => AuthRouteRoute,
 } as any)
 
-const AuthOrganizationsRouteRoute = AuthOrganizationsRouteImport.update({
-  id: '/organizations',
-  path: '/organizations',
+const AuthLoginRoute = AuthLoginImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => AuthRouteRoute,
 } as any)
 
-const AuthOrganizationsOrganizationIdIndexRoute =
-  AuthOrganizationsOrganizationIdIndexImport.update({
+const ProtectedOrganizationsRouteRoute =
+  ProtectedOrganizationsRouteImport.update({
+    id: '/organizations',
+    path: '/organizations',
+    getParentRoute: () => ProtectedRouteRoute,
+  } as any)
+
+const ProtectedOrganizationsOrganizationIdIndexRoute =
+  ProtectedOrganizationsOrganizationIdIndexImport.update({
     id: '/$organizationId/',
     path: '/$organizationId/',
-    getParentRoute: () => AuthOrganizationsRouteRoute,
+    getParentRoute: () => ProtectedOrganizationsRouteRoute,
   } as any)
 
-const AuthOrganizationsOrganizationIdUsersIndexRoute =
-  AuthOrganizationsOrganizationIdUsersIndexImport.update({
+const ProtectedOrganizationsOrganizationIdUsersIndexRoute =
+  ProtectedOrganizationsOrganizationIdUsersIndexImport.update({
     id: '/$organizationId/users/',
     path: '/$organizationId/users/',
-    getParentRoute: () => AuthOrganizationsRouteRoute,
+    getParentRoute: () => ProtectedOrganizationsRouteRoute,
   } as any)
 
-const AuthOrganizationsOrganizationIdActionsNewRoute =
-  AuthOrganizationsOrganizationIdActionsNewImport.update({
+const ProtectedOrganizationsOrganizationIdActionsNewRoute =
+  ProtectedOrganizationsOrganizationIdActionsNewImport.update({
     id: '/$organizationId/actions/new',
     path: '/$organizationId/actions/new',
-    getParentRoute: () => AuthOrganizationsRouteRoute,
+    getParentRoute: () => ProtectedOrganizationsRouteRoute,
   } as any)
 
-const AuthOrganizationsOrganizationIdActionsEditRoute =
-  AuthOrganizationsOrganizationIdActionsEditImport.update({
+const ProtectedOrganizationsOrganizationIdActionsEditRoute =
+  ProtectedOrganizationsOrganizationIdActionsEditImport.update({
     id: '/$organizationId/actions/edit',
     path: '/$organizationId/actions/edit',
-    getParentRoute: () => AuthOrganizationsRouteRoute,
+    getParentRoute: () => ProtectedOrganizationsRouteRoute,
   } as any)
 
-const AuthOrganizationsOrganizationIdUsersUserIdIndexRoute =
-  AuthOrganizationsOrganizationIdUsersUserIdIndexImport.update({
+const ProtectedOrganizationsOrganizationIdUsersUserIdIndexRoute =
+  ProtectedOrganizationsOrganizationIdUsersUserIdIndexImport.update({
     id: '/$organizationId/users/$userId/',
     path: '/$organizationId/users/$userId/',
-    getParentRoute: () => AuthOrganizationsRouteRoute,
+    getParentRoute: () => ProtectedOrganizationsRouteRoute,
   } as any)
 
-const AuthOrganizationsOrganizationIdUsersUserIdNewRoute =
-  AuthOrganizationsOrganizationIdUsersUserIdNewImport.update({
+const ProtectedOrganizationsOrganizationIdUsersUserIdNewRoute =
+  ProtectedOrganizationsOrganizationIdUsersUserIdNewImport.update({
     id: '/$organizationId/users/$userId/new',
     path: '/$organizationId/users/$userId/new',
-    getParentRoute: () => AuthOrganizationsRouteRoute,
+    getParentRoute: () => ProtectedOrganizationsRouteRoute,
   } as any)
 
-const AuthOrganizationsOrganizationIdUsersUserIdEditRoute =
-  AuthOrganizationsOrganizationIdUsersUserIdEditImport.update({
+const ProtectedOrganizationsOrganizationIdUsersUserIdEditRoute =
+  ProtectedOrganizationsOrganizationIdUsersUserIdEditImport.update({
     id: '/$organizationId/users/$userId/edit',
     path: '/$organizationId/users/$userId/edit',
-    getParentRoute: () => AuthOrganizationsRouteRoute,
+    getParentRoute: () => ProtectedOrganizationsRouteRoute,
   } as any)
 
-const AuthOrganizationsOrganizationIdUsersUserIdConfirmRoute =
-  AuthOrganizationsOrganizationIdUsersUserIdConfirmImport.update({
+const ProtectedOrganizationsOrganizationIdUsersUserIdConfirmRoute =
+  ProtectedOrganizationsOrganizationIdUsersUserIdConfirmImport.update({
     id: '/$organizationId/users/$userId/confirm',
     path: '/$organizationId/users/$userId/confirm',
-    getParentRoute: () => AuthOrganizationsRouteRoute,
+    getParentRoute: () => ProtectedOrganizationsRouteRoute,
   } as any)
 
 // Populate the FileRoutesByPath interface
@@ -130,6 +172,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRoute
     }
+    '/_protected': {
+      id: '/_protected'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof ProtectedRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/legal': {
+      id: '/legal'
+      path: '/legal'
+      fullPath: '/legal'
+      preLoaderRoute: typeof LegalRouteImport
+      parentRoute: typeof rootRoute
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -137,178 +193,251 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
-    '/_auth/organizations': {
-      id: '/_auth/organizations'
+    '/_protected/organizations': {
+      id: '/_protected/organizations'
       path: '/organizations'
       fullPath: '/organizations'
-      preLoaderRoute: typeof AuthOrganizationsRouteImport
+      preLoaderRoute: typeof ProtectedOrganizationsRouteImport
+      parentRoute: typeof ProtectedRouteImport
+    }
+    '/_auth/login': {
+      id: '/_auth/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof AuthLoginImport
       parentRoute: typeof AuthRouteImport
     }
-    '/_auth/food': {
-      id: '/_auth/food'
-      path: '/food'
-      fullPath: '/food'
-      preLoaderRoute: typeof AuthFoodImport
+    '/_auth/register': {
+      id: '/_auth/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof AuthRegisterImport
       parentRoute: typeof AuthRouteImport
     }
-    '/_auth/organizations/$organizationId/': {
-      id: '/_auth/organizations/$organizationId/'
+    '/_protected/dashboard': {
+      id: '/_protected/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof ProtectedDashboardImport
+      parentRoute: typeof ProtectedRouteImport
+    }
+    '/legal/privacy-policy': {
+      id: '/legal/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/legal/privacy-policy'
+      preLoaderRoute: typeof LegalPrivacyPolicyImport
+      parentRoute: typeof LegalRouteImport
+    }
+    '/legal/terms-and-conditions': {
+      id: '/legal/terms-and-conditions'
+      path: '/terms-and-conditions'
+      fullPath: '/legal/terms-and-conditions'
+      preLoaderRoute: typeof LegalTermsAndConditionsImport
+      parentRoute: typeof LegalRouteImport
+    }
+    '/_protected/organizations/$organizationId/': {
+      id: '/_protected/organizations/$organizationId/'
       path: '/$organizationId'
       fullPath: '/organizations/$organizationId'
-      preLoaderRoute: typeof AuthOrganizationsOrganizationIdIndexImport
-      parentRoute: typeof AuthOrganizationsRouteImport
+      preLoaderRoute: typeof ProtectedOrganizationsOrganizationIdIndexImport
+      parentRoute: typeof ProtectedOrganizationsRouteImport
     }
-    '/_auth/organizations/$organizationId/actions/edit': {
-      id: '/_auth/organizations/$organizationId/actions/edit'
+    '/_protected/organizations/$organizationId/actions/edit': {
+      id: '/_protected/organizations/$organizationId/actions/edit'
       path: '/$organizationId/actions/edit'
       fullPath: '/organizations/$organizationId/actions/edit'
-      preLoaderRoute: typeof AuthOrganizationsOrganizationIdActionsEditImport
-      parentRoute: typeof AuthOrganizationsRouteImport
+      preLoaderRoute: typeof ProtectedOrganizationsOrganizationIdActionsEditImport
+      parentRoute: typeof ProtectedOrganizationsRouteImport
     }
-    '/_auth/organizations/$organizationId/actions/new': {
-      id: '/_auth/organizations/$organizationId/actions/new'
+    '/_protected/organizations/$organizationId/actions/new': {
+      id: '/_protected/organizations/$organizationId/actions/new'
       path: '/$organizationId/actions/new'
       fullPath: '/organizations/$organizationId/actions/new'
-      preLoaderRoute: typeof AuthOrganizationsOrganizationIdActionsNewImport
-      parentRoute: typeof AuthOrganizationsRouteImport
+      preLoaderRoute: typeof ProtectedOrganizationsOrganizationIdActionsNewImport
+      parentRoute: typeof ProtectedOrganizationsRouteImport
     }
-    '/_auth/organizations/$organizationId/users/': {
-      id: '/_auth/organizations/$organizationId/users/'
+    '/_protected/organizations/$organizationId/users/': {
+      id: '/_protected/organizations/$organizationId/users/'
       path: '/$organizationId/users'
       fullPath: '/organizations/$organizationId/users'
-      preLoaderRoute: typeof AuthOrganizationsOrganizationIdUsersIndexImport
-      parentRoute: typeof AuthOrganizationsRouteImport
+      preLoaderRoute: typeof ProtectedOrganizationsOrganizationIdUsersIndexImport
+      parentRoute: typeof ProtectedOrganizationsRouteImport
     }
-    '/_auth/organizations/$organizationId/users/$userId/confirm': {
-      id: '/_auth/organizations/$organizationId/users/$userId/confirm'
+    '/_protected/organizations/$organizationId/users/$userId/confirm': {
+      id: '/_protected/organizations/$organizationId/users/$userId/confirm'
       path: '/$organizationId/users/$userId/confirm'
       fullPath: '/organizations/$organizationId/users/$userId/confirm'
-      preLoaderRoute: typeof AuthOrganizationsOrganizationIdUsersUserIdConfirmImport
-      parentRoute: typeof AuthOrganizationsRouteImport
+      preLoaderRoute: typeof ProtectedOrganizationsOrganizationIdUsersUserIdConfirmImport
+      parentRoute: typeof ProtectedOrganizationsRouteImport
     }
-    '/_auth/organizations/$organizationId/users/$userId/edit': {
-      id: '/_auth/organizations/$organizationId/users/$userId/edit'
+    '/_protected/organizations/$organizationId/users/$userId/edit': {
+      id: '/_protected/organizations/$organizationId/users/$userId/edit'
       path: '/$organizationId/users/$userId/edit'
       fullPath: '/organizations/$organizationId/users/$userId/edit'
-      preLoaderRoute: typeof AuthOrganizationsOrganizationIdUsersUserIdEditImport
-      parentRoute: typeof AuthOrganizationsRouteImport
+      preLoaderRoute: typeof ProtectedOrganizationsOrganizationIdUsersUserIdEditImport
+      parentRoute: typeof ProtectedOrganizationsRouteImport
     }
-    '/_auth/organizations/$organizationId/users/$userId/new': {
-      id: '/_auth/organizations/$organizationId/users/$userId/new'
+    '/_protected/organizations/$organizationId/users/$userId/new': {
+      id: '/_protected/organizations/$organizationId/users/$userId/new'
       path: '/$organizationId/users/$userId/new'
       fullPath: '/organizations/$organizationId/users/$userId/new'
-      preLoaderRoute: typeof AuthOrganizationsOrganizationIdUsersUserIdNewImport
-      parentRoute: typeof AuthOrganizationsRouteImport
+      preLoaderRoute: typeof ProtectedOrganizationsOrganizationIdUsersUserIdNewImport
+      parentRoute: typeof ProtectedOrganizationsRouteImport
     }
-    '/_auth/organizations/$organizationId/users/$userId/': {
-      id: '/_auth/organizations/$organizationId/users/$userId/'
+    '/_protected/organizations/$organizationId/users/$userId/': {
+      id: '/_protected/organizations/$organizationId/users/$userId/'
       path: '/$organizationId/users/$userId'
       fullPath: '/organizations/$organizationId/users/$userId'
-      preLoaderRoute: typeof AuthOrganizationsOrganizationIdUsersUserIdIndexImport
-      parentRoute: typeof AuthOrganizationsRouteImport
+      preLoaderRoute: typeof ProtectedOrganizationsOrganizationIdUsersUserIdIndexImport
+      parentRoute: typeof ProtectedOrganizationsRouteImport
     }
   }
 }
 
 // Create and export the route tree
 
-interface AuthOrganizationsRouteRouteChildren {
-  AuthOrganizationsOrganizationIdIndexRoute: typeof AuthOrganizationsOrganizationIdIndexRoute
-  AuthOrganizationsOrganizationIdActionsEditRoute: typeof AuthOrganizationsOrganizationIdActionsEditRoute
-  AuthOrganizationsOrganizationIdActionsNewRoute: typeof AuthOrganizationsOrganizationIdActionsNewRoute
-  AuthOrganizationsOrganizationIdUsersIndexRoute: typeof AuthOrganizationsOrganizationIdUsersIndexRoute
-  AuthOrganizationsOrganizationIdUsersUserIdConfirmRoute: typeof AuthOrganizationsOrganizationIdUsersUserIdConfirmRoute
-  AuthOrganizationsOrganizationIdUsersUserIdEditRoute: typeof AuthOrganizationsOrganizationIdUsersUserIdEditRoute
-  AuthOrganizationsOrganizationIdUsersUserIdNewRoute: typeof AuthOrganizationsOrganizationIdUsersUserIdNewRoute
-  AuthOrganizationsOrganizationIdUsersUserIdIndexRoute: typeof AuthOrganizationsOrganizationIdUsersUserIdIndexRoute
-}
-
-const AuthOrganizationsRouteRouteChildren: AuthOrganizationsRouteRouteChildren =
-  {
-    AuthOrganizationsOrganizationIdIndexRoute:
-      AuthOrganizationsOrganizationIdIndexRoute,
-    AuthOrganizationsOrganizationIdActionsEditRoute:
-      AuthOrganizationsOrganizationIdActionsEditRoute,
-    AuthOrganizationsOrganizationIdActionsNewRoute:
-      AuthOrganizationsOrganizationIdActionsNewRoute,
-    AuthOrganizationsOrganizationIdUsersIndexRoute:
-      AuthOrganizationsOrganizationIdUsersIndexRoute,
-    AuthOrganizationsOrganizationIdUsersUserIdConfirmRoute:
-      AuthOrganizationsOrganizationIdUsersUserIdConfirmRoute,
-    AuthOrganizationsOrganizationIdUsersUserIdEditRoute:
-      AuthOrganizationsOrganizationIdUsersUserIdEditRoute,
-    AuthOrganizationsOrganizationIdUsersUserIdNewRoute:
-      AuthOrganizationsOrganizationIdUsersUserIdNewRoute,
-    AuthOrganizationsOrganizationIdUsersUserIdIndexRoute:
-      AuthOrganizationsOrganizationIdUsersUserIdIndexRoute,
-  }
-
-const AuthOrganizationsRouteRouteWithChildren =
-  AuthOrganizationsRouteRoute._addFileChildren(
-    AuthOrganizationsRouteRouteChildren,
-  )
-
 interface AuthRouteRouteChildren {
-  AuthOrganizationsRouteRoute: typeof AuthOrganizationsRouteRouteWithChildren
-  AuthFoodRoute: typeof AuthFoodRoute
+  AuthLoginRoute: typeof AuthLoginRoute
+  AuthRegisterRoute: typeof AuthRegisterRoute
 }
 
 const AuthRouteRouteChildren: AuthRouteRouteChildren = {
-  AuthOrganizationsRouteRoute: AuthOrganizationsRouteRouteWithChildren,
-  AuthFoodRoute: AuthFoodRoute,
+  AuthLoginRoute: AuthLoginRoute,
+  AuthRegisterRoute: AuthRegisterRoute,
 }
 
 const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
   AuthRouteRouteChildren,
 )
 
+interface ProtectedOrganizationsRouteRouteChildren {
+  ProtectedOrganizationsOrganizationIdIndexRoute: typeof ProtectedOrganizationsOrganizationIdIndexRoute
+  ProtectedOrganizationsOrganizationIdActionsEditRoute: typeof ProtectedOrganizationsOrganizationIdActionsEditRoute
+  ProtectedOrganizationsOrganizationIdActionsNewRoute: typeof ProtectedOrganizationsOrganizationIdActionsNewRoute
+  ProtectedOrganizationsOrganizationIdUsersIndexRoute: typeof ProtectedOrganizationsOrganizationIdUsersIndexRoute
+  ProtectedOrganizationsOrganizationIdUsersUserIdConfirmRoute: typeof ProtectedOrganizationsOrganizationIdUsersUserIdConfirmRoute
+  ProtectedOrganizationsOrganizationIdUsersUserIdEditRoute: typeof ProtectedOrganizationsOrganizationIdUsersUserIdEditRoute
+  ProtectedOrganizationsOrganizationIdUsersUserIdNewRoute: typeof ProtectedOrganizationsOrganizationIdUsersUserIdNewRoute
+  ProtectedOrganizationsOrganizationIdUsersUserIdIndexRoute: typeof ProtectedOrganizationsOrganizationIdUsersUserIdIndexRoute
+}
+
+const ProtectedOrganizationsRouteRouteChildren: ProtectedOrganizationsRouteRouteChildren =
+  {
+    ProtectedOrganizationsOrganizationIdIndexRoute:
+      ProtectedOrganizationsOrganizationIdIndexRoute,
+    ProtectedOrganizationsOrganizationIdActionsEditRoute:
+      ProtectedOrganizationsOrganizationIdActionsEditRoute,
+    ProtectedOrganizationsOrganizationIdActionsNewRoute:
+      ProtectedOrganizationsOrganizationIdActionsNewRoute,
+    ProtectedOrganizationsOrganizationIdUsersIndexRoute:
+      ProtectedOrganizationsOrganizationIdUsersIndexRoute,
+    ProtectedOrganizationsOrganizationIdUsersUserIdConfirmRoute:
+      ProtectedOrganizationsOrganizationIdUsersUserIdConfirmRoute,
+    ProtectedOrganizationsOrganizationIdUsersUserIdEditRoute:
+      ProtectedOrganizationsOrganizationIdUsersUserIdEditRoute,
+    ProtectedOrganizationsOrganizationIdUsersUserIdNewRoute:
+      ProtectedOrganizationsOrganizationIdUsersUserIdNewRoute,
+    ProtectedOrganizationsOrganizationIdUsersUserIdIndexRoute:
+      ProtectedOrganizationsOrganizationIdUsersUserIdIndexRoute,
+  }
+
+const ProtectedOrganizationsRouteRouteWithChildren =
+  ProtectedOrganizationsRouteRoute._addFileChildren(
+    ProtectedOrganizationsRouteRouteChildren,
+  )
+
+interface ProtectedRouteRouteChildren {
+  ProtectedOrganizationsRouteRoute: typeof ProtectedOrganizationsRouteRouteWithChildren
+  ProtectedDashboardRoute: typeof ProtectedDashboardRoute
+}
+
+const ProtectedRouteRouteChildren: ProtectedRouteRouteChildren = {
+  ProtectedOrganizationsRouteRoute:
+    ProtectedOrganizationsRouteRouteWithChildren,
+  ProtectedDashboardRoute: ProtectedDashboardRoute,
+}
+
+const ProtectedRouteRouteWithChildren = ProtectedRouteRoute._addFileChildren(
+  ProtectedRouteRouteChildren,
+)
+
+interface LegalRouteRouteChildren {
+  LegalPrivacyPolicyRoute: typeof LegalPrivacyPolicyRoute
+  LegalTermsAndConditionsRoute: typeof LegalTermsAndConditionsRoute
+}
+
+const LegalRouteRouteChildren: LegalRouteRouteChildren = {
+  LegalPrivacyPolicyRoute: LegalPrivacyPolicyRoute,
+  LegalTermsAndConditionsRoute: LegalTermsAndConditionsRoute,
+}
+
+const LegalRouteRouteWithChildren = LegalRouteRoute._addFileChildren(
+  LegalRouteRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '': typeof AuthRouteRouteWithChildren
+  '': typeof ProtectedRouteRouteWithChildren
+  '/legal': typeof LegalRouteRouteWithChildren
   '/about': typeof AboutRoute
-  '/organizations': typeof AuthOrganizationsRouteRouteWithChildren
-  '/food': typeof AuthFoodRoute
-  '/organizations/$organizationId': typeof AuthOrganizationsOrganizationIdIndexRoute
-  '/organizations/$organizationId/actions/edit': typeof AuthOrganizationsOrganizationIdActionsEditRoute
-  '/organizations/$organizationId/actions/new': typeof AuthOrganizationsOrganizationIdActionsNewRoute
-  '/organizations/$organizationId/users': typeof AuthOrganizationsOrganizationIdUsersIndexRoute
-  '/organizations/$organizationId/users/$userId/confirm': typeof AuthOrganizationsOrganizationIdUsersUserIdConfirmRoute
-  '/organizations/$organizationId/users/$userId/edit': typeof AuthOrganizationsOrganizationIdUsersUserIdEditRoute
-  '/organizations/$organizationId/users/$userId/new': typeof AuthOrganizationsOrganizationIdUsersUserIdNewRoute
-  '/organizations/$organizationId/users/$userId': typeof AuthOrganizationsOrganizationIdUsersUserIdIndexRoute
+  '/organizations': typeof ProtectedOrganizationsRouteRouteWithChildren
+  '/login': typeof AuthLoginRoute
+  '/register': typeof AuthRegisterRoute
+  '/dashboard': typeof ProtectedDashboardRoute
+  '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
+  '/legal/terms-and-conditions': typeof LegalTermsAndConditionsRoute
+  '/organizations/$organizationId': typeof ProtectedOrganizationsOrganizationIdIndexRoute
+  '/organizations/$organizationId/actions/edit': typeof ProtectedOrganizationsOrganizationIdActionsEditRoute
+  '/organizations/$organizationId/actions/new': typeof ProtectedOrganizationsOrganizationIdActionsNewRoute
+  '/organizations/$organizationId/users': typeof ProtectedOrganizationsOrganizationIdUsersIndexRoute
+  '/organizations/$organizationId/users/$userId/confirm': typeof ProtectedOrganizationsOrganizationIdUsersUserIdConfirmRoute
+  '/organizations/$organizationId/users/$userId/edit': typeof ProtectedOrganizationsOrganizationIdUsersUserIdEditRoute
+  '/organizations/$organizationId/users/$userId/new': typeof ProtectedOrganizationsOrganizationIdUsersUserIdNewRoute
+  '/organizations/$organizationId/users/$userId': typeof ProtectedOrganizationsOrganizationIdUsersUserIdIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '': typeof AuthRouteRouteWithChildren
+  '': typeof ProtectedRouteRouteWithChildren
+  '/legal': typeof LegalRouteRouteWithChildren
   '/about': typeof AboutRoute
-  '/organizations': typeof AuthOrganizationsRouteRouteWithChildren
-  '/food': typeof AuthFoodRoute
-  '/organizations/$organizationId': typeof AuthOrganizationsOrganizationIdIndexRoute
-  '/organizations/$organizationId/actions/edit': typeof AuthOrganizationsOrganizationIdActionsEditRoute
-  '/organizations/$organizationId/actions/new': typeof AuthOrganizationsOrganizationIdActionsNewRoute
-  '/organizations/$organizationId/users': typeof AuthOrganizationsOrganizationIdUsersIndexRoute
-  '/organizations/$organizationId/users/$userId/confirm': typeof AuthOrganizationsOrganizationIdUsersUserIdConfirmRoute
-  '/organizations/$organizationId/users/$userId/edit': typeof AuthOrganizationsOrganizationIdUsersUserIdEditRoute
-  '/organizations/$organizationId/users/$userId/new': typeof AuthOrganizationsOrganizationIdUsersUserIdNewRoute
-  '/organizations/$organizationId/users/$userId': typeof AuthOrganizationsOrganizationIdUsersUserIdIndexRoute
+  '/organizations': typeof ProtectedOrganizationsRouteRouteWithChildren
+  '/login': typeof AuthLoginRoute
+  '/register': typeof AuthRegisterRoute
+  '/dashboard': typeof ProtectedDashboardRoute
+  '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
+  '/legal/terms-and-conditions': typeof LegalTermsAndConditionsRoute
+  '/organizations/$organizationId': typeof ProtectedOrganizationsOrganizationIdIndexRoute
+  '/organizations/$organizationId/actions/edit': typeof ProtectedOrganizationsOrganizationIdActionsEditRoute
+  '/organizations/$organizationId/actions/new': typeof ProtectedOrganizationsOrganizationIdActionsNewRoute
+  '/organizations/$organizationId/users': typeof ProtectedOrganizationsOrganizationIdUsersIndexRoute
+  '/organizations/$organizationId/users/$userId/confirm': typeof ProtectedOrganizationsOrganizationIdUsersUserIdConfirmRoute
+  '/organizations/$organizationId/users/$userId/edit': typeof ProtectedOrganizationsOrganizationIdUsersUserIdEditRoute
+  '/organizations/$organizationId/users/$userId/new': typeof ProtectedOrganizationsOrganizationIdUsersUserIdNewRoute
+  '/organizations/$organizationId/users/$userId': typeof ProtectedOrganizationsOrganizationIdUsersUserIdIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/_auth': typeof AuthRouteRouteWithChildren
+  '/_protected': typeof ProtectedRouteRouteWithChildren
+  '/legal': typeof LegalRouteRouteWithChildren
   '/about': typeof AboutRoute
-  '/_auth/organizations': typeof AuthOrganizationsRouteRouteWithChildren
-  '/_auth/food': typeof AuthFoodRoute
-  '/_auth/organizations/$organizationId/': typeof AuthOrganizationsOrganizationIdIndexRoute
-  '/_auth/organizations/$organizationId/actions/edit': typeof AuthOrganizationsOrganizationIdActionsEditRoute
-  '/_auth/organizations/$organizationId/actions/new': typeof AuthOrganizationsOrganizationIdActionsNewRoute
-  '/_auth/organizations/$organizationId/users/': typeof AuthOrganizationsOrganizationIdUsersIndexRoute
-  '/_auth/organizations/$organizationId/users/$userId/confirm': typeof AuthOrganizationsOrganizationIdUsersUserIdConfirmRoute
-  '/_auth/organizations/$organizationId/users/$userId/edit': typeof AuthOrganizationsOrganizationIdUsersUserIdEditRoute
-  '/_auth/organizations/$organizationId/users/$userId/new': typeof AuthOrganizationsOrganizationIdUsersUserIdNewRoute
-  '/_auth/organizations/$organizationId/users/$userId/': typeof AuthOrganizationsOrganizationIdUsersUserIdIndexRoute
+  '/_protected/organizations': typeof ProtectedOrganizationsRouteRouteWithChildren
+  '/_auth/login': typeof AuthLoginRoute
+  '/_auth/register': typeof AuthRegisterRoute
+  '/_protected/dashboard': typeof ProtectedDashboardRoute
+  '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
+  '/legal/terms-and-conditions': typeof LegalTermsAndConditionsRoute
+  '/_protected/organizations/$organizationId/': typeof ProtectedOrganizationsOrganizationIdIndexRoute
+  '/_protected/organizations/$organizationId/actions/edit': typeof ProtectedOrganizationsOrganizationIdActionsEditRoute
+  '/_protected/organizations/$organizationId/actions/new': typeof ProtectedOrganizationsOrganizationIdActionsNewRoute
+  '/_protected/organizations/$organizationId/users/': typeof ProtectedOrganizationsOrganizationIdUsersIndexRoute
+  '/_protected/organizations/$organizationId/users/$userId/confirm': typeof ProtectedOrganizationsOrganizationIdUsersUserIdConfirmRoute
+  '/_protected/organizations/$organizationId/users/$userId/edit': typeof ProtectedOrganizationsOrganizationIdUsersUserIdEditRoute
+  '/_protected/organizations/$organizationId/users/$userId/new': typeof ProtectedOrganizationsOrganizationIdUsersUserIdNewRoute
+  '/_protected/organizations/$organizationId/users/$userId/': typeof ProtectedOrganizationsOrganizationIdUsersUserIdIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -316,9 +445,14 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | ''
+    | '/legal'
     | '/about'
     | '/organizations'
-    | '/food'
+    | '/login'
+    | '/register'
+    | '/dashboard'
+    | '/legal/privacy-policy'
+    | '/legal/terms-and-conditions'
     | '/organizations/$organizationId'
     | '/organizations/$organizationId/actions/edit'
     | '/organizations/$organizationId/actions/new'
@@ -331,9 +465,14 @@ export interface FileRouteTypes {
   to:
     | '/'
     | ''
+    | '/legal'
     | '/about'
     | '/organizations'
-    | '/food'
+    | '/login'
+    | '/register'
+    | '/dashboard'
+    | '/legal/privacy-policy'
+    | '/legal/terms-and-conditions'
     | '/organizations/$organizationId'
     | '/organizations/$organizationId/actions/edit'
     | '/organizations/$organizationId/actions/new'
@@ -346,29 +485,39 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_auth'
+    | '/_protected'
+    | '/legal'
     | '/about'
-    | '/_auth/organizations'
-    | '/_auth/food'
-    | '/_auth/organizations/$organizationId/'
-    | '/_auth/organizations/$organizationId/actions/edit'
-    | '/_auth/organizations/$organizationId/actions/new'
-    | '/_auth/organizations/$organizationId/users/'
-    | '/_auth/organizations/$organizationId/users/$userId/confirm'
-    | '/_auth/organizations/$organizationId/users/$userId/edit'
-    | '/_auth/organizations/$organizationId/users/$userId/new'
-    | '/_auth/organizations/$organizationId/users/$userId/'
+    | '/_protected/organizations'
+    | '/_auth/login'
+    | '/_auth/register'
+    | '/_protected/dashboard'
+    | '/legal/privacy-policy'
+    | '/legal/terms-and-conditions'
+    | '/_protected/organizations/$organizationId/'
+    | '/_protected/organizations/$organizationId/actions/edit'
+    | '/_protected/organizations/$organizationId/actions/new'
+    | '/_protected/organizations/$organizationId/users/'
+    | '/_protected/organizations/$organizationId/users/$userId/confirm'
+    | '/_protected/organizations/$organizationId/users/$userId/edit'
+    | '/_protected/organizations/$organizationId/users/$userId/new'
+    | '/_protected/organizations/$organizationId/users/$userId/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRouteRoute: typeof AuthRouteRouteWithChildren
+  ProtectedRouteRoute: typeof ProtectedRouteRouteWithChildren
+  LegalRouteRoute: typeof LegalRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRouteRoute: AuthRouteRouteWithChildren,
+  ProtectedRouteRoute: ProtectedRouteRouteWithChildren,
+  LegalRouteRoute: LegalRouteRouteWithChildren,
   AboutRoute: AboutRoute,
 }
 
@@ -384,6 +533,8 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/_auth",
+        "/_protected",
+        "/legal",
         "/about"
       ]
     },
@@ -393,62 +544,92 @@ export const routeTree = rootRoute
     "/_auth": {
       "filePath": "_auth/route.tsx",
       "children": [
-        "/_auth/organizations",
-        "/_auth/food"
+        "/_auth/login",
+        "/_auth/register"
+      ]
+    },
+    "/_protected": {
+      "filePath": "_protected/route.tsx",
+      "children": [
+        "/_protected/organizations",
+        "/_protected/dashboard"
+      ]
+    },
+    "/legal": {
+      "filePath": "legal/route.tsx",
+      "children": [
+        "/legal/privacy-policy",
+        "/legal/terms-and-conditions"
       ]
     },
     "/about": {
       "filePath": "about.tsx"
     },
-    "/_auth/organizations": {
-      "filePath": "_auth/organizations/route.tsx",
-      "parent": "/_auth",
+    "/_protected/organizations": {
+      "filePath": "_protected/organizations/route.tsx",
+      "parent": "/_protected",
       "children": [
-        "/_auth/organizations/$organizationId/",
-        "/_auth/organizations/$organizationId/actions/edit",
-        "/_auth/organizations/$organizationId/actions/new",
-        "/_auth/organizations/$organizationId/users/",
-        "/_auth/organizations/$organizationId/users/$userId/confirm",
-        "/_auth/organizations/$organizationId/users/$userId/edit",
-        "/_auth/organizations/$organizationId/users/$userId/new",
-        "/_auth/organizations/$organizationId/users/$userId/"
+        "/_protected/organizations/$organizationId/",
+        "/_protected/organizations/$organizationId/actions/edit",
+        "/_protected/organizations/$organizationId/actions/new",
+        "/_protected/organizations/$organizationId/users/",
+        "/_protected/organizations/$organizationId/users/$userId/confirm",
+        "/_protected/organizations/$organizationId/users/$userId/edit",
+        "/_protected/organizations/$organizationId/users/$userId/new",
+        "/_protected/organizations/$organizationId/users/$userId/"
       ]
     },
-    "/_auth/food": {
-      "filePath": "_auth/food.tsx",
+    "/_auth/login": {
+      "filePath": "_auth/login.tsx",
       "parent": "/_auth"
     },
-    "/_auth/organizations/$organizationId/": {
-      "filePath": "_auth/organizations/$organizationId/index.tsx",
-      "parent": "/_auth/organizations"
+    "/_auth/register": {
+      "filePath": "_auth/register.tsx",
+      "parent": "/_auth"
     },
-    "/_auth/organizations/$organizationId/actions/edit": {
-      "filePath": "_auth/organizations/$organizationId/actions/edit.tsx",
-      "parent": "/_auth/organizations"
+    "/_protected/dashboard": {
+      "filePath": "_protected/dashboard.tsx",
+      "parent": "/_protected"
     },
-    "/_auth/organizations/$organizationId/actions/new": {
-      "filePath": "_auth/organizations/$organizationId/actions/new.tsx",
-      "parent": "/_auth/organizations"
+    "/legal/privacy-policy": {
+      "filePath": "legal/privacy-policy.tsx",
+      "parent": "/legal"
     },
-    "/_auth/organizations/$organizationId/users/": {
-      "filePath": "_auth/organizations/$organizationId/users/index.tsx",
-      "parent": "/_auth/organizations"
+    "/legal/terms-and-conditions": {
+      "filePath": "legal/terms-and-conditions.tsx",
+      "parent": "/legal"
     },
-    "/_auth/organizations/$organizationId/users/$userId/confirm": {
-      "filePath": "_auth/organizations/$organizationId/users/$userId/confirm.tsx",
-      "parent": "/_auth/organizations"
+    "/_protected/organizations/$organizationId/": {
+      "filePath": "_protected/organizations/$organizationId/index.tsx",
+      "parent": "/_protected/organizations"
     },
-    "/_auth/organizations/$organizationId/users/$userId/edit": {
-      "filePath": "_auth/organizations/$organizationId/users/$userId/edit.tsx",
-      "parent": "/_auth/organizations"
+    "/_protected/organizations/$organizationId/actions/edit": {
+      "filePath": "_protected/organizations/$organizationId/actions/edit.tsx",
+      "parent": "/_protected/organizations"
     },
-    "/_auth/organizations/$organizationId/users/$userId/new": {
-      "filePath": "_auth/organizations/$organizationId/users/$userId/new.tsx",
-      "parent": "/_auth/organizations"
+    "/_protected/organizations/$organizationId/actions/new": {
+      "filePath": "_protected/organizations/$organizationId/actions/new.tsx",
+      "parent": "/_protected/organizations"
     },
-    "/_auth/organizations/$organizationId/users/$userId/": {
-      "filePath": "_auth/organizations/$organizationId/users/$userId/index.tsx",
-      "parent": "/_auth/organizations"
+    "/_protected/organizations/$organizationId/users/": {
+      "filePath": "_protected/organizations/$organizationId/users/index.tsx",
+      "parent": "/_protected/organizations"
+    },
+    "/_protected/organizations/$organizationId/users/$userId/confirm": {
+      "filePath": "_protected/organizations/$organizationId/users/$userId/confirm.tsx",
+      "parent": "/_protected/organizations"
+    },
+    "/_protected/organizations/$organizationId/users/$userId/edit": {
+      "filePath": "_protected/organizations/$organizationId/users/$userId/edit.tsx",
+      "parent": "/_protected/organizations"
+    },
+    "/_protected/organizations/$organizationId/users/$userId/new": {
+      "filePath": "_protected/organizations/$organizationId/users/$userId/new.tsx",
+      "parent": "/_protected/organizations"
+    },
+    "/_protected/organizations/$organizationId/users/$userId/": {
+      "filePath": "_protected/organizations/$organizationId/users/$userId/index.tsx",
+      "parent": "/_protected/organizations"
     }
   }
 }

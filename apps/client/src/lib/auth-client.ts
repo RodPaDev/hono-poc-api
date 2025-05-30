@@ -14,4 +14,5 @@ export const {
   forgetPassword,
   resetPassword,
   organization,
+  getSession,
 } = authClient;

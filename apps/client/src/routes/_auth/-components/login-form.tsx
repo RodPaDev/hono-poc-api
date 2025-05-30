@@ -20,6 +20,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Link } from "@tanstack/react-router";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -39,8 +40,8 @@ export function LoginForm({ className, onSubmit, ...props }: LoginFormProps) {
   const form = useForm<SignInForm>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "test@test.com",
-      password: "Password123!",
+      email: "",
+      password: "",
     },
   });
 
@@ -93,17 +94,14 @@ export function LoginForm({ className, onSubmit, ...props }: LoginFormProps) {
                 <Button type="submit" className="w-full">
                   Login
                 </Button>
-                <Button variant="outline" className="w-full">
-                  Login with Google
-                </Button>
               </div>
             </form>
           </Form>
           <div className="mt-4 text-center text-sm">
             Don&apos;t have an account?{" "}
-            <a href="#" className="underline underline-offset-4">
+            <Link to="/register" className="underline underline-offset-4">
               Sign up
-            </a>
+            </Link>
           </div>
         </CardContent>
       </Card>
