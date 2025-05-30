@@ -1,17 +1,14 @@
 "use client";
 
-import { type LucideIcon } from "lucide-react";
-
 import {
   SidebarGroup,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { type LucideIcon } from "lucide-react";
 
-export function NavItems({
-  items,
-}: {
+interface Props {
   items: {
     title: string;
     url: string;
@@ -22,7 +19,9 @@ export function NavItems({
       url: string;
     }[];
   }[];
-}) {
+}
+
+export function NavItems({ items }: Props) {
   return (
     <SidebarGroup>
       <SidebarMenu>

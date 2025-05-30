@@ -1,15 +1,17 @@
-import { useSidebar } from "@/components/ui/sidebar";
+import { SidebarMenuButton, useSidebar } from "@/components/ui/sidebar";
+import { ArrowLeftToLine, ArrowRightToLine } from "lucide-react";
 
-interface Props {
-  Icon: React.ElementType;
-}
-
-export function SidebarTrigger({ Icon }: Props) {
-  const { toggleSidebar } = useSidebar();
+export function SidebarTrigger() {
+  const { toggleSidebar, state } = useSidebar();
+  const isOpened = state === "expanded";
+  const title = isOpened ? "Close Sidebar" : "Open Sidebar";
 
   return (
-    <button className="flex justify-end" onClick={toggleSidebar}>
-      <Icon />
+    <button onClick={toggleSidebar}>
+      <SidebarMenuButton tooltip={title}>
+        {isOpened ? <ArrowLeftToLine /> : <ArrowRightToLine />}
+        {isOpened && <span>{title}</span>}
+      </SidebarMenuButton>
     </button>
   );
 }

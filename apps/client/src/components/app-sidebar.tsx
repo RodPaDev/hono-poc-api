@@ -10,12 +10,8 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-  useSidebar,
 } from "@/components/ui/sidebar";
-import { cn } from "@/lib/utils";
 import {
-  ArrowLeftToLine,
-  ArrowRightToLine,
   AudioWaveform,
   Command,
   GalleryVerticalEnd,
@@ -81,7 +77,6 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { state } = useSidebar();
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -90,14 +85,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <NavItems items={data.navItems} />
       </SidebarContent>
-      <SidebarFooter
-        className={cn(
-          "flex items-center",
-          state === "collapsed" ? "flex-col" : "flex-row-reverse",
-        )}>
-        <SidebarTrigger
-          Icon={state === "expanded" ? ArrowLeftToLine : ArrowRightToLine}
-        />
+      <SidebarFooter>
+        <SidebarTrigger />
         <NavUser user={data.user} />
       </SidebarFooter>
       <SidebarRail />
