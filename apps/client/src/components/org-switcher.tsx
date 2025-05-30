@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronsUpDown, Plus } from "lucide-react";
+import { ChevronsUpDown } from "lucide-react";
 import * as React from "react";
 
 import {
@@ -8,7 +8,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -18,6 +17,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { useTranslation } from "react-i18next";
 
 export interface NavOrg {
   name: string;
@@ -31,6 +31,7 @@ interface OrgSwitcherProps {
 
 export function OrgSwitcher({ orgs }: OrgSwitcherProps) {
   const { isMobile } = useSidebar();
+  const { t } = useTranslation();
   const [activeOrg, setActiveOrg] = React.useState(orgs[0]);
 
   if (!activeOrg) {
@@ -60,7 +61,7 @@ export function OrgSwitcher({ orgs }: OrgSwitcherProps) {
             side={isMobile ? "bottom" : "right"}
             sideOffset={4}>
             <DropdownMenuLabel className="text-muted-foreground text-xs">
-              Organizations
+              {t("common.organizations")}
             </DropdownMenuLabel>
             {orgs.map((org, index) => (
               <DropdownMenuItem
@@ -74,13 +75,6 @@ export function OrgSwitcher({ orgs }: OrgSwitcherProps) {
                 <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
               </DropdownMenuItem>
             ))}
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="gap-2 p-2">
-              <div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
-                <Plus className="size-4" />
-              </div>
-              <div className="text-muted-foreground font-medium">Add org</div>
-            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>

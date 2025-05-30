@@ -1,4 +1,4 @@
-import { AppSidebar } from "@/components/app-sidebar";
+import { AppSidebar, type SidebarData } from "@/components/app-sidebar";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -16,8 +16,54 @@ import {
   redirect,
   useRouter,
 } from "@tanstack/react-router";
+import i18next from "i18next";
+import {
+  AudioWaveform,
+  Briefcase,
+  Command,
+  GalleryVerticalEnd,
+  Network,
+} from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Fragment } from "react/jsx-runtime";
+
+const data: SidebarData = {
+  user: {
+    name: "shadcn",
+    email: "m@example.com",
+    avatar: "/avatars/shadcn.jpg",
+  },
+  orgs: [
+    {
+      name: "Acme Inc",
+      logo: GalleryVerticalEnd,
+      id: "Enterprise",
+    },
+    {
+      name: "Acme Corp.",
+      logo: AudioWaveform,
+      id: "Startup",
+    },
+    {
+      name: "Evil Corp.",
+      logo: Command,
+      id: "Free",
+    },
+  ],
+  navItems: [
+    {
+      title: i18next.t("common.myOrganization"),
+      url: "/dashboard",
+      icon: Briefcase,
+      isActive: true,
+    },
+    {
+      title: i18next.t("common.organizations"),
+      url: "/organizations",
+      icon: Network,
+    },
+  ],
+};
 
 export const Route = createFileRoute("/_protected")({
   beforeLoad: async ({ location }) => {
@@ -45,7 +91,7 @@ function RouteComponent() {
   return (
     <Fragment>
       <SidebarProvider defaultOpen={true}>
-        <AppSidebar onClickLogout={handleLogout} />
+        <AppSidebar data={data} onClickLogout={handleLogout} />
         <SidebarInset>
           <header className="sticky top-0 flex shrink-0 items-center gap-2 border-b bg-background p-4">
             <Breadcrumb>
