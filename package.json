@@ -4,18 +4,11 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm --filter @fsm/api --filter @fsm/client --parallel run dev",
-    "api:dev": "pnpm --filter api dev",
-    "client:dev": "pnpm --filter client dev",
     "build": "pnpm --filter \"*\" build",
-    "api:build": "pnpm --filter api build",
-    "client:build": "pnpm --filter client build",
     "lint": "pnpm --filter \"*\" lint",
-    "api:lint": "pnpm --filter api lint",
-    "client:lint": "pnpm --filter client lint",
     "start": "pnpm --filter @fsm/api --filter @fsm/client --parallel run start",
-    "api:start": "pnpm --filter api start",
-    "client:start": "pnpm --filter client start",
-    "test:unit": "pnpm --filter \"*\" test:unit"
+    "test:unit": "pnpm --filter \"*\" test:unit",
+    "docker:api": "docker build -f apps/api/Dockerfile -t api-app ."
   },
   "devDependencies": {
     "@types/node": "22.15.23",

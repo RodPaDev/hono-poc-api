@@ -4,7 +4,6 @@
   "type": "module",
   "private": true,
   "main": "./src/index.ts",
-  "packageManager": "pnpm@10.11.0",
   "scripts": {
     "lint": "eslint . --ext .ts,.tsx"
   }
