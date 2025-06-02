@@ -29,6 +29,7 @@ const user = bussinessAc.newRole({
 
 export const auth = betterAuth({
   trustedOrigins: Env.ALLOWED_ORIGINS,
+  secret: Env.BETTER_AUTH_SECRET,
   database: drizzleAdapter(db, {
     provider: "pg",
     schema,
