@@ -1,6 +1,5 @@
 import { createRootRoute, HeadContent, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
-
 import { Fragment } from "react/jsx-runtime";
 
 export const Route = createRootRoute({
@@ -11,7 +10,9 @@ export const Route = createRootRoute({
     return (
       <Fragment>
         <HeadContent />
-        <Outlet />
+        <div className="w-screen h-screen">
+          <Outlet />
+        </div>
         <TanStackRouterDevtools position="bottom-right" />
       </Fragment>
     );

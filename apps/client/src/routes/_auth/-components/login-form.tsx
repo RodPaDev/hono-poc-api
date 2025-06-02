@@ -1,6 +1,3 @@
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -18,25 +15,30 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { signIn } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "@tanstack/react-router";
+import { Link, useRouter } from "@tanstack/react-router";
+import { t } from "i18next";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 
 const formSchema = z.object({
-  email: z.string().email({ message: "Invalid email address" }),
+  email: z.string().email({ message: t("authentication.login.invalidEmail") }),
   password: z
     .string()
-    .min(6, { message: "Password must be at least 6 characters long" }),
+    .min(6, { message: t("authentication.login.invalidPassword") }),
 });
 
 export type SignInForm = z.infer<typeof formSchema>;
 
 type LoginFormProps = {
-  onSubmit: (values: SignInForm) => Promise<void> | void;
   className?: string;
 };
 
-export function LoginForm({ className, onSubmit, ...props }: LoginFormProps) {
+export function LoginForm({ className, ...props }: LoginFormProps) {
+  const router = useRouter();
   const form = useForm<SignInForm>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -45,28 +47,56 @@ export function LoginForm({ className, onSubmit, ...props }: LoginFormProps) {
     },
   });
 
+  async function handleLogin(values: SignInForm) {
+    try {
+      const { error } = await signIn.email(
+        { email: values.email, password: values.password },
+        {
+          onSuccess: async () => {
+            router.invalidate();
+          },
+        },
+      );
+      if (error?.code) {
+        toast.error(t(`errors.${error.code}`));
+        // eslint-disable-next-line no-console
+        console.error("Login failed:", error);
+      }
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error("Login failed:", err);
+    }
+  }
+
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card>
+    <div
+      className={cn(
+        "flex flex-col gap-6 w-full max-w-md p-8 text-center",
+        className,
+      )}
+      {...props}>
+      <Card className="bg-transparent border-transparent shadow-none">
         <CardHeader>
-          <CardTitle>Login to your account</CardTitle>
+          <CardTitle>{t("authentication.login.title")}</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            {t("authentication.login.subtitle")}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <form
+              onSubmit={form.handleSubmit(handleLogin)}
+              className="space-y-6">
               <FormField
                 control={form.control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>{t("authentication.login.email")}</FormLabel>
                     <FormControl>
-                      <Input placeholder="m@example.com" {...field} />
+                      <Input {...field} />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-left" />
                   </FormItem>
                 )}
               />
@@ -75,32 +105,32 @@ export function LoginForm({ className, onSubmit, ...props }: LoginFormProps) {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <div className="flex items-center">
-                      <FormLabel>Password</FormLabel>
-                      <a
-                        href="#"
-                        className="ml-auto inline-block text-sm underline-offset-4 hover:underline">
-                        Forgot your password?
-                      </a>
+                    <div className="flex items-center justify-between">
+                      <FormLabel>
+                        {t("authentication.login.password")}
+                      </FormLabel>
+                      <Link to="/forgot-password" className="underline text-sm">
+                        {t("authentication.login.forgotPassword")}
+                      </Link>
                     </div>
                     <FormControl>
                       <Input type="password" {...field} />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-left" />
                   </FormItem>
                 )}
               />
               <div className="flex flex-col gap-3">
                 <Button type="submit" className="w-full">
-                  Login
+                  {t("authentication.login.loginButton")}
                 </Button>
               </div>
             </form>
           </Form>
           <div className="mt-4 text-center text-sm">
-            Don&apos;t have an account?{" "}
+            {t("authentication.login.createAccount")}{" "}
             <Link to="/register" className="underline underline-offset-4">
-              Sign up
+              {t("authentication.login.signUpButton")}
             </Link>
           </div>
         </CardContent>

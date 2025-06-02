@@ -1,11 +1,6 @@
 import { user } from "@/models/better-auth/auth.model";
 import { type InvitationStatus } from "better-auth/plugins";
-import {
-  pgTable,
-  text,
-  timestamp,
-  type AnyPgColumn,
-} from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 /* * * * * * * * * *
  * !! DO NOT EDIT !!

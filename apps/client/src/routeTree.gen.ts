@@ -20,6 +20,7 @@ import { Route as LegalPrivacyPolicyImport } from './routes/legal/privacy-policy
 import { Route as ProtectedDashboardImport } from './routes/_protected/dashboard'
 import { Route as AuthRegisterImport } from './routes/_auth/register'
 import { Route as AuthLoginImport } from './routes/_auth/login'
+import { Route as AuthForgotPasswordImport } from './routes/_auth/forgot-password'
 import { Route as ProtectedOrganizationsRouteImport } from './routes/_protected/organizations/route'
 import { Route as ProtectedOrganizationsOrganizationIdIndexImport } from './routes/_protected/organizations/$organizationId/index'
 import { Route as ProtectedOrganizationsOrganizationIdUsersIndexImport } from './routes/_protected/organizations/$organizationId/users/index'
@@ -81,6 +82,12 @@ const AuthRegisterRoute = AuthRegisterImport.update({
 const AuthLoginRoute = AuthLoginImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+
+const AuthForgotPasswordRoute = AuthForgotPasswordImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
   getParentRoute: () => AuthRouteRoute,
 } as any)
 
@@ -186,6 +193,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedOrganizationsRouteImport
       parentRoute: typeof ProtectedRouteImport
     }
+    '/_auth/forgot-password': {
+      id: '/_auth/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof AuthForgotPasswordImport
+      parentRoute: typeof AuthRouteImport
+    }
     '/_auth/login': {
       id: '/_auth/login'
       path: '/login'
@@ -283,11 +297,13 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AuthRouteRouteChildren {
+  AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
   AuthLoginRoute: typeof AuthLoginRoute
   AuthRegisterRoute: typeof AuthRegisterRoute
 }
 
 const AuthRouteRouteChildren: AuthRouteRouteChildren = {
+  AuthForgotPasswordRoute: AuthForgotPasswordRoute,
   AuthLoginRoute: AuthLoginRoute,
   AuthRegisterRoute: AuthRegisterRoute,
 }
@@ -366,6 +382,7 @@ export interface FileRoutesByFullPath {
   '': typeof ProtectedRouteRouteWithChildren
   '/legal': typeof LegalRouteRouteWithChildren
   '/organizations': typeof ProtectedOrganizationsRouteRouteWithChildren
+  '/forgot-password': typeof AuthForgotPasswordRoute
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
   '/dashboard': typeof ProtectedDashboardRoute
@@ -386,6 +403,7 @@ export interface FileRoutesByTo {
   '': typeof ProtectedRouteRouteWithChildren
   '/legal': typeof LegalRouteRouteWithChildren
   '/organizations': typeof ProtectedOrganizationsRouteRouteWithChildren
+  '/forgot-password': typeof AuthForgotPasswordRoute
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
   '/dashboard': typeof ProtectedDashboardRoute
@@ -408,6 +426,7 @@ export interface FileRoutesById {
   '/_protected': typeof ProtectedRouteRouteWithChildren
   '/legal': typeof LegalRouteRouteWithChildren
   '/_protected/organizations': typeof ProtectedOrganizationsRouteRouteWithChildren
+  '/_auth/forgot-password': typeof AuthForgotPasswordRoute
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/register': typeof AuthRegisterRoute
   '/_protected/dashboard': typeof ProtectedDashboardRoute
@@ -430,6 +449,7 @@ export interface FileRouteTypes {
     | ''
     | '/legal'
     | '/organizations'
+    | '/forgot-password'
     | '/login'
     | '/register'
     | '/dashboard'
@@ -449,6 +469,7 @@ export interface FileRouteTypes {
     | ''
     | '/legal'
     | '/organizations'
+    | '/forgot-password'
     | '/login'
     | '/register'
     | '/dashboard'
@@ -469,6 +490,7 @@ export interface FileRouteTypes {
     | '/_protected'
     | '/legal'
     | '/_protected/organizations'
+    | '/_auth/forgot-password'
     | '/_auth/login'
     | '/_auth/register'
     | '/_protected/dashboard'
@@ -521,6 +543,7 @@ export const routeTree = rootRoute
     "/_auth": {
       "filePath": "_auth/route.tsx",
       "children": [
+        "/_auth/forgot-password",
         "/_auth/login",
         "/_auth/register"
       ]
@@ -552,6 +575,10 @@ export const routeTree = rootRoute
         "/_protected/organizations/$organizationId/users/$userId/new",
         "/_protected/organizations/$organizationId/users/$userId/"
       ]
+    },
+    "/_auth/forgot-password": {
+      "filePath": "_auth/forgot-password.tsx",
+      "parent": "/_auth"
     },
     "/_auth/login": {
       "filePath": "_auth/login.tsx",

@@ -1,6 +1,23 @@
 {
   "translation": {
     "allInbox": "Welcome to React and react-i18next",
-    "common": {}
+    "common": {},
+    "authentication": {
+      "login": {
+        "title": "Login to your account",
+        "subtitle": "Enter your email below to login to your account",
+        "email": "Email",
+        "password": "Password",
+        "invalidEmail": "Please enter a valid email address",
+        "invalidPassword": "Password must be at least 6 characters",
+        "forgotPassword": "Forgot your password?",
+        "createAccount": "Don't have an account?",
+        "loginButton": "Login",
+        "signUpButton": "Sign Up"
+      }
+    },
+    "errors": {
+      "INVALID_EMAIL_OR_PASSWORD": "Invalid email or password"
+    }
   }
 }

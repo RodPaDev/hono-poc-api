@@ -1,10 +1,7 @@
-/* eslint-disable no-console */
 import { Button } from "@/components/ui/button";
 import { apiClient } from "@/lib/api-client";
 import { organization, signOut, useSession } from "@/lib/auth-client";
-import { Auth } from "@/pages/auth";
 import type { MeteoriteLanding } from "@fsm/types";
-
 import {
   keepPreviousData,
   QueryClient,
@@ -13,6 +10,7 @@ import {
 } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { z } from "zod";
+// import { Auth } from "@/pages/auth";
 
 const queryClient = new QueryClient();
 
@@ -173,7 +171,8 @@ function InnerApp() {
           )}
         </div>
       ) : (
-        <Auth />
+        <div>Authtest</div>
+        // <Auth />
       )}
     </div>
   );

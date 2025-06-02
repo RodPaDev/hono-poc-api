@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/sonner";
 import "@/index.css";
 import { routeTree } from "@/routeTree.gen";
 import enTranslations from "@/translations/en.json";
@@ -24,7 +25,7 @@ i18n.use(initReactI18next).init({
   missingKeyHandler: (_lng, _ns, _key, _fallbackValue) => {
     // UNCOMMENT THIS TO LOG MISSING TRANSLATIONS IN BROWSER CONSOLE
     // console.log(
-    //   `Missing translation - Language: ${lng}, Namespace: ${ns}, Key: ${key}`,
+    //   `Missing translation - Language: ${_lng}, Namespace: ${_ns}, Key: ${_key}`,
     // );
   },
 });
@@ -48,6 +49,12 @@ if (!rootElement.innerHTML) {
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
       </QueryClientProvider>
+      <Toaster
+        richColors={true}
+        expand={true}
+        position="bottom-right"
+        theme="light"
+      />
     </StrictMode>,
   );
 }
