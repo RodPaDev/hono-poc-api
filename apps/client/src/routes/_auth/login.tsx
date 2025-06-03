@@ -1,3 +1,4 @@
+import { AuthCover } from "@/routes/_auth/-components/auth-cover";
 import { LoginForm } from "@/routes/_auth/-components/login-form";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -17,11 +18,7 @@ export function LoginPage() {
         <LoginForm />
       </div>
       <div className="w-1/2 h-full">
-        <img
-          src="auth/screen-cover.png"
-          alt="screen-cover"
-          className="w-full h-full object-cover object-center"
-        />
+        <AuthCover />
       </div>
     </div>
   );
