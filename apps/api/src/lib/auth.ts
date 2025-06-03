@@ -1,16 +1,16 @@
-import { betterAuth } from "better-auth";
-import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { admin, openAPI, organization } from "better-auth/plugins";
-import type { Context, Next } from "hono";
-
 import { AppConfig } from "@/config/app.config";
 import { Env } from "@/env";
 import { db } from "@/lib/db";
+import { sendEmail } from "@/lib/email";
 import { logger } from "@/lib/logger";
 import * as schema from "@/models";
+import { betterAuth } from "better-auth";
+import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { admin, emailOTP, openAPI, organization } from "better-auth/plugins";
 import { createAccessControl } from "better-auth/plugins/access";
 import { defaultRoles as defaultAdminRoles } from "better-auth/plugins/admin/access";
 import { defaultRoles as defaultOrganizationRoles } from "better-auth/plugins/organization/access";
+import type { Context, Next } from "hono";
 
 const permissions = {
   "meteorite-landing": ["read", "create", "update", "delete"],
@@ -41,6 +41,19 @@ export const auth = betterAuth({
     }),
     admin({
       roles: defaultAdminRoles,
+    }),
+    emailOTP({
+      async sendVerificationOTP({ email, otp, type }) {
+        switch (type) {
+          case "forget-password":
+            sendEmail(email, "ForgotPassword", {
+              otp,
+            });
+            break;
+          default:
+            break;
+        }
+      },
     }),
     organization({
       ac: bussinessAc,

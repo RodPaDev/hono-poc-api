@@ -15,6 +15,7 @@ const EnvSchema = z.object({
     message: "Invalid DB URL, e.g. 'postgres://user:pass@host:5432/db'",
   }),
   BETTER_AUTH_SECRET: z.string().nonempty("BETTER_AUTH_SECRET is required"),
+  RESEND_API_KEY: z.string().nonempty("RESEND_API_KEY is required"),
   ALLOWED_ORIGINS: z
     .string()
     .nonempty("ALLOWED_ORIGINS is required")
