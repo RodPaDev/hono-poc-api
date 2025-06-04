@@ -25,10 +25,8 @@ import { toast } from "sonner";
 import { z } from "zod";
 
 const formSchema = z.object({
-  email: z.string().email({ message: t("authentication.login.invalidEmail") }),
-  password: z
-    .string()
-    .min(6, { message: t("authentication.login.invalidPassword") }),
+  email: z.string().email({ message: t("authentication.invalidEmail") }),
+  password: z.string().min(6, { message: t("authentication.invalidPassword") }),
 });
 
 export type SignInForm = z.infer<typeof formSchema>;
@@ -92,7 +90,7 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("authentication.login.email")}</FormLabel>
+                    <FormLabel>{t("authentication.email")}</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -106,9 +104,7 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
                 render={({ field }) => (
                   <FormItem>
                     <div className="flex items-center justify-between">
-                      <FormLabel>
-                        {t("authentication.login.password")}
-                      </FormLabel>
+                      <FormLabel>{t("authentication.password")}</FormLabel>
                       <Link to="/forgot-password" className="underline text-sm">
                         {t("authentication.login.forgotPassword")}
                       </Link>
