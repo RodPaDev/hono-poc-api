@@ -1,4 +1,10 @@
 import { AppConfig } from "@/config/app.config";
+import {
+  ORGANIZATION_ROLES,
+  organizationAC,
+  USER_ROLES,
+  userAC,
+} from "@/config/permissions.config";
 import { Env } from "@/env";
 import { db } from "@/lib/db";
 import { sendEmail } from "@/lib/email";
@@ -6,26 +12,8 @@ import { logger } from "@/lib/logger";
 import * as schema from "@/models";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { admin, emailOTP, openAPI, organization } from "better-auth/plugins";
-import { createAccessControl } from "better-auth/plugins/access";
-import { defaultRoles as defaultAdminRoles } from "better-auth/plugins/admin/access";
-import { defaultRoles as defaultOrganizationRoles } from "better-auth/plugins/organization/access";
+import * as plugins from "better-auth/plugins";
 import type { Context, Next } from "hono";
-
-const permissions = {
-  "meteorite-landing": ["read", "create", "update", "delete"],
-  "meteorite-landing:year": ["read", "create", "update", "delete"],
-} as const;
-
-export type RolePermissions = {
-  [K in keyof typeof permissions]?: Array<(typeof permissions)[K][number]>;
-};
-
-export const bussinessAc = createAccessControl(permissions);
-
-const user = bussinessAc.newRole({
-  "meteorite-landing": ["read", "create", "update", "delete"],
-});
 
 export const auth = betterAuth({
   trustedOrigins: Env.ALLOWED_ORIGINS,
@@ -35,14 +23,15 @@ export const auth = betterAuth({
     schema,
   }),
   plugins: [
-    openAPI({
+    plugins.openAPI({
       path: "/docs",
       disableDefaultReference: !AppConfig.EXPOSE_OPEN_API,
     }),
-    admin({
-      roles: defaultAdminRoles,
+    plugins.admin({
+      ac: userAC,
+      roles: USER_ROLES,
     }),
-    emailOTP({
+    plugins.emailOTP({
       async sendVerificationOTP({ email, otp, type }) {
         switch (type) {
           case "forget-password":
@@ -55,12 +44,9 @@ export const auth = betterAuth({
         }
       },
     }),
-    organization({
-      ac: bussinessAc,
-      roles: {
-        ...defaultOrganizationRoles,
-        user,
-      },
+    plugins.organization({
+      ac: organizationAC,
+      roles: ORGANIZATION_ROLES,
     }),
   ],
   emailAndPassword: {

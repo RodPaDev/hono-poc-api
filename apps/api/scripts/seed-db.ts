@@ -47,11 +47,11 @@ async function runMigrations(db: NodePgDatabase) {
 }
 
 async function main() {
-  // const shouldContinue = await askToContinue();
-  // if (!shouldContinue) {
-  //   logger.info("Seed operation cancelled.");
-  //   return;
-  // }
+  const shouldContinue = await askToContinue();
+  if (!shouldContinue) {
+    logger.info("Seed operation cancelled.");
+    return;
+  }
 
   logger.info("Starting seed...");
   await dbClient.connect();
@@ -59,12 +59,46 @@ async function main() {
   await clearAllTables();
   await runMigrations(db);
 
-  await auth.api.createUser({
+  const { user: platformAdmin } = await auth.api.createUser({
     body: {
       email: "platform.admin@altar.io",
       password: "qqqqqQ1!",
       name: "Platform Admin",
       role: "admin",
+    },
+  });
+
+  const { user: user1 } = await auth.api.createUser({
+    body: {
+      email: "user1@altar.io",
+      password: "qqqqqQ1!",
+      name: "User1",
+      role: "user",
+    },
+  });
+
+  const { user: user2 } = await auth.api.createUser({
+    body: {
+      email: "user2@altar.io",
+      password: "qqqqqQ1!",
+      name: "User2",
+      role: "user",
+    },
+  });
+
+  await auth.api.createOrganization({
+    body: {
+      name: "Organization 1",
+      slug: "organization-1",
+      userId: user1.id,
+    },
+  });
+
+  await auth.api.createOrganization({
+    body: {
+      name: "Organization 2",
+      slug: "organization-2",
+      userId: user2.id,
     },
   });
 
