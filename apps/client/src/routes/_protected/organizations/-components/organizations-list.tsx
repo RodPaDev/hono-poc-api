@@ -60,8 +60,15 @@ const OrganizationRow = ({ data }: { data: OrganizationRowProps }) => {
   );
 };
 
-export const OrganizationsList = () => {
-  const { data: organizations } = useGetOrganizations();
+interface OrganizationsListProps {
+  filters: {
+    search?: string;
+    status?: OrganizationStatus;
+  };
+}
+
+export const OrganizationsList = ({ filters }: OrganizationsListProps) => {
+  const { data: organizations } = useGetOrganizations(filters);
   const hasOrganizations = organizations && organizations.length > 0;
 
   return (
@@ -85,6 +92,7 @@ export const OrganizationsList = () => {
                 const orgMetadata = parseOrganizationMetadata(org.metadata);
                 return (
                   <OrganizationRow
+                    key={org.id}
                     data={{
                       image: org.logo,
                       name: org.name,

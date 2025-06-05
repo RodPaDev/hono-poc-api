@@ -1,13 +1,5 @@
+import { OrganizationStatus } from "@fsm/common";
 import z from "zod";
-
-export enum OrganizationStatus {
-  ACTIVE = "active",
-  INACTIVE = "inactive",
-}
-
-export type OrganizationMetadata = {
-  status: OrganizationStatus;
-};
 
 export const FilterOrganizationsSchema = z.object({
   search: z.string().optional(),

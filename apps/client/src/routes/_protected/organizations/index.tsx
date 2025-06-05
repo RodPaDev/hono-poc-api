@@ -1,11 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { Sheet } from "@/components/ui/sheet";
-import { AddOrganization } from "@/routes/_protected/organizations/-components/add-organization";
 import {
   OrganizationsFilter,
   type TabsType,
 } from "@/routes/_protected/organizations/-components/organizations-filter";
 import { OrganizationsList } from "@/routes/_protected/organizations/-components/organizations-list";
+import { OrganizationStatus } from "@fsm/common";
 import { createFileRoute } from "@tanstack/react-router";
 import { t } from "i18next";
 import { Plus } from "lucide-react";
@@ -17,10 +16,13 @@ export const Route = createFileRoute("/_protected/organizations/")({
 
 function OrganizationsPage() {
   const [isOpened, setIsOpened] = useState(false);
+  const [search, setSearch] = useState<string>("");
+  const [activeTab, setActiveTab] = useState<TabsType>("all");
 
-  const handleOpenChange = (type: TabsType, searchValue: string) => {
-    console.log("Filter changed to:", type);
-    console.log("Search changed to:", searchValue);
+  const getStatusFilter = (tab: TabsType): OrganizationStatus | undefined => {
+    if (tab === "active") return OrganizationStatus.ACTIVE;
+    if (tab === "inactive") return OrganizationStatus.INACTIVE;
+    return undefined;
   };
 
   return (
@@ -34,17 +36,15 @@ function OrganizationsPage() {
           {t("organization.createOrganization")}
         </Button>
       </div>
-      <OrganizationsFilter onFilterChange={handleOpenChange} />
-      <OrganizationsList />
-      {/* <div>Hello "/_protected/organizations/"!</div>;
-      <Sheet open={isOpened} onOpenChange={setIsOpened}>
-        <AddOrganization />
-      </Sheet>
-      <div>
-        <Button onClick={() => setIsOpened((state) => !state)}>
-          Create Organization
-        </Button>
-      </div> */}
+      <OrganizationsFilter
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+        search={search}
+        onSearchChange={setSearch}
+      />
+      <OrganizationsList
+        filters={{ search, status: getStatusFilter(activeTab) }}
+      />
     </div>
   );
 }
