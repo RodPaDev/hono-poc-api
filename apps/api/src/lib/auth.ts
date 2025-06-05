@@ -48,6 +48,20 @@ export const auth = betterAuth({
     plugins.organization({
       ac: organizationAC,
       roles: ORGANIZATION_ROLES,
+      organizationCreation: {
+        beforeCreate: async ({ organization }) => {
+          const metadata: OrganizationMetadata = {
+            status: OrganizationStatus.ACTIVE, // Default status for new organizations
+          };
+
+          return {
+            data: {
+              ...organization,
+              metadata,
+            },
+          };
+        },
+      },
     }),
   ],
   emailAndPassword: {

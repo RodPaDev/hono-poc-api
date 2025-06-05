@@ -1,20 +1,17 @@
 import type { HonoContext } from "@/lib/context";
 import { db } from "@/lib/db";
 import { isPlatformAdmin } from "@/middlewares/authorization.middleware";
-import { organization } from "@/models";
-import { zValidator } from "@hono/zod-validator";
+import { OrganizationRepository } from "@/repositories/organization.repository";
+import { OrganizationService } from "@/services/organization.service";
 import { Hono } from "hono";
+
+const organizationRepository = new OrganizationRepository(db);
+const organizationService = new OrganizationService(organizationRepository);
 
 export const organizationRouter = new Hono<HonoContext>()
   .use(isPlatformAdmin)
-  .get(
-    "/",
-    // zValidator("query", querySchema),
-    async (c) => {
-      const orgs = await db.select().from(organization);
+  .get("/", async (c) => {
+    const orgs = await organizationService.getAll();
 
-      // console.log("Fetched organizations:", orgs);
-
-      return c.json(orgs);
-    },
-  );
+    return c.json(orgs);
+  });

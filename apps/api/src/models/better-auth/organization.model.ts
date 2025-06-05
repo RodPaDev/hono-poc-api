@@ -30,6 +30,7 @@ export const organization = pgTable("organization", {
    * * *  DO NOT EDIT - END  (fields required by BetterAuth - Organization Plugin  * * *
    * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 });
+export type OrganizationSelect = typeof organization.$inferSelect;
 
 export const member = pgTable("member", {
   /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
