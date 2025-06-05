@@ -113,7 +113,7 @@ export const OrganizationsList = ({ filters }: OrganizationsListProps) => {
           <div className="p-3 border border-[#E5E5E5] w-fit rounded-lg">
             <Inbox className="size-5" />
           </div>
-          <p className="text-2xl font-bold mt-5">
+          <p className="text-2xl font-semibold mt-5">
             {t("organization.noOrganizationsTitle")}
           </p>
           <p className="text-[#737373] mt-2">

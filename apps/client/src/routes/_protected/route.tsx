@@ -1,14 +1,6 @@
 import { AppSidebar } from "@/components/app-sidebar";
 import type { NavItem } from "@/components/nav-items";
 import type { NavOrg, NavUser } from "@/components/nav-user";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { authClient, getSession, signOut } from "@/lib/auth-client";
@@ -22,7 +14,6 @@ import {
 import i18next from "i18next";
 import { Briefcase, Network } from "lucide-react";
 import { useCallback, useEffect } from "react";
-import { useTranslation } from "react-i18next";
 import { Fragment } from "react/jsx-runtime";
 
 const navItems: NavItem[] = [
@@ -73,8 +64,6 @@ function RouteComponent() {
     isPending: isActiveOrganizationPending,
     refetch: refetchActiveOrganization,
   } = authClient.useActiveOrganization();
-
-  const { t } = useTranslation();
 
   const setActiveOrg = useCallback(
     async (organizationId: string) => {
