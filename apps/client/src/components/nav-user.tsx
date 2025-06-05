@@ -1,5 +1,3 @@
-"use client";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -16,30 +14,58 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { Spinner } from "@/components/ui/spinner";
+import { cn } from "@/lib/utils";
+import type { BetterFetchError } from "better-auth/react";
 
-import {
-  ChevronsUpDown,
-  CircleHelp,
-  LogOut,
-  Search,
-  Settings,
-} from "lucide-react";
+import { EllipsisVertical, LogOut, Settings } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { Fragment } from "react/jsx-runtime";
 
 export interface NavUser {
   name: string;
   email: string;
   avatar: string;
+  userRole: "admin" | "user";
+  activeOrgId?: string;
+}
+
+export interface NavOrg {
+  name: string;
+  logo: React.ComponentType<{ className?: string }>;
+  id: string;
+}
+
+export interface AsyncOrganizations {
+  list: NavOrg[];
+  isPending: boolean;
+  error: BetterFetchError | null;
 }
 
 interface Props {
   user: NavUser;
-  onClickLogout?: () => void;
+  organizations: AsyncOrganizations;
+  onClickOrg: (org: NavOrg) => void;
+  onClickLogout: () => void;
 }
 
-export function NavUser({ user, onClickLogout }: Props) {
+export function NavUser({
+  organizations,
+  user,
+  onClickOrg,
+  onClickLogout,
+}: Props) {
   const { t } = useTranslation();
   const { isMobile } = useSidebar();
+
+  const getInitials = (name: string) => {
+    const names = name.split(" ");
+    const firstInitial = names[0] ? names[0][0].toUpperCase() : "";
+    const lastInitial = names[names.length - 1]
+      ? names[names.length - 1][0].toUpperCase()
+      : "";
+    return `${firstInitial}${lastInitial}`;
+  };
 
   return (
     <SidebarMenu>
@@ -51,50 +77,80 @@ export function NavUser({ user, onClickLogout }: Props) {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarFallback className="rounded-lg">
+                  {getInitials(user.name)}
+                </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{user.name}</span>
                 <span className="truncate text-xs">{user.email}</span>
               </div>
-              <ChevronsUpDown className="ml-auto size-4" />
+              <EllipsisVertical className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-            side={isMobile ? "bottom" : "right"}
+            side={isMobile ? "bottom" : "top"}
             align="end"
             sideOffset={4}>
-            <DropdownMenuLabel className="p-0 font-normal">
-              <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
-                </Avatar>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
-                </div>
-              </div>
-            </DropdownMenuLabel>
-            <DropdownMenuSeparator />
+            {organizations.isPending && !organizations.error && (
+              <Fragment>
+                <DropdownMenuGroup>
+                  <DropdownMenuLabel className="text-muted-foreground text-xs">
+                    {t("common.organizations")}
+                    <Spinner
+                      size="sm"
+                      className="mt-1 bg-sidebar-accent-foreground"
+                    />
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                </DropdownMenuGroup>
+              </Fragment>
+            )}
+            {!organizations.isPending &&
+              !organizations.error &&
+              organizations.list.length > 0 && (
+                <Fragment>
+                  <DropdownMenuGroup>
+                    <DropdownMenuLabel className="text-muted-foreground text-xs">
+                      {t("common.organizations")}
+                    </DropdownMenuLabel>
+
+                    <DropdownMenuLabel className="p-0 font-normal">
+                      {organizations.list.map((org) => (
+                        <SidebarMenuButton
+                          key={org.name}
+                          onClick={() => onClickOrg(org)}
+                          disabled={org.id === user.activeOrgId}
+                          className={cn(
+                            "gap-2 p-2",
+                            org.id === user.activeOrgId &&
+                              "bg-sidebar-primary text-sidebar-primary-foreground border-sidebar-primary hover:bg-sidebar-primary hover:text-sidebar-primary-foreground",
+                          )}>
+                          <div
+                            className={cn(
+                              org.id === user.activeOrgId &&
+                                "bg-sidebar-primary text-sidebar-primary-foreground border-sidebar-primary hover:bg-sidebar-primary hover:text-sidebar-primary-foreground",
+                              "flex size-6 items-center justify-center rounded-md border",
+                            )}>
+                            <org.logo className="size-3.5 shrink-0" />
+                          </div>
+                          {org.name}
+                        </SidebarMenuButton>
+                      ))}
+                    </DropdownMenuLabel>
+                  </DropdownMenuGroup>
+                  <DropdownMenuSeparator />
+                </Fragment>
+              )}
+
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <Settings />
-                {t("common.settings")}
+                {t("common.profileSettings")}
               </DropdownMenuItem>
             </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <CircleHelp />
-                {t("common.help")}
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Search />
-                {t("common.search")}
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
+
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={onClickLogout}>
               <LogOut />

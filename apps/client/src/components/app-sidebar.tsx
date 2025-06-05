@@ -1,9 +1,10 @@
-"use client";
-
 import { NavItems, type NavItem } from "@/components/nav-items";
-import { NavUser } from "@/components/nav-user";
-import { OrgSwitcher, type NavOrg } from "@/components/org-switcher";
-import { SidebarTrigger } from "@/components/sidebar-trigger";
+import {
+  NavUser,
+  type AsyncOrganizations,
+  type NavOrg,
+} from "@/components/nav-user";
+import { IntusLogo } from "@/components/svgr/IntusLogo";
 import {
   Sidebar,
   SidebarContent,
@@ -14,30 +15,37 @@ import {
 
 import * as React from "react";
 
-export interface SidebarData {
+interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  onClickLogout: () => void;
+  onClickOrg: (org: NavOrg) => void;
   user: NavUser;
-  orgs: NavOrg[];
+  organizations: AsyncOrganizations;
   navItems: NavItem[];
 }
 
-
-interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
-  onClickLogout: () => void;
-  data: SidebarData;
-}
-
-export function AppSidebar({ onClickLogout,data , ...props}: AppSidebarProps) {
+export function AppSidebar({
+  onClickOrg,
+  onClickLogout,
+  user,
+  organizations,
+  navItems,
+  ...props
+}: AppSidebarProps) {
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar className="h-screen" collapsible="none" {...props}>
       <SidebarHeader>
-        <OrgSwitcher orgs={data.orgs} />
+        <IntusLogo />
       </SidebarHeader>
       <SidebarContent>
-        <NavItems items={data.navItems} />
+        <NavItems items={navItems} />
       </SidebarContent>
       <SidebarFooter>
-        <SidebarTrigger />
-        <NavUser onClickLogout={onClickLogout} user={data.user} />
+        <NavUser
+          onClickLogout={onClickLogout}
+          onClickOrg={onClickOrg}
+          organizations={organizations}
+          user={user}
+        />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
