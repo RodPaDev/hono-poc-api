@@ -18,10 +18,11 @@ import { Route as IndexImport } from './routes/index'
 import { Route as LegalTermsAndConditionsImport } from './routes/legal/terms-and-conditions'
 import { Route as LegalPrivacyPolicyImport } from './routes/legal/privacy-policy'
 import { Route as ProtectedDashboardImport } from './routes/_protected/dashboard'
+import { Route as AuthResetPasswordImport } from './routes/_auth/reset-password'
 import { Route as AuthRegisterImport } from './routes/_auth/register'
 import { Route as AuthLoginImport } from './routes/_auth/login'
 import { Route as AuthForgotPasswordImport } from './routes/_auth/forgot-password'
-import { Route as ProtectedOrganizationsRouteImport } from './routes/_protected/organizations/route'
+import { Route as ProtectedOrganizationsIndexImport } from './routes/_protected/organizations/index'
 import { Route as ProtectedOrganizationsOrganizationIdIndexImport } from './routes/_protected/organizations/$organizationId/index'
 import { Route as ProtectedOrganizationsOrganizationIdUsersIndexImport } from './routes/_protected/organizations/$organizationId/users/index'
 import { Route as ProtectedOrganizationsOrganizationIdActionsNewImport } from './routes/_protected/organizations/$organizationId/actions/new'
@@ -73,6 +74,12 @@ const ProtectedDashboardRoute = ProtectedDashboardImport.update({
   getParentRoute: () => ProtectedRouteRoute,
 } as any)
 
+const AuthResetPasswordRoute = AuthResetPasswordImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+
 const AuthRegisterRoute = AuthRegisterImport.update({
   id: '/register',
   path: '/register',
@@ -91,67 +98,67 @@ const AuthForgotPasswordRoute = AuthForgotPasswordImport.update({
   getParentRoute: () => AuthRouteRoute,
 } as any)
 
-const ProtectedOrganizationsRouteRoute =
-  ProtectedOrganizationsRouteImport.update({
-    id: '/organizations',
-    path: '/organizations',
+const ProtectedOrganizationsIndexRoute =
+  ProtectedOrganizationsIndexImport.update({
+    id: '/organizations/',
+    path: '/organizations/',
     getParentRoute: () => ProtectedRouteRoute,
   } as any)
 
 const ProtectedOrganizationsOrganizationIdIndexRoute =
   ProtectedOrganizationsOrganizationIdIndexImport.update({
-    id: '/$organizationId/',
-    path: '/$organizationId/',
-    getParentRoute: () => ProtectedOrganizationsRouteRoute,
+    id: '/organizations/$organizationId/',
+    path: '/organizations/$organizationId/',
+    getParentRoute: () => ProtectedRouteRoute,
   } as any)
 
 const ProtectedOrganizationsOrganizationIdUsersIndexRoute =
   ProtectedOrganizationsOrganizationIdUsersIndexImport.update({
-    id: '/$organizationId/users/',
-    path: '/$organizationId/users/',
-    getParentRoute: () => ProtectedOrganizationsRouteRoute,
+    id: '/organizations/$organizationId/users/',
+    path: '/organizations/$organizationId/users/',
+    getParentRoute: () => ProtectedRouteRoute,
   } as any)
 
 const ProtectedOrganizationsOrganizationIdActionsNewRoute =
   ProtectedOrganizationsOrganizationIdActionsNewImport.update({
-    id: '/$organizationId/actions/new',
-    path: '/$organizationId/actions/new',
-    getParentRoute: () => ProtectedOrganizationsRouteRoute,
+    id: '/organizations/$organizationId/actions/new',
+    path: '/organizations/$organizationId/actions/new',
+    getParentRoute: () => ProtectedRouteRoute,
   } as any)
 
 const ProtectedOrganizationsOrganizationIdActionsEditRoute =
   ProtectedOrganizationsOrganizationIdActionsEditImport.update({
-    id: '/$organizationId/actions/edit',
-    path: '/$organizationId/actions/edit',
-    getParentRoute: () => ProtectedOrganizationsRouteRoute,
+    id: '/organizations/$organizationId/actions/edit',
+    path: '/organizations/$organizationId/actions/edit',
+    getParentRoute: () => ProtectedRouteRoute,
   } as any)
 
 const ProtectedOrganizationsOrganizationIdUsersUserIdIndexRoute =
   ProtectedOrganizationsOrganizationIdUsersUserIdIndexImport.update({
-    id: '/$organizationId/users/$userId/',
-    path: '/$organizationId/users/$userId/',
-    getParentRoute: () => ProtectedOrganizationsRouteRoute,
+    id: '/organizations/$organizationId/users/$userId/',
+    path: '/organizations/$organizationId/users/$userId/',
+    getParentRoute: () => ProtectedRouteRoute,
   } as any)
 
 const ProtectedOrganizationsOrganizationIdUsersUserIdNewRoute =
   ProtectedOrganizationsOrganizationIdUsersUserIdNewImport.update({
-    id: '/$organizationId/users/$userId/new',
-    path: '/$organizationId/users/$userId/new',
-    getParentRoute: () => ProtectedOrganizationsRouteRoute,
+    id: '/organizations/$organizationId/users/$userId/new',
+    path: '/organizations/$organizationId/users/$userId/new',
+    getParentRoute: () => ProtectedRouteRoute,
   } as any)
 
 const ProtectedOrganizationsOrganizationIdUsersUserIdEditRoute =
   ProtectedOrganizationsOrganizationIdUsersUserIdEditImport.update({
-    id: '/$organizationId/users/$userId/edit',
-    path: '/$organizationId/users/$userId/edit',
-    getParentRoute: () => ProtectedOrganizationsRouteRoute,
+    id: '/organizations/$organizationId/users/$userId/edit',
+    path: '/organizations/$organizationId/users/$userId/edit',
+    getParentRoute: () => ProtectedRouteRoute,
   } as any)
 
 const ProtectedOrganizationsOrganizationIdUsersUserIdConfirmRoute =
   ProtectedOrganizationsOrganizationIdUsersUserIdConfirmImport.update({
-    id: '/$organizationId/users/$userId/confirm',
-    path: '/$organizationId/users/$userId/confirm',
-    getParentRoute: () => ProtectedOrganizationsRouteRoute,
+    id: '/organizations/$organizationId/users/$userId/confirm',
+    path: '/organizations/$organizationId/users/$userId/confirm',
+    getParentRoute: () => ProtectedRouteRoute,
   } as any)
 
 // Populate the FileRoutesByPath interface
@@ -186,13 +193,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LegalRouteImport
       parentRoute: typeof rootRoute
     }
-    '/_protected/organizations': {
-      id: '/_protected/organizations'
-      path: '/organizations'
-      fullPath: '/organizations'
-      preLoaderRoute: typeof ProtectedOrganizationsRouteImport
-      parentRoute: typeof ProtectedRouteImport
-    }
     '/_auth/forgot-password': {
       id: '/_auth/forgot-password'
       path: '/forgot-password'
@@ -212,6 +212,13 @@ declare module '@tanstack/react-router' {
       path: '/register'
       fullPath: '/register'
       preLoaderRoute: typeof AuthRegisterImport
+      parentRoute: typeof AuthRouteImport
+    }
+    '/_auth/reset-password': {
+      id: '/_auth/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof AuthResetPasswordImport
       parentRoute: typeof AuthRouteImport
     }
     '/_protected/dashboard': {
@@ -235,61 +242,68 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LegalTermsAndConditionsImport
       parentRoute: typeof LegalRouteImport
     }
+    '/_protected/organizations/': {
+      id: '/_protected/organizations/'
+      path: '/organizations'
+      fullPath: '/organizations'
+      preLoaderRoute: typeof ProtectedOrganizationsIndexImport
+      parentRoute: typeof ProtectedRouteImport
+    }
     '/_protected/organizations/$organizationId/': {
       id: '/_protected/organizations/$organizationId/'
-      path: '/$organizationId'
+      path: '/organizations/$organizationId'
       fullPath: '/organizations/$organizationId'
       preLoaderRoute: typeof ProtectedOrganizationsOrganizationIdIndexImport
-      parentRoute: typeof ProtectedOrganizationsRouteImport
+      parentRoute: typeof ProtectedRouteImport
     }
     '/_protected/organizations/$organizationId/actions/edit': {
       id: '/_protected/organizations/$organizationId/actions/edit'
-      path: '/$organizationId/actions/edit'
+      path: '/organizations/$organizationId/actions/edit'
       fullPath: '/organizations/$organizationId/actions/edit'
       preLoaderRoute: typeof ProtectedOrganizationsOrganizationIdActionsEditImport
-      parentRoute: typeof ProtectedOrganizationsRouteImport
+      parentRoute: typeof ProtectedRouteImport
     }
     '/_protected/organizations/$organizationId/actions/new': {
       id: '/_protected/organizations/$organizationId/actions/new'
-      path: '/$organizationId/actions/new'
+      path: '/organizations/$organizationId/actions/new'
       fullPath: '/organizations/$organizationId/actions/new'
       preLoaderRoute: typeof ProtectedOrganizationsOrganizationIdActionsNewImport
-      parentRoute: typeof ProtectedOrganizationsRouteImport
+      parentRoute: typeof ProtectedRouteImport
     }
     '/_protected/organizations/$organizationId/users/': {
       id: '/_protected/organizations/$organizationId/users/'
-      path: '/$organizationId/users'
+      path: '/organizations/$organizationId/users'
       fullPath: '/organizations/$organizationId/users'
       preLoaderRoute: typeof ProtectedOrganizationsOrganizationIdUsersIndexImport
-      parentRoute: typeof ProtectedOrganizationsRouteImport
+      parentRoute: typeof ProtectedRouteImport
     }
     '/_protected/organizations/$organizationId/users/$userId/confirm': {
       id: '/_protected/organizations/$organizationId/users/$userId/confirm'
-      path: '/$organizationId/users/$userId/confirm'
+      path: '/organizations/$organizationId/users/$userId/confirm'
       fullPath: '/organizations/$organizationId/users/$userId/confirm'
       preLoaderRoute: typeof ProtectedOrganizationsOrganizationIdUsersUserIdConfirmImport
-      parentRoute: typeof ProtectedOrganizationsRouteImport
+      parentRoute: typeof ProtectedRouteImport
     }
     '/_protected/organizations/$organizationId/users/$userId/edit': {
       id: '/_protected/organizations/$organizationId/users/$userId/edit'
-      path: '/$organizationId/users/$userId/edit'
+      path: '/organizations/$organizationId/users/$userId/edit'
       fullPath: '/organizations/$organizationId/users/$userId/edit'
       preLoaderRoute: typeof ProtectedOrganizationsOrganizationIdUsersUserIdEditImport
-      parentRoute: typeof ProtectedOrganizationsRouteImport
+      parentRoute: typeof ProtectedRouteImport
     }
     '/_protected/organizations/$organizationId/users/$userId/new': {
       id: '/_protected/organizations/$organizationId/users/$userId/new'
-      path: '/$organizationId/users/$userId/new'
+      path: '/organizations/$organizationId/users/$userId/new'
       fullPath: '/organizations/$organizationId/users/$userId/new'
       preLoaderRoute: typeof ProtectedOrganizationsOrganizationIdUsersUserIdNewImport
-      parentRoute: typeof ProtectedOrganizationsRouteImport
+      parentRoute: typeof ProtectedRouteImport
     }
     '/_protected/organizations/$organizationId/users/$userId/': {
       id: '/_protected/organizations/$organizationId/users/$userId/'
-      path: '/$organizationId/users/$userId'
+      path: '/organizations/$organizationId/users/$userId'
       fullPath: '/organizations/$organizationId/users/$userId'
       preLoaderRoute: typeof ProtectedOrganizationsOrganizationIdUsersUserIdIndexImport
-      parentRoute: typeof ProtectedOrganizationsRouteImport
+      parentRoute: typeof ProtectedRouteImport
     }
   }
 }
@@ -300,19 +314,23 @@ interface AuthRouteRouteChildren {
   AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
   AuthLoginRoute: typeof AuthLoginRoute
   AuthRegisterRoute: typeof AuthRegisterRoute
+  AuthResetPasswordRoute: typeof AuthResetPasswordRoute
 }
 
 const AuthRouteRouteChildren: AuthRouteRouteChildren = {
   AuthForgotPasswordRoute: AuthForgotPasswordRoute,
   AuthLoginRoute: AuthLoginRoute,
   AuthRegisterRoute: AuthRegisterRoute,
+  AuthResetPasswordRoute: AuthResetPasswordRoute,
 }
 
 const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
   AuthRouteRouteChildren,
 )
 
-interface ProtectedOrganizationsRouteRouteChildren {
+interface ProtectedRouteRouteChildren {
+  ProtectedDashboardRoute: typeof ProtectedDashboardRoute
+  ProtectedOrganizationsIndexRoute: typeof ProtectedOrganizationsIndexRoute
   ProtectedOrganizationsOrganizationIdIndexRoute: typeof ProtectedOrganizationsOrganizationIdIndexRoute
   ProtectedOrganizationsOrganizationIdActionsEditRoute: typeof ProtectedOrganizationsOrganizationIdActionsEditRoute
   ProtectedOrganizationsOrganizationIdActionsNewRoute: typeof ProtectedOrganizationsOrganizationIdActionsNewRoute
@@ -323,40 +341,25 @@ interface ProtectedOrganizationsRouteRouteChildren {
   ProtectedOrganizationsOrganizationIdUsersUserIdIndexRoute: typeof ProtectedOrganizationsOrganizationIdUsersUserIdIndexRoute
 }
 
-const ProtectedOrganizationsRouteRouteChildren: ProtectedOrganizationsRouteRouteChildren =
-  {
-    ProtectedOrganizationsOrganizationIdIndexRoute:
-      ProtectedOrganizationsOrganizationIdIndexRoute,
-    ProtectedOrganizationsOrganizationIdActionsEditRoute:
-      ProtectedOrganizationsOrganizationIdActionsEditRoute,
-    ProtectedOrganizationsOrganizationIdActionsNewRoute:
-      ProtectedOrganizationsOrganizationIdActionsNewRoute,
-    ProtectedOrganizationsOrganizationIdUsersIndexRoute:
-      ProtectedOrganizationsOrganizationIdUsersIndexRoute,
-    ProtectedOrganizationsOrganizationIdUsersUserIdConfirmRoute:
-      ProtectedOrganizationsOrganizationIdUsersUserIdConfirmRoute,
-    ProtectedOrganizationsOrganizationIdUsersUserIdEditRoute:
-      ProtectedOrganizationsOrganizationIdUsersUserIdEditRoute,
-    ProtectedOrganizationsOrganizationIdUsersUserIdNewRoute:
-      ProtectedOrganizationsOrganizationIdUsersUserIdNewRoute,
-    ProtectedOrganizationsOrganizationIdUsersUserIdIndexRoute:
-      ProtectedOrganizationsOrganizationIdUsersUserIdIndexRoute,
-  }
-
-const ProtectedOrganizationsRouteRouteWithChildren =
-  ProtectedOrganizationsRouteRoute._addFileChildren(
-    ProtectedOrganizationsRouteRouteChildren,
-  )
-
-interface ProtectedRouteRouteChildren {
-  ProtectedOrganizationsRouteRoute: typeof ProtectedOrganizationsRouteRouteWithChildren
-  ProtectedDashboardRoute: typeof ProtectedDashboardRoute
-}
-
 const ProtectedRouteRouteChildren: ProtectedRouteRouteChildren = {
-  ProtectedOrganizationsRouteRoute:
-    ProtectedOrganizationsRouteRouteWithChildren,
   ProtectedDashboardRoute: ProtectedDashboardRoute,
+  ProtectedOrganizationsIndexRoute: ProtectedOrganizationsIndexRoute,
+  ProtectedOrganizationsOrganizationIdIndexRoute:
+    ProtectedOrganizationsOrganizationIdIndexRoute,
+  ProtectedOrganizationsOrganizationIdActionsEditRoute:
+    ProtectedOrganizationsOrganizationIdActionsEditRoute,
+  ProtectedOrganizationsOrganizationIdActionsNewRoute:
+    ProtectedOrganizationsOrganizationIdActionsNewRoute,
+  ProtectedOrganizationsOrganizationIdUsersIndexRoute:
+    ProtectedOrganizationsOrganizationIdUsersIndexRoute,
+  ProtectedOrganizationsOrganizationIdUsersUserIdConfirmRoute:
+    ProtectedOrganizationsOrganizationIdUsersUserIdConfirmRoute,
+  ProtectedOrganizationsOrganizationIdUsersUserIdEditRoute:
+    ProtectedOrganizationsOrganizationIdUsersUserIdEditRoute,
+  ProtectedOrganizationsOrganizationIdUsersUserIdNewRoute:
+    ProtectedOrganizationsOrganizationIdUsersUserIdNewRoute,
+  ProtectedOrganizationsOrganizationIdUsersUserIdIndexRoute:
+    ProtectedOrganizationsOrganizationIdUsersUserIdIndexRoute,
 }
 
 const ProtectedRouteRouteWithChildren = ProtectedRouteRoute._addFileChildren(
@@ -381,13 +384,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '': typeof ProtectedRouteRouteWithChildren
   '/legal': typeof LegalRouteRouteWithChildren
-  '/organizations': typeof ProtectedOrganizationsRouteRouteWithChildren
   '/forgot-password': typeof AuthForgotPasswordRoute
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
+  '/reset-password': typeof AuthResetPasswordRoute
   '/dashboard': typeof ProtectedDashboardRoute
   '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
   '/legal/terms-and-conditions': typeof LegalTermsAndConditionsRoute
+  '/organizations': typeof ProtectedOrganizationsIndexRoute
   '/organizations/$organizationId': typeof ProtectedOrganizationsOrganizationIdIndexRoute
   '/organizations/$organizationId/actions/edit': typeof ProtectedOrganizationsOrganizationIdActionsEditRoute
   '/organizations/$organizationId/actions/new': typeof ProtectedOrganizationsOrganizationIdActionsNewRoute
@@ -402,13 +406,14 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof ProtectedRouteRouteWithChildren
   '/legal': typeof LegalRouteRouteWithChildren
-  '/organizations': typeof ProtectedOrganizationsRouteRouteWithChildren
   '/forgot-password': typeof AuthForgotPasswordRoute
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
+  '/reset-password': typeof AuthResetPasswordRoute
   '/dashboard': typeof ProtectedDashboardRoute
   '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
   '/legal/terms-and-conditions': typeof LegalTermsAndConditionsRoute
+  '/organizations': typeof ProtectedOrganizationsIndexRoute
   '/organizations/$organizationId': typeof ProtectedOrganizationsOrganizationIdIndexRoute
   '/organizations/$organizationId/actions/edit': typeof ProtectedOrganizationsOrganizationIdActionsEditRoute
   '/organizations/$organizationId/actions/new': typeof ProtectedOrganizationsOrganizationIdActionsNewRoute
@@ -425,13 +430,14 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteRouteWithChildren
   '/_protected': typeof ProtectedRouteRouteWithChildren
   '/legal': typeof LegalRouteRouteWithChildren
-  '/_protected/organizations': typeof ProtectedOrganizationsRouteRouteWithChildren
   '/_auth/forgot-password': typeof AuthForgotPasswordRoute
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/register': typeof AuthRegisterRoute
+  '/_auth/reset-password': typeof AuthResetPasswordRoute
   '/_protected/dashboard': typeof ProtectedDashboardRoute
   '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
   '/legal/terms-and-conditions': typeof LegalTermsAndConditionsRoute
+  '/_protected/organizations/': typeof ProtectedOrganizationsIndexRoute
   '/_protected/organizations/$organizationId/': typeof ProtectedOrganizationsOrganizationIdIndexRoute
   '/_protected/organizations/$organizationId/actions/edit': typeof ProtectedOrganizationsOrganizationIdActionsEditRoute
   '/_protected/organizations/$organizationId/actions/new': typeof ProtectedOrganizationsOrganizationIdActionsNewRoute
@@ -448,13 +454,14 @@ export interface FileRouteTypes {
     | '/'
     | ''
     | '/legal'
-    | '/organizations'
     | '/forgot-password'
     | '/login'
     | '/register'
+    | '/reset-password'
     | '/dashboard'
     | '/legal/privacy-policy'
     | '/legal/terms-and-conditions'
+    | '/organizations'
     | '/organizations/$organizationId'
     | '/organizations/$organizationId/actions/edit'
     | '/organizations/$organizationId/actions/new'
@@ -468,13 +475,14 @@ export interface FileRouteTypes {
     | '/'
     | ''
     | '/legal'
-    | '/organizations'
     | '/forgot-password'
     | '/login'
     | '/register'
+    | '/reset-password'
     | '/dashboard'
     | '/legal/privacy-policy'
     | '/legal/terms-and-conditions'
+    | '/organizations'
     | '/organizations/$organizationId'
     | '/organizations/$organizationId/actions/edit'
     | '/organizations/$organizationId/actions/new'
@@ -489,13 +497,14 @@ export interface FileRouteTypes {
     | '/_auth'
     | '/_protected'
     | '/legal'
-    | '/_protected/organizations'
     | '/_auth/forgot-password'
     | '/_auth/login'
     | '/_auth/register'
+    | '/_auth/reset-password'
     | '/_protected/dashboard'
     | '/legal/privacy-policy'
     | '/legal/terms-and-conditions'
+    | '/_protected/organizations/'
     | '/_protected/organizations/$organizationId/'
     | '/_protected/organizations/$organizationId/actions/edit'
     | '/_protected/organizations/$organizationId/actions/new'
@@ -545,27 +554,15 @@ export const routeTree = rootRoute
       "children": [
         "/_auth/forgot-password",
         "/_auth/login",
-        "/_auth/register"
+        "/_auth/register",
+        "/_auth/reset-password"
       ]
     },
     "/_protected": {
       "filePath": "_protected/route.tsx",
       "children": [
-        "/_protected/organizations",
-        "/_protected/dashboard"
-      ]
-    },
-    "/legal": {
-      "filePath": "legal/route.tsx",
-      "children": [
-        "/legal/privacy-policy",
-        "/legal/terms-and-conditions"
-      ]
-    },
-    "/_protected/organizations": {
-      "filePath": "_protected/organizations/route.tsx",
-      "parent": "/_protected",
-      "children": [
+        "/_protected/dashboard",
+        "/_protected/organizations/",
         "/_protected/organizations/$organizationId/",
         "/_protected/organizations/$organizationId/actions/edit",
         "/_protected/organizations/$organizationId/actions/new",
@@ -574,6 +571,13 @@ export const routeTree = rootRoute
         "/_protected/organizations/$organizationId/users/$userId/edit",
         "/_protected/organizations/$organizationId/users/$userId/new",
         "/_protected/organizations/$organizationId/users/$userId/"
+      ]
+    },
+    "/legal": {
+      "filePath": "legal/route.tsx",
+      "children": [
+        "/legal/privacy-policy",
+        "/legal/terms-and-conditions"
       ]
     },
     "/_auth/forgot-password": {
@@ -588,6 +592,10 @@ export const routeTree = rootRoute
       "filePath": "_auth/register.tsx",
       "parent": "/_auth"
     },
+    "/_auth/reset-password": {
+      "filePath": "_auth/reset-password.tsx",
+      "parent": "/_auth"
+    },
     "/_protected/dashboard": {
       "filePath": "_protected/dashboard.tsx",
       "parent": "/_protected"
@@ -600,37 +608,41 @@ export const routeTree = rootRoute
       "filePath": "legal/terms-and-conditions.tsx",
       "parent": "/legal"
     },
+    "/_protected/organizations/": {
+      "filePath": "_protected/organizations/index.tsx",
+      "parent": "/_protected"
+    },
     "/_protected/organizations/$organizationId/": {
       "filePath": "_protected/organizations/$organizationId/index.tsx",
-      "parent": "/_protected/organizations"
+      "parent": "/_protected"
     },
     "/_protected/organizations/$organizationId/actions/edit": {
       "filePath": "_protected/organizations/$organizationId/actions/edit.tsx",
-      "parent": "/_protected/organizations"
+      "parent": "/_protected"
     },
     "/_protected/organizations/$organizationId/actions/new": {
       "filePath": "_protected/organizations/$organizationId/actions/new.tsx",
-      "parent": "/_protected/organizations"
+      "parent": "/_protected"
     },
     "/_protected/organizations/$organizationId/users/": {
       "filePath": "_protected/organizations/$organizationId/users/index.tsx",
-      "parent": "/_protected/organizations"
+      "parent": "/_protected"
     },
     "/_protected/organizations/$organizationId/users/$userId/confirm": {
       "filePath": "_protected/organizations/$organizationId/users/$userId/confirm.tsx",
-      "parent": "/_protected/organizations"
+      "parent": "/_protected"
     },
     "/_protected/organizations/$organizationId/users/$userId/edit": {
       "filePath": "_protected/organizations/$organizationId/users/$userId/edit.tsx",
-      "parent": "/_protected/organizations"
+      "parent": "/_protected"
     },
     "/_protected/organizations/$organizationId/users/$userId/new": {
       "filePath": "_protected/organizations/$organizationId/users/$userId/new.tsx",
-      "parent": "/_protected/organizations"
+      "parent": "/_protected"
     },
     "/_protected/organizations/$organizationId/users/$userId/": {
       "filePath": "_protected/organizations/$organizationId/users/$userId/index.tsx",
-      "parent": "/_protected/organizations"
+      "parent": "/_protected"
     }
   }
 }

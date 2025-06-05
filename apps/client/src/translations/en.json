@@ -1,7 +1,9 @@
 {
   "translation": {
     "allInbox": "Welcome to React and react-i18next",
-    "common": {},
+    "common": {
+      "allOrganizations": "All Organizations"
+    },
     "authentication": {
       "login": {
         "title": "Login to your account",
@@ -29,6 +31,28 @@
       "invalidPassword": "Password must be at least 6 characters",
       "invalidOTP": "OTP must be 6 characters",
       "confirmationCode": "Confirmation Code"
+    },
+    "organization": {
+      "create": {
+        "title": "Create Organization",
+        "subtitle": "Enter the details below to create a new organization",
+        "createButton": "Create Organization"
+      },
+      "filter": {
+        "search": "Search",
+        "all": "View All",
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "allOrganizations": "All Organizations",
+      "createOrganization": "Create New",
+      "noOrganizationsTitle": "No Organizations added",
+      "noOrganizationsSubtitle": "It looks like you haven't added any organizations yet! Start by creating new entries to manage your databases.",
+      "name": "Name",
+      "personOfContact": "Person of Contact",
+      "emailOfContact": "Email of Contact",
+      "status": "Status",
+      "totalUsers": "Users"
     },
     "errors": {
       "USER_NOT_FOUND": "User not found",

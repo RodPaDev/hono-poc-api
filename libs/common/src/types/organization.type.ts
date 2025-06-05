@@ -3,6 +3,9 @@ export const OrganizationStatus = {
   INACTIVE: "inactive",
 } as const;
 
+export type OrganizationStatus =
+  (typeof OrganizationStatus)[keyof typeof OrganizationStatus];
+
 export type OrganizationMetadata = {
-  status: (typeof OrganizationStatus)[keyof typeof OrganizationStatus];
+  status: OrganizationStatus;
 };
