@@ -1,22 +1,13 @@
 import * as schema from "@/models";
-import { type OrganizationSelect } from "@/models";
 import { type FilterOrganizations } from "@/types/organization.types";
 import { parseOrganizationMetadata } from "@fsm/common";
 import { asc, ilike, sql } from "drizzle-orm";
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 
-export interface IOrganizationRepository {
-  findAll(
-    filters: FilterOrganizations,
-  ): Promise<(OrganizationSelect & { userCount: number })[]>;
-}
-
-export class OrganizationRepository implements IOrganizationRepository {
+export class OrganizationRepository {
   constructor(private readonly db: NodePgDatabase<typeof schema>) {}
 
-  async findAll(
-    filters: FilterOrganizations,
-  ): Promise<(OrganizationSelect & { userCount: number })[]> {
+  async findAll(filters: FilterOrganizations) {
     // Get user counts per organization
     const userCounts = await this.db
       .select({

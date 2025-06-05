@@ -1,24 +1,11 @@
+import * as schema from "@/models";
+import { meteoriteLandingTable } from "@/models/meteorite-landing.model";
 import type { MeteoriteLanding } from "@fsm/common";
 import { eq } from "drizzle-orm";
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 import type { QueryResult } from "pg";
 
-import * as schema from "@/models";
-import { meteoriteLandingTable } from "@/models/meteorite-landing.model";
-
-export interface IMeteoriteLandingRepository {
-  findAll(): Promise<MeteoriteLanding[]>;
-  findById(id: string): Promise<MeteoriteLanding | undefined>;
-  findByDatasetId(datasetId: number): Promise<MeteoriteLanding[]>;
-  create(data: Partial<MeteoriteLanding>): Promise<MeteoriteLanding>;
-  update(
-    id: string,
-    data: Partial<Omit<MeteoriteLanding, "id">>,
-  ): Promise<MeteoriteLanding>;
-  delete(id: string): Promise<QueryResult>;
-}
-
-export class MeteoriteLandingRepository implements IMeteoriteLandingRepository {
+export class MeteoriteLandingRepository {
   constructor(private readonly db: NodePgDatabase<typeof schema>) {}
 
   async findAll(): Promise<MeteoriteLanding[]> {
