@@ -94,13 +94,23 @@ async function main() {
     },
   });
 
-  await auth.api.createOrganization({
+  const org2 = await auth.api.createOrganization({
     body: {
       name: "Organization 2",
       slug: "organization-2",
       userId: user2.id,
     },
   });
+
+  if (org2?.id) {
+    await auth.api.addMember({
+      body: {
+        userId: user1.id,
+        organizationId: org2.id,
+        role: "user",
+      },
+    });
+  }
 
   // await db.insert(meteoriteLandingTable).values({
 

@@ -25,14 +25,14 @@ import { Fragment } from "react/jsx-runtime";
 export interface NavUser {
   name: string;
   email: string;
-  avatar: string;
+  avatar?: string;
   userRole: "admin" | "user";
   activeOrgId?: string;
 }
 
 export interface NavOrg {
   name: string;
-  logo: React.ComponentType<{ className?: string }>;
+  logo?: string;
   id: string;
 }
 
@@ -116,25 +116,28 @@ export function NavUser({
                       {t("common.organizations")}
                     </DropdownMenuLabel>
 
-                    <DropdownMenuLabel className="p-0 font-normal">
+                    <DropdownMenuLabel className="flex flex-col gap-1 p-0 font-normal">
                       {organizations.list.map((org) => (
                         <SidebarMenuButton
                           key={org.name}
                           onClick={() => onClickOrg(org)}
-                          disabled={org.id === user.activeOrgId}
                           className={cn(
-                            "gap-2 p-2",
+                            "gap-2 p-2 h-10 border border-transparent",
                             org.id === user.activeOrgId &&
-                              "bg-sidebar-primary text-sidebar-primary-foreground border-sidebar-primary hover:bg-sidebar-primary hover:text-sidebar-primary-foreground",
+                              "bg-sidebar-accent text-sidebar-primary border border-border",
                           )}>
-                          <div
-                            className={cn(
-                              org.id === user.activeOrgId &&
-                                "bg-sidebar-primary text-sidebar-primary-foreground border-sidebar-primary hover:bg-sidebar-primary hover:text-sidebar-primary-foreground",
-                              "flex size-6 items-center justify-center rounded-md border",
-                            )}>
-                            <org.logo className="size-3.5 shrink-0" />
-                          </div>
+                          <Avatar className="h-8 w-8 rounded-full">
+                            <AvatarImage src={org.logo} alt={org.name} />
+                            <AvatarFallback
+                              className={cn(
+                                "rounded-full border border-border",
+                                org.id === user.activeOrgId &&
+                                  "bg-sidebar-accent",
+                              )}>
+                              {getInitials(org.name)}
+                            </AvatarFallback>
+                          </Avatar>
+
                           {org.name}
                         </SidebarMenuButton>
                       ))}

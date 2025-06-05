@@ -18,8 +18,10 @@ import {
   redirect,
   useRouter,
 } from "@tanstack/react-router";
+
 import i18next from "i18next";
-import { Briefcase, GalleryVerticalEnd, Network } from "lucide-react";
+import { Briefcase, Network } from "lucide-react";
+import { useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Fragment } from "react/jsx-runtime";
 
@@ -63,10 +65,43 @@ function RouteComponent() {
   const loaderData = Route.useLoaderData();
   const {
     data: organizations,
-    isPending,
+    isPending: isOrganizationsPending,
     error,
   } = authClient.useListOrganizations();
-  const { t } = useTranslation(); // not passing any namespace will use the defaultNS (by default set to 'translation')
+  const {
+    data: activeOrganization,
+    isPending: isActiveOrganizationPending,
+    refetch: refetchActiveOrganization,
+  } = authClient.useActiveOrganization();
+
+  const { t } = useTranslation();
+
+  const setActiveOrg = useCallback(
+    async (organizationId: string) => {
+      await authClient.organization.setActive({ organizationId });
+      refetchActiveOrganization();
+    },
+    [refetchActiveOrganization],
+  );
+
+  useEffect(() => {
+    if (
+      !isActiveOrganizationPending &&
+      !isOrganizationsPending &&
+      !activeOrganization &&
+      organizations &&
+      organizations.length > 0
+    ) {
+      // If no active organization is set, set the first organization as active
+      setActiveOrg(organizations[0].id);
+    }
+  }, [
+    isActiveOrganizationPending,
+    isOrganizationsPending,
+    activeOrganization,
+    organizations,
+    setActiveOrg,
+  ]);
 
   const handleLogout = async () => {
     await signOut();
@@ -77,28 +112,21 @@ function RouteComponent() {
     organizations?.map((org) => ({
       id: org.id,
       name: org.name,
-      logo: org.logo
-        ? () => (
-            <img
-              src={org.logo ?? undefined}
-              alt={org.name ?? ""}
-              className="h-6 w-6"
-            />
-          )
-        : GalleryVerticalEnd,
+      logo: org.logo || undefined,
     })) ?? [];
 
   const user: NavUser = {
     name: loaderData.user.name,
     email: loaderData.user.email,
     avatar: loaderData.user.image || "",
-    activeOrgId: loaderData.session.activeOrganizationId ?? undefined,
+    activeOrgId: activeOrganization?.id || "",
     userRole: loaderData.user.role as "admin" | "user",
   };
 
-  const handleClickOrg = (org: NavOrg) => {
-    // Handle organization click logic here
-    console.log("Organization clicked:", org);
+  const handleClickOrg = async (org: NavOrg) => {
+    if (org.id !== user.activeOrgId) {
+      await setActiveOrg(org.id);
+    }
   };
 
   return (
@@ -109,7 +137,7 @@ function RouteComponent() {
           user={user}
           organizations={{
             list: orgs,
-            isPending,
+            isPending: isOrganizationsPending,
             error,
           }}
           onClickOrg={handleClickOrg}
