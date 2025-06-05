@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { apiClient } from "@/lib/api-client";
 import { organization, signOut, useSession } from "@/lib/auth-client";
-import type { MeteoriteLanding } from "@fsm/types";
+import type { MeteoriteLanding } from "@fsm/common";
 import {
   keepPreviousData,
   QueryClient,

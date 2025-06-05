@@ -15,7 +15,7 @@
     "db:push": "drizzle-kit push"
   },
   "dependencies": {
-    "@fsm/types": "workspace:*",
+    "@fsm/common": "workspace:*",
     "@hono/node-server": "1.14.3",
     "@hono/swagger-ui": "0.5.1",
     "@hono/zod-validator": "0.7.0",

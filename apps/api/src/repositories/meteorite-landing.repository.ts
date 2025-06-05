@@ -1,4 +1,4 @@
-import type { MeteoriteLanding } from "@fsm/types";
+import type { MeteoriteLanding } from "@fsm/common";
 import { eq } from "drizzle-orm";
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 import type { QueryResult } from "pg";

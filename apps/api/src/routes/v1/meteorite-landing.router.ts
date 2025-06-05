@@ -9,7 +9,7 @@ import { AppError } from "@/lib/error";
 
 import { MeteoriteLandingRepository } from "@/repositories/meteorite-landing.repository";
 import { MeteoriteService } from "@/services/meteorite-landing.service";
-import { MeteoriteLandingSchema } from "@fsm/types";
+import { MeteoriteLandingSchema } from "@fsm/common";
 import { z } from "zod";
 
 const metoeriteRepository = new MeteoriteLandingRepository(db);

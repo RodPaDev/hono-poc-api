@@ -1,4 +1,4 @@
-import type { MeteoriteLanding } from "@fsm/types";
+import type { MeteoriteLanding } from "@fsm/common";
 import type { QueryResult } from "pg";
 import type { MeteoriteLandingRepository } from "../repositories/meteorite-landing.repository";
 

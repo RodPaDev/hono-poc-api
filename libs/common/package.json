@@ -1,5 +1,5 @@
 {
-  "name": "@fsm/types",
+  "name": "@fsm/common",
   "version": "1.0.0",
   "type": "module",
   "private": true,

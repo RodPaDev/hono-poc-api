@@ -10,6 +10,7 @@ import { db } from "@/lib/db";
 import { sendEmail } from "@/lib/email";
 import { logger } from "@/lib/logger";
 import * as schema from "@/models";
+import { type OrganizationMetadata, OrganizationStatus } from "@fsm/common";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import * as plugins from "better-auth/plugins";
