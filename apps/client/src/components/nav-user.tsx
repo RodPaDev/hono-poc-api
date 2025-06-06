@@ -14,7 +14,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { Spinner } from "@/components/ui/spinner";
+
 import { cn } from "@/lib/utils";
 import type { BetterFetchError } from "better-auth/react";
 
@@ -96,12 +96,9 @@ export function NavUser({
             {organizations.isPending && !organizations.error && (
               <Fragment>
                 <DropdownMenuGroup>
-                  <DropdownMenuLabel className="text-muted-foreground text-xs">
+                  <DropdownMenuLabel className="text-muted-foreground text-xs flex gap-2">
                     {t("common.organizations")}
-                    <Spinner
-                      size="sm"
-                      className="mt-1 bg-sidebar-accent-foreground"
-                    />
+                    <div className="h-3 w-3 animate-spin rounded-full border-1 border-muted-foreground border-t-transparent" />
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                 </DropdownMenuGroup>

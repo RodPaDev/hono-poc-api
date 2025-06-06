@@ -1,10 +1,10 @@
-import { NavItems, type NavItem } from "@/components/nav-items";
+import { NavItems } from "@/components/nav-items";
 import {
   NavUser,
   type AsyncOrganizations,
   type NavOrg,
 } from "@/components/nav-user";
-import { IntusLogo } from "@/components/svgr/IntusLogo";
+import { AppLogo } from "@/components/svgr/IntusLogo";
 import {
   Sidebar,
   SidebarContent,
@@ -20,7 +20,8 @@ interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   onClickOrg: (org: NavOrg) => void;
   user: NavUser;
   organizations: AsyncOrganizations;
-  navItems: NavItem[];
+  navItems: NavItems;
+  isNavItemsPending: boolean;
 }
 
 export function AppSidebar({
@@ -34,10 +35,10 @@ export function AppSidebar({
   return (
     <Sidebar className="h-screen" collapsible="none" {...props}>
       <SidebarHeader>
-        <IntusLogo />
+        <AppLogo />
       </SidebarHeader>
       <SidebarContent>
-        <NavItems items={navItems} />
+        <NavItems navItems={navItems} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser

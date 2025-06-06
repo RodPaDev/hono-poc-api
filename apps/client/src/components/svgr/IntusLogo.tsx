@@ -1,9 +1,9 @@
-type IntusLogoProps = {
+type AppLogoProps = {
   width?: number;
   height?: number;
 } & React.SVGProps<SVGSVGElement>;
 
-export function IntusLogo(props: IntusLogoProps) {
+export function AppLogo(props: AppLogoProps) {
   return (
     <svg
       {...props}
@@ -11,6 +11,7 @@ export function IntusLogo(props: IntusLogoProps) {
       xmlnsXlink="http://www.w3.org/1999/xlink"
       width={props.width ?? 78}
       height={props.height ?? 40}
+      viewBox="0 0 78 40"
       fill="none">
       <path fill="url(#a)" d="M0 0h78v40H0z" />
       <defs>

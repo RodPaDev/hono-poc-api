@@ -1,8 +1,11 @@
 import { AppSidebar } from "@/components/app-sidebar";
-import type { NavItem } from "@/components/nav-items";
+import AppSplashScreen from "@/components/app-splashscreen";
 import type { NavOrg, NavUser } from "@/components/nav-user";
-
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import {
+  useAccessControlledSidebar,
+  type AccessControlledNavItem,
+} from "@/hooks/use-ac-sidebar";
 import { authClient, getSession, signOut } from "@/lib/auth-client";
 import {
   createFileRoute,
@@ -10,28 +13,36 @@ import {
   redirect,
   useRouter,
 } from "@tanstack/react-router";
-
 import i18next from "i18next";
 import { Briefcase, Network } from "lucide-react";
 import { useCallback, useEffect } from "react";
 import { Fragment } from "react/jsx-runtime";
 
-const navItems: NavItem[] = [
+const navItems: AccessControlledNavItem[] = [
   {
     title: i18next.t("common.myOrganization"),
     url: "/dashboard",
     icon: Briefcase,
-    isActive: true,
+    permissions: {
+      organization: { organization: ["read", "create", "update", "delete"] },
+    },
   },
   {
     title: i18next.t("common.organizations"),
     url: "/organizations",
     icon: Network,
+    permissions: {
+      user: {
+        platform: ["read", "create", "update", "delete"],
+      },
+    },
   },
 ];
 
 export const Route = createFileRoute("/_protected")({
   beforeLoad: async ({ location }) => {
+    // simulate a delay for loading
+    await new Promise((resolve) => setTimeout(resolve, 10000000));
     const { data } = await getSession();
     if (!data?.session) {
       throw redirect({
@@ -48,6 +59,7 @@ export const Route = createFileRoute("/_protected")({
       session: context.data.session,
     };
   },
+  pendingComponent: AppSplashScreen,
   component: RouteComponent,
 });
 
@@ -57,13 +69,19 @@ function RouteComponent() {
   const {
     data: organizations,
     isPending: isOrganizationsPending,
-    error,
+    error: organizationsError,
   } = authClient.useListOrganizations();
   const {
     data: activeOrganization,
     isPending: isActiveOrganizationPending,
     refetch: refetchActiveOrganization,
   } = authClient.useActiveOrganization();
+
+  const {
+    data: sidebarItems,
+    isPending: isAcSidebarPending,
+    error: sidebarError,
+  } = useAccessControlledSidebar(navItems);
 
   const setActiveOrg = useCallback(
     async (organizationId: string) => {
@@ -97,12 +115,11 @@ function RouteComponent() {
     await router.invalidate();
   };
 
-  const orgs =
-    organizations?.map((org) => ({
-      id: org.id,
-      name: org.name,
-      logo: org.logo || undefined,
-    })) ?? [];
+  const orgs = organizations?.map((org) => ({
+    id: org.id,
+    name: org.name,
+    logo: org.logo || undefined,
+  }));
 
   const user: NavUser = {
     name: loaderData.user.name,
@@ -122,12 +139,17 @@ function RouteComponent() {
     <Fragment>
       <SidebarProvider defaultOpen={true}>
         <AppSidebar
-          navItems={navItems}
+          isNavItemsPending={isAcSidebarPending}
+          navItems={{
+            list: sidebarItems || [],
+            isPending: isAcSidebarPending,
+            error: sidebarError,
+          }}
           user={user}
           organizations={{
-            list: orgs,
+            list: orgs || [],
             isPending: isOrganizationsPending,
-            error,
+            error: organizationsError,
           }}
           onClickOrg={handleClickOrg}
           onClickLogout={handleLogout}
