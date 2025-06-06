@@ -153,7 +153,6 @@ function RouteComponent() {
           isPending: isAcSidebarPending,
           error: sidebarError,
         },
-        isNavItemsPending: isAcSidebarPending,
       }}>
       <SidebarProvider defaultOpen={true}>
         <AppSidebar />

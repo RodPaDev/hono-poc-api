@@ -12,7 +12,6 @@ export interface SidebarAppContextValue {
   user: NavUser;
   organizations: AsyncOrganizations;
   navItems: NavItems;
-  isNavItemsPending: boolean;
 }
 
 const SidebarAppContext = createContext<SidebarAppContextValue | null>(null);
