@@ -44,8 +44,6 @@
         "details": "Organization Details",
         "organizationImage": "Image",
         "organizationName": "Organization Name",
-        "ownerName": "Owner Name",
-        "ownerEmail": "Owner Email",
         "createButton": "Create Organization"
       },
       "filter": {

@@ -17,7 +17,7 @@ export const Route = createFileRoute("/_protected/organizations/")({
 });
 
 function OrganizationsPage() {
-  const [isOpened, setIsOpened] = useState(true);
+  const [isOpened, setIsOpened] = useState(false);
   const [search, setSearch] = useState<string>("");
   const [activeTab, setActiveTab] = useState<TabsType>("all");
 
@@ -48,7 +48,7 @@ function OrganizationsPage() {
         filters={{ search, status: getStatusFilter(activeTab) }}
       />
       <Sheet open={isOpened} onOpenChange={setIsOpened}>
-        <AddOrganization />
+        <AddOrganization setIsOpened={setIsOpened} />
       </Sheet>
     </div>
   );

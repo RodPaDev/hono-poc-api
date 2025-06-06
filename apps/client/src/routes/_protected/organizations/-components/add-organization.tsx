@@ -16,35 +16,39 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import { authClient } from "@/lib/auth-client";
 import { formatInitials } from "@/utils/formatting";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
 import { t } from "i18next";
-import { useState } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import z from "zod";
 
 const formSchema = z.object({
   organizationName: z.string().min(3),
-  ownerName: z.string().min(3),
-  ownerEmail: z.string().email({ message: t("authentication.invalidEmail") }),
 });
 export type CreateOrganizationForm = z.infer<typeof formSchema>;
 
-export const AddOrganization = () => {
+interface Props {
+  setIsOpened: Dispatch<SetStateAction<boolean>>;
+}
+
+export const AddOrganization = ({ setIsOpened }: Props) => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const queryClient = useQueryClient();
 
   const form = useForm<CreateOrganizationForm>({
     resolver: zodResolver(formSchema),
     mode: "onChange",
     defaultValues: {
       organizationName: "",
-      ownerName: "",
-      ownerEmail: "",
     },
   });
 
-  const organizationName = form.watch("organizationName") || "";
+  const organizationName = form.watch("organizationName");
 
   async function handleCreateOrganization(values: CreateOrganizationForm) {
     const submissionData = {
@@ -65,8 +69,29 @@ export const AddOrganization = () => {
       submissionData.organizationImage = s3FileUrl;
     }
 
-    console.log("Creating organization with values:", submissionData);
-    console.log("Form is valid:", form.formState.isValid);
+    try {
+      const { error } = await authClient.organization.create({
+        name: submissionData.organizationName,
+        slug: submissionData.organizationName,
+        logo: submissionData.organizationImage,
+      });
+
+      if (error?.code) {
+        toast.error(t(`errors.${error.code}`));
+        // eslint-disable-next-line no-console
+        console.error("Failed to create organization:", error);
+      }
+
+      // Invalidate the organizations query to refresh the orgs list
+      queryClient.invalidateQueries({
+        queryKey: ["organizations"],
+        exact: false,
+      });
+      setIsOpened(false);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error("Failed to create organization:", err);
+    }
   }
 
   return (
@@ -133,32 +158,6 @@ export const AddOrganization = () => {
                     <FormLabel>
                       {t("organization.create.organizationName")}
                     </FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage className="text-left" />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="ownerName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t("organization.create.ownerName")}</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage className="text-left" />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="ownerEmail"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t("organization.create.ownerEmail")}</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
