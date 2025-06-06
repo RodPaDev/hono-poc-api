@@ -1,14 +1,12 @@
 import { AppSidebar } from "@/components/app-sidebar/app-sidebar";
+import { SIDEBAR_ITEMS } from "@/components/app-sidebar/app-sidebar-config";
 import { SidebarAppProvider } from "@/components/app-sidebar/app-sidebar-context";
 import type {
   NavOrg,
   NavUser,
 } from "@/components/app-sidebar/app-sidebar-types";
 
-import {
-  useAccessControlledSidebar,
-  type AccessControlledNavItem,
-} from "@/components/app-sidebar/use-app-sidebar-ac";
+import { useAccessControlledSidebar } from "@/components/app-sidebar/use-app-sidebar-ac";
 import AppSplashScreen from "@/components/app-splashscreen";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
@@ -19,30 +17,8 @@ import {
   redirect,
   useRouter,
 } from "@tanstack/react-router";
-import i18next from "i18next";
-import { Briefcase, Network } from "lucide-react";
-import { useCallback, useEffect } from "react";
 
-const navItems: AccessControlledNavItem[] = [
-  {
-    title: i18next.t("common.myOrganization"),
-    url: "/dashboard",
-    icon: Briefcase,
-    permissions: {
-      organization: { organization: ["read", "create", "update", "delete"] },
-    },
-  },
-  {
-    title: i18next.t("common.organizations"),
-    url: "/organizations",
-    icon: Network,
-    permissions: {
-      user: {
-        platform: ["read", "create", "update", "delete"],
-      },
-    },
-  },
-];
+import { useCallback, useEffect } from "react";
 
 export const Route = createFileRoute("/_protected")({
   beforeLoad: async ({ location }) => {
@@ -85,14 +61,18 @@ function RouteComponent() {
     data: sidebarItems,
     isPending: isAcSidebarPending,
     error: sidebarError,
-  } = useAccessControlledSidebar(navItems);
+    refetch: refetchSidebarItems,
+  } = useAccessControlledSidebar(SIDEBAR_ITEMS);
 
   const setActiveOrg = useCallback(
     async (organizationId: string) => {
       await authClient.organization.setActive({ organizationId });
+      // refetch the active organization to ensure we have the latest data
       refetchActiveOrganization();
+      // the sidebar items may change based on the active organization and its permissions
+      refetchSidebarItems();
     },
-    [refetchActiveOrganization],
+    [refetchActiveOrganization, refetchSidebarItems],
   );
 
   useEffect(() => {

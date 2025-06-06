@@ -1,24 +1,27 @@
 import type { NavItem } from "@/components/app-sidebar/app-sidebar-types";
 import { authClient } from "@/lib/auth-client";
+import type {
+  OrganizationRolePermissions,
+  UserRolePermissions,
+} from "@fsm/common";
 import { useQuery } from "@tanstack/react-query";
 
+/**
+ * Permissions required for the current user to view this navigation item.
+ *
+ * @remarks
+ * - `userRolePermissions` apply to the user's global/platform-level roles.
+ *   These are evaluated using `authClient.admin.hasPermission`.
+ *
+ * - `organizationRolePermissions` apply to the user's role within the currently active organization.
+ *   These are evaluated using `authClient.organization.hasPermission`.
+ *
+ * - If both are provided, access is granted only if each defined permission check passes.
+ */
 export interface AccessControlledNavItem extends NavItem {
-  /**
-   * Permissions required to access this navigation item.
-   * Can specify permissions for both user and organization.
-   */
-  permissions: {
-    /**
-     * There are user level permissions that can be checked against the user's roles.
-     */
-    user?: Record<string, string[]> | null;
-    /**
-     * There are organization level permissions that can be checked against the user's organization roles.
-     */
-    organization?: Record<string, string[]> | null;
-  };
+  userRolePermissions?: UserRolePermissions;
+  organizationRolePermissions?: OrganizationRolePermissions;
 }
-
 /**
  * Custom React hook that returns a filtered list of navigation items based on access control.
  * Utilizes React Query's `useQuery` to asynchronously filter the provided navigation items.
@@ -52,7 +55,6 @@ async function filterNavItems(
   const promises = items.map((item) => checkNavItemPermission(item));
 
   const results = await Promise.allSettled(promises);
-
   return results
     .filter(
       (r): r is PromiseFulfilledResult<NavItem> =>
@@ -78,21 +80,25 @@ async function checkNavItemPermission(
   let hasUserPermission = true;
   let hasOrgPermission = true;
 
-  if (item.permissions?.user) {
+  if (item.userRolePermissions) {
     const result = await authClient.admin.hasPermission({
-      permissions: item.permissions.user ?? {},
+      permissions: item.userRolePermissions,
     });
+
     hasUserPermission = result.data?.success ?? false;
   }
 
-  if (item.permissions?.organization) {
+  if (item.organizationRolePermissions) {
     const result = await authClient.organization.hasPermission({
-      permissions: item.permissions.organization ?? {},
+      permissions: item.organizationRolePermissions,
     });
     hasOrgPermission = result.data?.success ?? false;
   }
 
-  if (hasUserPermission || hasOrgPermission) {
+  if (
+    (!item.userRolePermissions || hasUserPermission) &&
+    (!item.organizationRolePermissions || hasOrgPermission)
+  ) {
     const { title, url, icon } = item;
     return { title, url, icon };
   }

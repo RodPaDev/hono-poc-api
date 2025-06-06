@@ -6,5 +6,8 @@
   "main": "./src/index.ts",
   "scripts": {
     "lint": "eslint . --ext .ts,.tsx"
+  },
+  "dependencies": {
+    "better-auth": "1.2.8"
   }
 }

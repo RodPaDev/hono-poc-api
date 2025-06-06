@@ -1,7 +1,7 @@
-import type { OrganizationRolePermissions } from "@/config/permissions.config";
 import { auth } from "@/lib/auth";
 import { AppError } from "@/lib/error";
 import { logger } from "@/lib/logger";
+import type { OrganizationRolePermissions } from "@fsm/common";
 import type { Context, Next } from "hono";
 
 function createRebac(

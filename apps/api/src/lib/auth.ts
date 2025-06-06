@@ -1,16 +1,17 @@
 import { AppConfig } from "@/config/app.config";
-import {
-  ORGANIZATION_ROLES,
-  organizationAC,
-  USER_ROLES,
-  userAC,
-} from "@/config/permissions.config";
 import { Env } from "@/env";
 import { db } from "@/lib/db";
 import { sendEmail } from "@/lib/email";
 import { logger } from "@/lib/logger";
 import * as schema from "@/models";
-import { type OrganizationMetadata, OrganizationStatus } from "@fsm/common";
+import {
+  ORGANIZATION_ROLES,
+  organizationAC,
+  type OrganizationMetadata,
+  OrganizationStatus,
+  USER_ROLES,
+  userAC,
+} from "@fsm/common";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import * as plugins from "better-auth/plugins";

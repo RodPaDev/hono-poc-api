@@ -1,4 +1,10 @@
 import {
+  ORGANIZATION_ROLES,
+  organizationAC,
+  USER_ROLES,
+  userAC,
+} from "@fsm/common";
+import {
   adminClient,
   emailOTPClient,
   organizationClient,
@@ -7,7 +13,17 @@ import { createAuthClient } from "better-auth/react";
 
 export const authClient = createAuthClient({
   baseURL: "http://localhost:3000",
-  plugins: [emailOTPClient(), adminClient(), organizationClient()],
+  plugins: [
+    emailOTPClient(),
+    organizationClient({
+      ac: organizationAC,
+      roles: ORGANIZATION_ROLES,
+    }),
+    adminClient({
+      ac: userAC,
+      roles: USER_ROLES,
+    }),
+  ],
 });
 
 export const {
