@@ -16,6 +16,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import { formatInitials } from "@/utils/formatting";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { t } from "i18next";
 import { useState } from "react";
@@ -96,7 +97,7 @@ export const AddOrganization = () => {
                       alt="Organization logo"
                     />
                     <AvatarFallback>
-                      {organizationName.charAt(0).toUpperCase()}
+                      {formatInitials(organizationName)}
                     </AvatarFallback>
                   </Avatar>
                   <div className="relative">
