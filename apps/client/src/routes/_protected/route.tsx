@@ -22,8 +22,8 @@ import { useCallback, useEffect } from "react";
 
 export const Route = createFileRoute("/_protected")({
   beforeLoad: async ({ location }) => {
-    // simulate a loading state
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    // simulate a loading state to trigger the splash screen
+    // await new Promise((resolve) => setTimeout(resolve, 3000));
 
     const { data } = await getSession();
     if (!data?.session) {
