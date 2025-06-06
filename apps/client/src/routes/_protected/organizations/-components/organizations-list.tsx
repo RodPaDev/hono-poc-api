@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/table";
 import { useGetOrganizations } from "@/lib/api/queries/organization";
 import { cn } from "@/lib/utils";
+import { formatInitials } from "@/utils/formatting";
 import {
   parseOrganizationMetadata,
   type OrganizationStatus,
@@ -26,33 +27,37 @@ interface OrganizationRowProps {
   users: number;
 }
 
-const OrganizationRow = ({ data }: { data: OrganizationRowProps }) => {
+const OrganizationRow = ({
+  organization,
+}: {
+  organization: OrganizationRowProps;
+}) => {
   return (
     <TableRow>
       <TableCell className="font-medium">
         <div className="flex items-center gap-2">
           <Avatar className="size-10">
-            <AvatarImage src={data.image || ""} alt="@shadcn" />
-            <AvatarFallback>{data.name.charAt(0).toUpperCase()}</AvatarFallback>
+            <AvatarImage src={organization.image || ""} alt="@shadcn" />
+            <AvatarFallback>{formatInitials(organization.name)}</AvatarFallback>
           </Avatar>
-          {data.name}
+          {organization.name}
         </div>
       </TableCell>
-      <TableCell>{data.person}</TableCell>
-      <TableCell>{data.email}</TableCell>
+      <TableCell>{organization.person}</TableCell>
+      <TableCell>{organization.email}</TableCell>
       <TableCell>
         <Badge
           className={cn(
             "min-w-[80px] text-center inline-block",
-            data.status?.toLowerCase() === "active"
+            organization.status?.toLowerCase() === "active"
               ? "bg-green-600"
               : "bg-red-600",
           )}>
-          {data.status.charAt(0).toUpperCase() +
-            data.status.slice(1).toLowerCase()}
+          {organization.status.charAt(0).toUpperCase() +
+            organization.status.slice(1).toLowerCase()}
         </Badge>
       </TableCell>
-      <TableCell>{data.users}</TableCell>
+      <TableCell>{organization.users}</TableCell>
       <TableCell>
         <ArrowRight className="size-4" />
       </TableCell>
@@ -93,7 +98,7 @@ export const OrganizationsList = ({ filters }: OrganizationsListProps) => {
                 return (
                   <OrganizationRow
                     key={org.id}
-                    data={{
+                    organization={{
                       image: org.logo,
                       name: org.name,
                       person: "-",
