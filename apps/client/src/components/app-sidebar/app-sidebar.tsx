@@ -1,5 +1,5 @@
-import { NavItems } from "@/components/app-sidebar/nav-items";
-import { NavUser } from "@/components/app-sidebar/nav-user";
+import { NavItems } from "@/components/app-sidebar/app-nav-items";
+import { NavUser } from "@/components/app-sidebar/app-nav-user";
 import { AppLogo } from "@/components/svgr/IntusLogo";
 import {
   Sidebar,

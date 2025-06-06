@@ -46,6 +46,7 @@ const navItems: AccessControlledNavItem[] = [
 
 export const Route = createFileRoute("/_protected")({
   beforeLoad: async ({ location }) => {
+    await new Promise((resolve) => setTimeout(resolve, 10000));
     const { data } = await getSession();
     if (!data?.session) {
       throw redirect({
@@ -74,6 +75,7 @@ function RouteComponent() {
     isPending: isOrganizationsPending,
     error: organizationsError,
   } = authClient.useListOrganizations();
+
   const {
     data: activeOrganization,
     isPending: isActiveOrganizationPending,
@@ -138,30 +140,30 @@ function RouteComponent() {
   };
 
   return (
-    <SidebarAppProvider
-      context={{
-        onClickLogout: handleLogout,
-        onClickOrg: handleClickOrg,
-        user,
-        organizations: {
-          list: orgs || [],
-          isPending: isOrganizationsPending,
-          error: organizationsError,
-        },
-        navItems: {
-          list: sidebarItems || [],
-          isPending: isAcSidebarPending,
-          error: sidebarError,
-        },
-      }}>
-      <SidebarProvider defaultOpen={true}>
+    <SidebarProvider defaultOpen={true}>
+      <SidebarAppProvider
+        context={{
+          onClickLogout: handleLogout,
+          onClickOrg: handleClickOrg,
+          user,
+          organizations: {
+            list: orgs || [],
+            isPending: isOrganizationsPending,
+            error: organizationsError,
+          },
+          navItems: {
+            list: sidebarItems || [],
+            isPending: isAcSidebarPending,
+            error: sidebarError,
+          },
+        }}>
         <AppSidebar />
-        <SidebarInset>
-          <main className="flex h-full flex-1 flex-col overflow-hidden">
-            <Outlet />
-          </main>
-        </SidebarInset>
-      </SidebarProvider>
-    </SidebarAppProvider>
+      </SidebarAppProvider>
+      <SidebarInset>
+        <main className="flex h-full flex-1 flex-col overflow-hidden">
+          <Outlet />
+        </main>
+      </SidebarInset>
+    </SidebarProvider>
   );
 }

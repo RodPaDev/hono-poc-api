@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/sidebar";
 
 import { cn } from "@/lib/utils";
+import { formatInitials } from "@/utils/formatting";
 
 import { EllipsisVertical, LogOut, Settings } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -27,15 +28,6 @@ export function NavUser() {
     useSidebarAppContext();
   const { t } = useTranslation();
   const { isMobile } = useSidebar();
-
-  const getInitials = (name: string) => {
-    const names = name.split(" ");
-    const firstInitial = names[0] ? names[0][0].toUpperCase() : "";
-    const lastInitial = names[names.length - 1]
-      ? names[names.length - 1][0].toUpperCase()
-      : "";
-    return `${firstInitial}${lastInitial}`;
-  };
 
   return (
     <SidebarMenu>
@@ -48,7 +40,7 @@ export function NavUser() {
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={user.avatar} alt={user.name} />
                 <AvatarFallback className="rounded-lg">
-                  {getInitials(user.name)}
+                  {formatInitials(user.name)}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -101,7 +93,7 @@ export function NavUser() {
                                 org.id === user.activeOrgId &&
                                   "bg-sidebar-accent",
                               )}>
-                              {getInitials(org.name)}
+                              {formatInitials(org.name)}
                             </AvatarFallback>
                           </Avatar>
 

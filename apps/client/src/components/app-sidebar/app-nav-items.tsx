@@ -10,17 +10,19 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Link, useRouterState } from "@tanstack/react-router";
 
 export function NavItems() {
-  const { navItems } = useSidebarAppContext();
+  const {
+    navItems: { isPending, list },
+  } = useSidebarAppContext();
 
   return (
     <SidebarGroup>
       <SidebarMenu>
-        {navItems.isPending ? (
+        {isPending ? (
           <div className="flex flex-col gap-2">
             <SidebarMenuSkeleton count={4} />
           </div>
         ) : (
-          navItems.list.map((item) => (
+          list.map((item) => (
             <SidebarMenuItem key={item.url}>
               <SidebarNavItem item={item} />
             </SidebarMenuItem>
