@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button";
+import { Sheet } from "@/components/ui/sheet";
+import { AddOrganization } from "@/routes/_protected/organizations/-components/add-organization";
 import {
   OrganizationsFilter,
   type TabsType,
@@ -15,7 +17,7 @@ export const Route = createFileRoute("/_protected/organizations/")({
 });
 
 function OrganizationsPage() {
-  const [isOpened, setIsOpened] = useState(false);
+  const [isOpened, setIsOpened] = useState(true);
   const [search, setSearch] = useState<string>("");
   const [activeTab, setActiveTab] = useState<TabsType>("all");
 
@@ -31,7 +33,7 @@ function OrganizationsPage() {
         <p className="text-2xl font-semibold">
           {t("organization.allOrganizations")}
         </p>
-        <Button>
+        <Button onClick={() => setIsOpened(true)}>
           <Plus />
           {t("organization.createOrganization")}
         </Button>
@@ -45,6 +47,9 @@ function OrganizationsPage() {
       <OrganizationsList
         filters={{ search, status: getStatusFilter(activeTab) }}
       />
+      <Sheet open={isOpened} onOpenChange={setIsOpened}>
+        <AddOrganization />
+      </Sheet>
     </div>
   );
 }

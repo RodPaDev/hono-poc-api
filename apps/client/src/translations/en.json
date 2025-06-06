@@ -34,8 +34,13 @@
     },
     "organization": {
       "create": {
-        "title": "Create Organization",
+        "title": "Create New Organization",
         "subtitle": "Enter the details below to create a new organization",
+        "details": "Organization Details",
+        "organizationImage": "Image",
+        "organizationName": "Organization Name",
+        "ownerName": "Owner Name",
+        "ownerEmail": "Owner Email",
         "createButton": "Create Organization"
       },
       "filter": {
