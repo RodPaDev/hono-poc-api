@@ -6,7 +6,8 @@
       "myOrganization": "My Organization",
       "organizations": "Organizations",
       "profileSettings": "Profile Settings",
-      "logout": "Logout"
+      "logout": "Logout",
+      "preparingWorkspace": "Preparing your workspace"
     },
     "authentication": {
       "login": {
