@@ -5,9 +5,17 @@
       "allOrganizations": "All Organizations",
       "myOrganization": "My Organization",
       "organizations": "Organizations",
-      "profileSettings": "Profile Settings",
+      "settings": "Settings",
       "logout": "Logout",
-      "preparingWorkspace": "Preparing your workspace"
+      "preparingWorkspace": "Preparing your workspace",
+      "pageNotFound": "Page Not Found",
+      "goToHome": "Go to Home"
+    },
+    "settings": {
+      "routeTitle": "Settings",
+      "profile": "Profile",
+      "privacyPolicy": "Privacy Policy",
+      "termsAndConditions": "Terms and Conditions"
     },
     "authentication": {
       "login": {

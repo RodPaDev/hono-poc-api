@@ -122,30 +122,32 @@ function RouteComponent() {
   };
 
   return (
-    <SidebarProvider defaultOpen={true}>
-      <SidebarAppProvider
-        context={{
-          onClickLogout: handleLogout,
-          onClickOrg: handleClickOrg,
-          user,
-          organizations: {
-            list: orgs || [],
-            isPending: isOrganizationsPending,
-            error: organizationsError,
-          },
-          navItems: {
-            list: sidebarItems || [],
-            isPending: isAcSidebarPending,
-            error: sidebarError,
-          },
-        }}>
-        <AppSidebar />
-      </SidebarAppProvider>
-      <SidebarInset>
-        <main className="flex h-full flex-1 flex-col overflow-hidden">
-          <Outlet />
-        </main>
-      </SidebarInset>
-    </SidebarProvider>
+    <div className="max-h-screen flex h-full w-full flex-col overflow-hidden">
+      <SidebarProvider defaultOpen={true}>
+        <SidebarAppProvider
+          context={{
+            onClickLogout: handleLogout,
+            onClickOrg: handleClickOrg,
+            user,
+            organizations: {
+              list: orgs || [],
+              isPending: isOrganizationsPending,
+              error: organizationsError,
+            },
+            navItems: {
+              list: sidebarItems || [],
+              isPending: isAcSidebarPending,
+              error: sidebarError,
+            },
+          }}>
+          <AppSidebar />
+        </SidebarAppProvider>
+        <SidebarInset>
+          <main className="flex h-full flex-1 flex-col overflow-hidden">
+            <Outlet />
+          </main>
+        </SidebarInset>
+      </SidebarProvider>
+    </div>
   );
 }

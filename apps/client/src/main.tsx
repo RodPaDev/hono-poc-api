@@ -33,6 +33,7 @@ i18n.use(initReactI18next).init({
 const router = createRouter({
   routeTree,
   defaultPreload: "intent",
+  notFoundMode: "root",
 });
 
 declare module "@tanstack/react-router" {

@@ -23,4 +23,11 @@ export const Route = createFileRoute("/")({
       search: location.search,
     });
   },
+  notFoundComponent: () => {
+    return (
+      <div className="flex items-center justify-center w-screen h-screen">
+        <h1 className="text-2xl font-bold">Page Not Found</h1>
+      </div>
+    );
+  },
 });

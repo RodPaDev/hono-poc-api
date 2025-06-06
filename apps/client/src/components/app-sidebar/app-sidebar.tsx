@@ -11,7 +11,10 @@ import {
 
 export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar className="h-screen" collapsible="none" {...props}>
+    <Sidebar
+      className="h-screen bg-background border-r border-b"
+      collapsible="none"
+      {...props}>
       <SidebarHeader>
         <AppLogo />
       </SidebarHeader>

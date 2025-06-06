@@ -113,10 +113,10 @@ export function NavUser() {
               )}
 
             <DropdownMenuGroup>
-              <Link to="/profile" className="w-full">
+              <Link to="/settings" className="w-full">
                 <DropdownMenuItem>
                   <Settings />
-                  {t("common.profileSettings")}
+                  {t("common.settings")}
                 </DropdownMenuItem>
               </Link>
             </DropdownMenuGroup>
