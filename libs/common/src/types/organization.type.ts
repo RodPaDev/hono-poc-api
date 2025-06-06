@@ -9,8 +9,8 @@ export type OrganizationMetadata = {
   status: OrganizationStatus;
 };
 
-export const FilterOrganizationsSchema = z.object({
+export const GetOrganizationsSchema = z.object({
   search: z.string().optional(),
   status: z.nativeEnum(OrganizationStatus).optional(),
 });
-export type FilterOrganizations = z.infer<typeof FilterOrganizationsSchema>;
+export type GetOrganizations = z.infer<typeof GetOrganizationsSchema>;

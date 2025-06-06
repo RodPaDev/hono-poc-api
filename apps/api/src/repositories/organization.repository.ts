@@ -1,13 +1,12 @@
 import * as schema from "@/models";
-import { type FilterOrganizations } from "@/types/organization.types";
-import { parseOrganizationMetadata } from "@fsm/common";
+import { parseOrganizationMetadata, type GetOrganizations } from "@fsm/common";
 import { asc, ilike, sql } from "drizzle-orm";
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 
 export class OrganizationRepository {
   constructor(private readonly db: NodePgDatabase<typeof schema>) {}
 
-  async findAll(filters: FilterOrganizations) {
+  async findAll(filters: GetOrganizations) {
     // Get user counts per organization
     const userCounts = await this.db
       .select({

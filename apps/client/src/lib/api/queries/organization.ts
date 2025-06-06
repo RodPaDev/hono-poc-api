@@ -1,9 +1,9 @@
 import { apiClient } from "@/lib/api/api-client";
 import { useQuery } from "@tanstack/react-query";
 
-import { type FilterOrganizations } from "@fsm/common";
+import { type GetOrganizations } from "@fsm/common";
 
-export const useGetOrganizations = (params: FilterOrganizations) => {
+export const useGetOrganizations = (params: GetOrganizations) => {
   return useQuery({
     queryKey: ["organizations", params],
     queryFn: async () => {
