@@ -46,7 +46,6 @@ const navItems: AccessControlledNavItem[] = [
 
 export const Route = createFileRoute("/_protected")({
   beforeLoad: async ({ location }) => {
-    await new Promise((resolve) => setTimeout(resolve, 10000));
     const { data } = await getSession();
     if (!data?.session) {
       throw redirect({
