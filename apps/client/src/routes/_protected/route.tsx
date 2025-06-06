@@ -46,8 +46,6 @@ const navItems: AccessControlledNavItem[] = [
 
 export const Route = createFileRoute("/_protected")({
   beforeLoad: async ({ location }) => {
-    // simulate a delay for loading
-    // await new Promise((resolve) => setTimeout(resolve, 10000000));
     const { data } = await getSession();
     if (!data?.session) {
       throw redirect({
@@ -104,7 +102,6 @@ function RouteComponent() {
       organizations &&
       organizations.length > 0
     ) {
-      // If no active organization is set, set the first organization as active
       setActiveOrg(organizations[0].id);
     }
   }, [
