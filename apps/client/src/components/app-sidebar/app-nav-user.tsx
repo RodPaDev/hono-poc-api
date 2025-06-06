@@ -18,6 +18,7 @@ import {
 
 import { cn } from "@/lib/utils";
 import { formatInitials } from "@/utils/formatting";
+import { Link } from "@tanstack/react-router";
 
 import { EllipsisVertical, LogOut, Settings } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -50,6 +51,11 @@ export function NavUser() {
               <EllipsisVertical className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
+          {/* 
+              DropdownMenuContent is used to display the dropdown menu when the user clicks on the user avatar.
+              It contains the list of organizations, profile settings, and logout option.
+              These are not entirely configurable, per project it's better to just edit the code here
+            */}
           <DropdownMenuContent
             className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
             side={isMobile ? "bottom" : "top"}
@@ -107,10 +113,12 @@ export function NavUser() {
               )}
 
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Settings />
-                {t("common.profileSettings")}
-              </DropdownMenuItem>
+              <Link to="/profile" className="w-full">
+                <DropdownMenuItem>
+                  <Settings />
+                  {t("common.profileSettings")}
+                </DropdownMenuItem>
+              </Link>
             </DropdownMenuGroup>
 
             <DropdownMenuSeparator />

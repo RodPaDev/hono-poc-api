@@ -1,3 +1,4 @@
+import type { FileRoutesByTo } from "@/routeTree.gen";
 import type { BetterFetchError } from "better-auth/react";
 import type { LucideIcon } from "lucide-react";
 
@@ -23,7 +24,7 @@ export interface AsyncOrganizations {
 
 export interface NavItem {
   title: string;
-  url: string;
+  url: keyof FileRoutesByTo;
   icon?: LucideIcon;
 }
 

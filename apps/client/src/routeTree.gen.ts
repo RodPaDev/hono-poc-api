@@ -17,6 +17,7 @@ import { Route as AuthRouteImport } from './routes/_auth/route'
 import { Route as IndexImport } from './routes/index'
 import { Route as LegalTermsAndConditionsImport } from './routes/legal/terms-and-conditions'
 import { Route as LegalPrivacyPolicyImport } from './routes/legal/privacy-policy'
+import { Route as ProtectedProfileImport } from './routes/_protected/profile'
 import { Route as ProtectedDashboardImport } from './routes/_protected/dashboard'
 import { Route as AuthResetPasswordImport } from './routes/_auth/reset-password'
 import { Route as AuthRegisterImport } from './routes/_auth/register'
@@ -66,6 +67,12 @@ const LegalPrivacyPolicyRoute = LegalPrivacyPolicyImport.update({
   id: '/privacy-policy',
   path: '/privacy-policy',
   getParentRoute: () => LegalRouteRoute,
+} as any)
+
+const ProtectedProfileRoute = ProtectedProfileImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => ProtectedRouteRoute,
 } as any)
 
 const ProtectedDashboardRoute = ProtectedDashboardImport.update({
@@ -228,6 +235,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedDashboardImport
       parentRoute: typeof ProtectedRouteImport
     }
+    '/_protected/profile': {
+      id: '/_protected/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProtectedProfileImport
+      parentRoute: typeof ProtectedRouteImport
+    }
     '/legal/privacy-policy': {
       id: '/legal/privacy-policy'
       path: '/privacy-policy'
@@ -330,6 +344,7 @@ const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
 
 interface ProtectedRouteRouteChildren {
   ProtectedDashboardRoute: typeof ProtectedDashboardRoute
+  ProtectedProfileRoute: typeof ProtectedProfileRoute
   ProtectedOrganizationsIndexRoute: typeof ProtectedOrganizationsIndexRoute
   ProtectedOrganizationsOrganizationIdIndexRoute: typeof ProtectedOrganizationsOrganizationIdIndexRoute
   ProtectedOrganizationsOrganizationIdActionsEditRoute: typeof ProtectedOrganizationsOrganizationIdActionsEditRoute
@@ -343,6 +358,7 @@ interface ProtectedRouteRouteChildren {
 
 const ProtectedRouteRouteChildren: ProtectedRouteRouteChildren = {
   ProtectedDashboardRoute: ProtectedDashboardRoute,
+  ProtectedProfileRoute: ProtectedProfileRoute,
   ProtectedOrganizationsIndexRoute: ProtectedOrganizationsIndexRoute,
   ProtectedOrganizationsOrganizationIdIndexRoute:
     ProtectedOrganizationsOrganizationIdIndexRoute,
@@ -389,6 +405,7 @@ export interface FileRoutesByFullPath {
   '/register': typeof AuthRegisterRoute
   '/reset-password': typeof AuthResetPasswordRoute
   '/dashboard': typeof ProtectedDashboardRoute
+  '/profile': typeof ProtectedProfileRoute
   '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
   '/legal/terms-and-conditions': typeof LegalTermsAndConditionsRoute
   '/organizations': typeof ProtectedOrganizationsIndexRoute
@@ -411,6 +428,7 @@ export interface FileRoutesByTo {
   '/register': typeof AuthRegisterRoute
   '/reset-password': typeof AuthResetPasswordRoute
   '/dashboard': typeof ProtectedDashboardRoute
+  '/profile': typeof ProtectedProfileRoute
   '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
   '/legal/terms-and-conditions': typeof LegalTermsAndConditionsRoute
   '/organizations': typeof ProtectedOrganizationsIndexRoute
@@ -435,6 +453,7 @@ export interface FileRoutesById {
   '/_auth/register': typeof AuthRegisterRoute
   '/_auth/reset-password': typeof AuthResetPasswordRoute
   '/_protected/dashboard': typeof ProtectedDashboardRoute
+  '/_protected/profile': typeof ProtectedProfileRoute
   '/legal/privacy-policy': typeof LegalPrivacyPolicyRoute
   '/legal/terms-and-conditions': typeof LegalTermsAndConditionsRoute
   '/_protected/organizations/': typeof ProtectedOrganizationsIndexRoute
@@ -459,6 +478,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/dashboard'
+    | '/profile'
     | '/legal/privacy-policy'
     | '/legal/terms-and-conditions'
     | '/organizations'
@@ -480,6 +500,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/dashboard'
+    | '/profile'
     | '/legal/privacy-policy'
     | '/legal/terms-and-conditions'
     | '/organizations'
@@ -502,6 +523,7 @@ export interface FileRouteTypes {
     | '/_auth/register'
     | '/_auth/reset-password'
     | '/_protected/dashboard'
+    | '/_protected/profile'
     | '/legal/privacy-policy'
     | '/legal/terms-and-conditions'
     | '/_protected/organizations/'
@@ -562,6 +584,7 @@ export const routeTree = rootRoute
       "filePath": "_protected/route.tsx",
       "children": [
         "/_protected/dashboard",
+        "/_protected/profile",
         "/_protected/organizations/",
         "/_protected/organizations/$organizationId/",
         "/_protected/organizations/$organizationId/actions/edit",
@@ -598,6 +621,10 @@ export const routeTree = rootRoute
     },
     "/_protected/dashboard": {
       "filePath": "_protected/dashboard.tsx",
+      "parent": "/_protected"
+    },
+    "/_protected/profile": {
+      "filePath": "_protected/profile.tsx",
       "parent": "/_protected"
     },
     "/legal/privacy-policy": {
