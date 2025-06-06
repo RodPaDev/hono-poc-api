@@ -23,7 +23,7 @@ export function NavItems() {
           </div>
         ) : (
           list.map((item) => (
-            <SidebarMenuItem key={item.url}>
+            <SidebarMenuItem key={item.to}>
               <SidebarNavItem item={item} />
             </SidebarMenuItem>
           ))
@@ -36,9 +36,9 @@ export function NavItems() {
 function SidebarNavItem({ item }: { item: NavItem }) {
   const location = useRouterState({ select: (s) => s.location });
   return (
-    <Link to={item.url}>
+    <Link to={item.to}>
       <SidebarMenuButton
-        isActive={location.pathname === item.url}
+        isActive={location.pathname === item.to}
         tooltip={item.title}>
         {item.icon && <item.icon />}
         <span>{item.title}</span>

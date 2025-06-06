@@ -66,7 +66,7 @@ async function filterNavItems(
 /**
  * Checks if the current user or their organization has permission to access a navigation item.
  *
- * @param item - The navigation item with access control information.
+ * @param acNavItem - The navigation item with access control information.
  * @returns A promise that resolves to a `NavItem` object containing the item's title, URL, and icon if the user or organization has permission; otherwise, resolves to `null`.
  *
  * @remarks
@@ -75,32 +75,35 @@ async function filterNavItems(
  *
  */
 async function checkNavItemPermission(
-  item: AccessControlledNavItem,
+  acNavItem: AccessControlledNavItem,
 ): Promise<NavItem | null> {
   let hasUserPermission = true;
   let hasOrgPermission = true;
 
-  if (item.userRolePermissions) {
+  if (acNavItem.userRolePermissions) {
     const result = await authClient.admin.hasPermission({
-      permissions: item.userRolePermissions,
+      permissions: acNavItem.userRolePermissions,
     });
 
     hasUserPermission = result.data?.success ?? false;
   }
 
-  if (item.organizationRolePermissions) {
+  if (acNavItem.organizationRolePermissions) {
     const result = await authClient.organization.hasPermission({
-      permissions: item.organizationRolePermissions,
+      permissions: acNavItem.organizationRolePermissions,
     });
     hasOrgPermission = result.data?.success ?? false;
   }
 
   if (
-    (!item.userRolePermissions || hasUserPermission) &&
-    (!item.organizationRolePermissions || hasOrgPermission)
+    (!acNavItem.userRolePermissions || hasUserPermission) &&
+    (!acNavItem.organizationRolePermissions || hasOrgPermission)
   ) {
-    const { title, url, icon } = item;
-    return { title, url, icon };
+    return {
+      title: acNavItem.title,
+      to: acNavItem.to,
+      icon: acNavItem.icon,
+    };
   }
 
   return null;

@@ -19,7 +19,7 @@ import { Briefcase, Network } from "lucide-react";
 export const SIDEBAR_ITEMS: AccessControlledNavItem[] = [
   {
     title: i18next.t("common.myOrganization"),
-    url: "/dashboard",
+    to: "/dashboard",
     icon: Briefcase,
     organizationRolePermissions: {
       organization: ["update", "delete"],
@@ -27,7 +27,7 @@ export const SIDEBAR_ITEMS: AccessControlledNavItem[] = [
   },
   {
     title: i18next.t("common.organizations"),
-    url: "/organizations",
+    to: "/organizations",
     icon: Network,
     userRolePermissions: {
       platform: ["read", "create", "update", "delete"],

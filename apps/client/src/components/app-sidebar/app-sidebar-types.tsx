@@ -24,7 +24,7 @@ export interface AsyncOrganizations {
 
 export interface NavItem {
   title: string;
-  url: keyof FileRoutesByTo;
+  to: keyof FileRoutesByTo;
   icon?: LucideIcon;
 }
 
