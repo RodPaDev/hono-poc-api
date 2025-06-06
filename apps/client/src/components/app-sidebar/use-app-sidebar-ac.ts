@@ -1,4 +1,4 @@
-import type { NavItem } from "@/components/nav-items";
+import type { NavItem } from "@/components/app-sidebar/app-sidebar-types";
 import { authClient } from "@/lib/auth-client";
 import { useQuery } from "@tanstack/react-query";
 

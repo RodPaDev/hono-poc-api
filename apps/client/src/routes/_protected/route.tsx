@@ -1,11 +1,17 @@
-import { AppSidebar } from "@/components/app-sidebar";
-import AppSplashScreen from "@/components/app-splashscreen";
-import type { NavOrg, NavUser } from "@/components/nav-user";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/app-sidebar/app-sidebar";
+import { SidebarAppProvider } from "@/components/app-sidebar/app-sidebar-context";
+import type {
+  NavOrg,
+  NavUser,
+} from "@/components/app-sidebar/app-sidebar-types";
+
 import {
   useAccessControlledSidebar,
   type AccessControlledNavItem,
-} from "@/hooks/use-ac-sidebar";
+} from "@/components/app-sidebar/use-app-sidebar-ac";
+import AppSplashScreen from "@/components/app-splashscreen";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+
 import { authClient, getSession, signOut } from "@/lib/auth-client";
 import {
   createFileRoute,
@@ -16,7 +22,6 @@ import {
 import i18next from "i18next";
 import { Briefcase, Network } from "lucide-react";
 import { useCallback, useEffect } from "react";
-import { Fragment } from "react/jsx-runtime";
 
 const navItems: AccessControlledNavItem[] = [
   {
@@ -42,7 +47,7 @@ const navItems: AccessControlledNavItem[] = [
 export const Route = createFileRoute("/_protected")({
   beforeLoad: async ({ location }) => {
     // simulate a delay for loading
-    await new Promise((resolve) => setTimeout(resolve, 10000000));
+    // await new Promise((resolve) => setTimeout(resolve, 10000000));
     const { data } = await getSession();
     if (!data?.session) {
       throw redirect({
@@ -136,30 +141,31 @@ function RouteComponent() {
   };
 
   return (
-    <Fragment>
+    <SidebarAppProvider
+      context={{
+        onClickLogout: handleLogout,
+        onClickOrg: handleClickOrg,
+        user,
+        organizations: {
+          list: orgs || [],
+          isPending: isOrganizationsPending,
+          error: organizationsError,
+        },
+        navItems: {
+          list: sidebarItems || [],
+          isPending: isAcSidebarPending,
+          error: sidebarError,
+        },
+        isNavItemsPending: isAcSidebarPending,
+      }}>
       <SidebarProvider defaultOpen={true}>
-        <AppSidebar
-          isNavItemsPending={isAcSidebarPending}
-          navItems={{
-            list: sidebarItems || [],
-            isPending: isAcSidebarPending,
-            error: sidebarError,
-          }}
-          user={user}
-          organizations={{
-            list: orgs || [],
-            isPending: isOrganizationsPending,
-            error: organizationsError,
-          }}
-          onClickOrg={handleClickOrg}
-          onClickLogout={handleLogout}
-        />
+        <AppSidebar />
         <SidebarInset>
           <main className="flex h-full flex-1 flex-col overflow-hidden">
             <Outlet />
           </main>
         </SidebarInset>
       </SidebarProvider>
-    </Fragment>
+    </SidebarAppProvider>
   );
 }

@@ -1,3 +1,4 @@
+import { useSidebarAppContext } from "@/components/app-sidebar/app-sidebar-context";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -16,45 +17,14 @@ import {
 } from "@/components/ui/sidebar";
 
 import { cn } from "@/lib/utils";
-import type { BetterFetchError } from "better-auth/react";
 
 import { EllipsisVertical, LogOut, Settings } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Fragment } from "react/jsx-runtime";
 
-export interface NavUser {
-  name: string;
-  email: string;
-  avatar?: string;
-  userRole: "admin" | "user";
-  activeOrgId?: string;
-}
-
-export interface NavOrg {
-  name: string;
-  logo?: string;
-  id: string;
-}
-
-export interface AsyncOrganizations {
-  list: NavOrg[];
-  isPending: boolean;
-  error: BetterFetchError | null;
-}
-
-interface Props {
-  user: NavUser;
-  organizations: AsyncOrganizations;
-  onClickOrg: (org: NavOrg) => void;
-  onClickLogout: () => void;
-}
-
-export function NavUser({
-  organizations,
-  user,
-  onClickOrg,
-  onClickLogout,
-}: Props) {
+export function NavUser() {
+  const { organizations, user, onClickOrg, onClickLogout } =
+    useSidebarAppContext();
   const { t } = useTranslation();
   const { isMobile } = useSidebar();
 

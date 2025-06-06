@@ -1,3 +1,5 @@
+import { useSidebarAppContext } from "@/components/app-sidebar/app-sidebar-context";
+import type { NavItem } from "@/components/app-sidebar/app-sidebar-types";
 import {
   SidebarGroup,
   SidebarMenu,
@@ -6,25 +8,10 @@ import {
 } from "@/components/ui/sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { type LucideIcon } from "lucide-react";
 
-export interface NavItem {
-  title: string;
-  url: string;
-  icon?: LucideIcon;
-}
+export function NavItems() {
+  const { navItems } = useSidebarAppContext();
 
-export interface NavItems {
-  list: NavItem[];
-  isPending: boolean;
-  error: Error | null;
-}
-
-interface Props {
-  navItems: NavItems;
-}
-
-export function NavItems({ navItems }: Props) {
   return (
     <SidebarGroup>
       <SidebarMenu>
